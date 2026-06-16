@@ -59,7 +59,7 @@
     background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23ff0000'/></svg>") no-repeat center/contain}
   .mail:hover::before{display:inline-block}
 
-  .brand{position:absolute;left:3px;top:41px;width:560px;font-size:14px;line-height:14px;letter-spacing:-.6px;text-transform:uppercase;color:var(--grey)}
+  .brand{position:absolute;left:-7px;top:41px;width:560px;font-size:14px;line-height:14px;letter-spacing:-.6px;text-transform:uppercase;color:var(--grey)}
   .brand p{background:#000;display:inline-block;padding:2px 6px 4px 5px}
   .brand .r{color:var(--red)}
   .brand a{text-decoration:none;font-weight:700;cursor:pointer}
@@ -103,7 +103,7 @@
   #preloader img{width:80px;height:80px;object-fit:contain;pointer-events:none}
 
   /* ---- giant dark text ---- */
-  .giant{position:absolute;left:-3px;top:633px;width:1024px;z-index:2;text-align:right;
+  .giant{position:absolute;left:-13px;top:633px;width:1024px;z-index:2;text-align:right;
     font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;
     text-transform:uppercase;pointer-events:none;--fill:0%}
   .giant p{margin:0;color:#262626;cursor:pointer;pointer-events:auto;filter:url(index.html#threshfx)}
@@ -240,7 +240,7 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:4px;top:3380px;width:600px;z-index:8;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:3380px;width:600px;z-index:8;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   #endcap .ec-kick{margin:5px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey)}
@@ -248,7 +248,7 @@
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
   #endcap .ec-head{margin:0 0 30px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
     letter-spacing:-6px;color:#262626;filter:url(index.html#threshfx);height:168px;min-height:168px;overflow:visible}
-  #endcap .ec-cta{display:inline-block;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--red);text-decoration:none;padding:1px 3px 2px;line-height:12px}
+  #endcap .ec-cta{display:inline-block;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--red);text-decoration:none;padding:1px 0 2px 3px;line-height:12px}
   #endcap .ec-cta::before{content:'';display:none;width:12px;height:9px;margin-right:5px;vertical-align:-1px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23ff0000'/></svg>") no-repeat center/contain}
   #endcap .ec-cta:hover{background:var(--red);color:#000}
   #endcap .ec-cta:hover::before{display:inline-block;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23000000'/></svg>") no-repeat center/contain}
@@ -273,7 +273,7 @@
   .sect .stats{display:flex;justify-content:space-between;gap:20px;border-top:1px solid #262626;
     margin-top:24px;padding-top:14px;color:var(--grey);font-size:10px;letter-spacing:1px}
   .sect .stats b{display:block;color:#cfcfcf;font-weight:400;font-size:20px;line-height:25px;min-height:25px;letter-spacing:-.6px;margin-bottom:5px}
-  .sect .stats > div{position:relative;text-align:left;padding-left:14px}
+  .sect .stats > div{position:relative;text-align:left;padding-left:14px;white-space:nowrap;min-width:max-content}
   .sect .stats > div:first-child{padding-left:0;transform:translateX(5px)}
   .sect .stats > div:not(:first-child)::before{content:'';position:absolute;left:-10px;top:0;width:1px;height:34px;background:#262626}
   #faq{position:absolute;left:3px;top:1965px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
