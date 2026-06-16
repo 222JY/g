@@ -110,7 +110,7 @@
   
   .giant p{position:relative}
   .giant .seltxt{padding-right:4px;margin-right:-4px}
-    .giant p.hov{filter:url(index.html#threshfxHover) blur(.35px)}
+    .giant p.hov{filter:url(index.html#threshfxHover) blur(1.1px)}
     .giant p.hov .seltxt{color:#000;background:linear-gradient(#818181,#818181) 0 7px/100% 97px no-repeat}
   /* left-pointing arrow on the right of each line — follows the text color (grey, red on hover) */
   .giant p:not(.static) .seltxt::after{content:'';display:inline-block;width:32px;height:32px;margin-left:18px;vertical-align:14px;
@@ -521,9 +521,9 @@
   <feGaussianBlur stdDeviation="1.25"></feGaussianBlur>
   <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 0 1 1"></feFuncA></feComponentTransfer>
 </filter>
-<filter id="threshfxHover" x="-18%" y="-18%" width="136%" height="136%">
-  <feGaussianBlur stdDeviation="2.15"></feGaussianBlur>
-  <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 0 0 1 1"></feFuncA></feComponentTransfer>
+<filter id="threshfxHover" x="-22%" y="-22%" width="144%" height="144%">
+  <feGaussianBlur stdDeviation="4.2"></feGaussianBlur>
+  <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 0 0 0 1 1"></feFuncA></feComponentTransfer>
 </filter>
 <filter id="pixelfx2" x="-10%" y="-10%" width="120%" height="120%">
   <feFlood x="0" y="0" height="1" width="1"></feFlood>
