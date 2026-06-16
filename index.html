@@ -110,7 +110,8 @@
   
   .giant p{position:relative}
   .giant .seltxt{padding-right:4px;margin-right:-4px}
-    .giant p.hov .seltxt{color:#262626;background:linear-gradient(#818181,#818181) 0 7px/100% 97px no-repeat}
+    .giant p.hov{filter:url(index.html#threshfxHover) blur(.35px)}
+    .giant p.hov .seltxt{color:#000;background:linear-gradient(#818181,#818181) 0 7px/100% 97px no-repeat}
   /* left-pointing arrow on the right of each line — follows the text color (grey, red on hover) */
   .giant p:not(.static) .seltxt::after{content:'';display:inline-block;width:32px;height:32px;margin-left:18px;vertical-align:14px;
     background:currentColor}
@@ -248,7 +249,7 @@
   #endcap .ec-kick b{color:#19e65a;font-weight:400;animation:ecBlink 2.4s ease-in-out infinite}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
   #endcap .ec-head{margin:0 0 30px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
-    letter-spacing:-6px;color:#262626;filter:url(index.html#threshfx);height:252px;min-height:252px;overflow:visible}
+    letter-spacing:-6px;color:#262626;filter:url(index.html#threshfx);height:168px;min-height:168px;overflow:visible}
   #endcap .ec-cta{display:inline-block;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--red);text-decoration:none;padding:1px 0 2px 3px;line-height:12px;transform:translateX(2px)}
   #endcap .ec-cta::before{content:'';display:none;width:12px;height:9px;margin-right:5px;vertical-align:-1px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23ff0000'/></svg>") no-repeat center/contain}
   #endcap .ec-cta:hover{background:var(--red);color:#000}
@@ -489,7 +490,7 @@
   </div>
 
   <div id="endcap">
-    <h2 class="ec-head">LET'S<br>GO BOLD<br>NOW</h2>
+    <h2 class="ec-head">LET'S<br>GO BOLD NOW</h2>
     <a class="ec-cta" href="mailto:HELLO@GOBOLD.LIVE">START A PROJECT</a>
     <p class="ec-kick"><b>●</b> AVAILABLE FOR NEW PROJECTS — Q3</p>
     <p class="ec-svc">WEBSITES <span>/</span> AI INTEGRATIONS <span>/</span> BRANDING <span>/</span> 3D / WEB3<br>STRATEGY <span>/</span> DESIGN <span>/</span> DEVELOPMENT — END TO END, IN-HOUSE</p>
@@ -519,6 +520,10 @@
 <filter id="threshfx" x="-15%" y="-15%" width="130%" height="130%">
   <feGaussianBlur stdDeviation="1.25"></feGaussianBlur>
   <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 0 1 1"></feFuncA></feComponentTransfer>
+</filter>
+<filter id="threshfxHover" x="-18%" y="-18%" width="136%" height="136%">
+  <feGaussianBlur stdDeviation="2.15"></feGaussianBlur>
+  <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 0 0 1 1"></feFuncA></feComponentTransfer>
 </filter>
 <filter id="pixelfx2" x="-10%" y="-10%" width="120%" height="120%">
   <feFlood x="0" y="0" height="1" width="1"></feFlood>
