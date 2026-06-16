@@ -243,18 +243,18 @@
   #endcap{position:absolute;right:14px;top:3380px;width:600px;z-index:8;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none}
   #endcap .ec-l,#endcap a{pointer-events:auto}
-  #endcap .ec-kick{margin:5px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey)}
+  #endcap .ec-kick{margin:5px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey);transform:translateX(2px)}
   #endcap .ec-kick b{color:#19e65a;font-weight:400;animation:ecBlink 2.4s ease-in-out infinite}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
   #endcap .ec-head{margin:0 0 30px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
     letter-spacing:-6px;color:#262626;filter:url(index.html#threshfx);height:168px;min-height:168px;overflow:visible}
-  #endcap .ec-cta{display:inline-block;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--red);text-decoration:none;padding:1px 0 2px 3px;line-height:12px}
+  #endcap .ec-cta{display:inline-block;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--red);text-decoration:none;padding:1px 0 2px 3px;line-height:12px;transform:translateX(2px)}
   #endcap .ec-cta::before{content:'';display:none;width:12px;height:9px;margin-right:5px;vertical-align:-1px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23ff0000'/></svg>") no-repeat center/contain}
   #endcap .ec-cta:hover{background:var(--red);color:#000}
   #endcap .ec-cta:hover::before{display:inline-block;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23000000'/></svg>") no-repeat center/contain}
-  #endcap .ec-svc{margin:22px 0 0;font-size:6px;line-height:9px;letter-spacing:1px;color:var(--grey)}
+  #endcap .ec-svc{margin:22px 0 0;font-size:6px;line-height:9px;letter-spacing:1px;color:var(--grey);transform:translateX(2px)}
   #endcap .ec-svc span{color:var(--dark)}
-  #endcap .ec-credit{margin:8px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--dark)}
+  #endcap .ec-credit{margin:8px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--dark);transform:translateX(2px)}
   #endcap .ec-credit a{color:var(--dark);text-decoration:none}
   #endcap .ec-credit a:hover{color:var(--red)}
   /* ---- content sections between FAQ and the globe ---- */
@@ -275,12 +275,13 @@
   .sect .stats b{display:block;color:#cfcfcf;font-weight:400;font-size:20px;line-height:25px;min-height:25px;letter-spacing:-.6px;margin-bottom:5px}
   .sect .stats > div{position:relative;text-align:left;padding-left:14px;white-space:nowrap;min-width:max-content}
   .sect .stats > div:first-child{padding-left:0;transform:translateX(5px)}
+  .sect .stats > div:nth-child(4){transform:translateX(-4px)}
   .sect .stats > div:not(:first-child)::before{content:'';position:absolute;left:-10px;top:0;width:1px;height:34px;background:#262626}
   #faq{position:absolute;left:3px;top:1965px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
-  #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#262626;text-transform:uppercase;filter:url(index.html#threshfx)}
+  #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#262626;text-transform:uppercase;filter:url(index.html#threshfx);transform:translateX(-10px)}
   .faq-item{border-top:1px solid #262626}
   .faq-item:last-child{border-bottom:1px solid #262626}
-  .faq-q{display:flex;justify-content:space-between;align-items:baseline;width:100%;background:none;border:0;
+  .faq-q{display:flex;justify-content:space-between;align-items:baseline;width:100%;background:none;border:0;transform:translateX(-3px);
     color:var(--grey);font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:14px;line-height:14px;letter-spacing:-.6px;text-transform:uppercase;
     padding:12px 2px;cursor:pointer;text-align:right;justify-content:flex-end}
   .faq-q span{color:var(--red);flex:none;margin-left:20px}
@@ -288,7 +289,7 @@
   .faq-item.open .faq-q{color:#fff}
   .faq-a{max-height:0;overflow:hidden;transition:max-height .12s ease-out}
   .faq-item.open .faq-a{max-height:220px}
-  .faq-a p{margin:0 0 0 auto;padding:0 2px 14px;color:#6a6a6a;font-size:14px;line-height:18px;letter-spacing:-.6px;max-width:660px;text-transform:uppercase;text-align:right}
+  .faq-a p{margin:0 0 0 auto;padding:0 2px 14px;color:#6a6a6a;font-size:14px;line-height:18px;letter-spacing:-.6px;max-width:660px;text-transform:uppercase;text-align:right;transform:translateX(-3px)}
 
   #rgbBlur{position:fixed;left:0;right:0;bottom:0;height:200px;z-index:500;pointer-events:none}
   #rgbBlur .b{position:absolute;inset:0;backdrop-filter:url(index.html#meltWave) blur(7px) saturate(1.5) contrast(1.08);-webkit-backdrop-filter:url(index.html#meltWave) blur(7px) saturate(1.5) contrast(1.08);
