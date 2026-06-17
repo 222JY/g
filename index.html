@@ -118,7 +118,7 @@
   .giant{position:absolute;left:-13px;top:633px;width:1024px;z-index:2;text-align:right;
     font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;
     text-transform:uppercase;pointer-events:none;--fill:0%}
-  .giant p{margin:0;color:#262626;cursor:pointer;pointer-events:auto;filter:url(index.html#threshfx)}
+  .giant p{margin:0;color:#343434;cursor:pointer;pointer-events:auto;filter:url(index.html#threshfxStrong)}
   
   .giant p{position:relative}
   .giant .seltxt{padding-right:4px;margin-right:-4px}
@@ -254,14 +254,14 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:3380px;width:600px;z-index:8;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:3590px;width:600px;z-index:8;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   #endcap .ec-kick{margin:5px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey);transform:translateX(2px)}
   #endcap .ec-kick b{color:#19e65a;font-weight:400;animation:ecBlink 2.4s ease-in-out infinite}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
-  #endcap .ec-head{margin:0 0 30px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
-    letter-spacing:-6px;color:#262626;filter:url(index.html#threshfx);height:168px;min-height:168px;overflow:visible}
+  #endcap .ec-head{margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
+    letter-spacing:-6px;color:#383838;filter:url(index.html#threshfxStrong);height:168px;min-height:168px;overflow:visible}
   #endcap .ec-cta{display:inline-block;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--red);text-decoration:none;padding:1px 0 2px 3px;line-height:12px;transform:translateX(2px)}
   #endcap .ec-cta::before{content:'';display:none;width:12px;height:9px;margin-right:5px;vertical-align:-1px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23ff0000'/></svg>") no-repeat center/contain}
   #endcap .ec-cta:hover{background:var(--red);color:#000}
@@ -271,11 +271,12 @@
   #endcap .ec-credit{margin:8px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--dark);transform:translateX(2px)}
   #endcap .ec-credit a{color:var(--dark);text-decoration:none}
   #endcap .ec-credit a:hover{color:var(--red)}
+  #endcap .ec-meta{margin:0 0 18px;transform:translateY(-30px)}
   /* ---- content sections between FAQ and the globe ---- */
   .sect{position:absolute;left:3px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase}
   .sect .sect-kick{margin:0 0 8px;font-size:6px;line-height:8px;letter-spacing:2px;color:var(--grey);text-align:right}
   .sect .sect-head{margin:0 0 26px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:92px;line-height:76px;
-    letter-spacing:-5.2px;color:#262626;filter:url(index.html#threshfx);text-align:right}
+    letter-spacing:-5.2px;color:#303030;filter:url(index.html#threshfxStrong);text-align:right}
   .sect .row{display:flex;justify-content:space-between;align-items:flex-start;gap:34px;border-top:1px solid #262626;padding:15px 2px}
   .sect .rows .row:last-child{border-bottom:1px solid #262626}
   .sect .row .rl{display:flex;gap:14px;align-items:baseline;flex:none;width:300px}
@@ -292,7 +293,7 @@
   .sect .stats > div:nth-child(4){transform:translateX(-5px)}
   .sect .stats > div:not(:first-child)::before{content:'';position:absolute;left:-10px;top:0;width:1px;height:34px;background:#262626}
   #faq{position:absolute;left:3px;top:1965px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
-  #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#262626;text-transform:uppercase;filter:url(index.html#threshfx);transform:translateX(-10px)}
+  #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#303030;text-transform:uppercase;filter:url(index.html#threshfxStrong);transform:translateX(-10px)}
   .faq-item{border-top:1px solid #262626}
   .faq-item:last-child{border-bottom:1px solid #262626}
   .faq-q{display:flex;justify-content:space-between;align-items:baseline;width:100%;background:none;border:0;transform:translateX(-3px);
@@ -502,11 +503,13 @@
   </div>
 
   <div id="endcap">
+    <div class="ec-meta">
+      <a class="ec-cta" href="mailto:HELLO@GOBOLD.LIVE">START A PROJECT</a>
+      <p class="ec-kick"><b>●</b> AVAILABLE FOR NEW PROJECTS — Q3</p>
+      <p class="ec-svc">WEBSITES <span>/</span> AI INTEGRATIONS <span>/</span> BRANDING <span>/</span> 3D / WEB3<br>STRATEGY <span>/</span> DESIGN <span>/</span> DEVELOPMENT — END TO END, IN-HOUSE</p>
+      <p class="ec-credit">(+)~ GOBOLD 2026 — REMOTE-FIRST, WORLDWIDE / <a href="mailto:HELLO@GOBOLD.LIVE">HELLO@GOBOLD.LIVE</a></p>
+    </div>
     <h2 class="ec-head">LET'S<br>GO BOLD NOW</h2>
-    <a class="ec-cta" href="mailto:HELLO@GOBOLD.LIVE">START A PROJECT</a>
-    <p class="ec-kick"><b>●</b> AVAILABLE FOR NEW PROJECTS — Q3</p>
-    <p class="ec-svc">WEBSITES <span>/</span> AI INTEGRATIONS <span>/</span> BRANDING <span>/</span> 3D / WEB3<br>STRATEGY <span>/</span> DESIGN <span>/</span> DEVELOPMENT — END TO END, IN-HOUSE</p>
-    <p class="ec-credit">(+)~ GOBOLD 2026 — REMOTE-FIRST, WORLDWIDE / <a href="mailto:HELLO@GOBOLD.LIVE">HELLO@GOBOLD.LIVE</a></p>
   </div>
 
 </div>
@@ -532,6 +535,10 @@
 <filter id="threshfx" x="-15%" y="-15%" width="130%" height="130%">
   <feGaussianBlur stdDeviation="1.25"></feGaussianBlur>
   <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 0 1 1"></feFuncA></feComponentTransfer>
+</filter>
+<filter id="threshfxStrong" x="-30%" y="-30%" width="160%" height="160%">
+  <feGaussianBlur stdDeviation="4.1"></feGaussianBlur>
+  <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 0 1 1 1 1"></feFuncA></feComponentTransfer>
 </filter>
 <filter id="threshfxHover" x="-22%" y="-22%" width="144%" height="144%">
   <feGaussianBlur stdDeviation="4.2"></feGaussianBlur>
@@ -575,7 +582,7 @@
 
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 3704;   /* FAQ + planet band; page ends at the planet band */
+const PAGE_H = 3860;   /* footer text sits at bottom */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
