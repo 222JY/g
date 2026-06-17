@@ -118,11 +118,11 @@
   .giant{position:absolute;left:-13px;top:633px;width:1024px;z-index:2;text-align:right;
     font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;
     text-transform:uppercase;pointer-events:none;--fill:0%}
-  .giant p{margin:0;color:#343434;cursor:pointer;pointer-events:auto;filter:url(index.html#threshfxStrong)}
+  .giant p{margin:0;color:#343434;cursor:pointer;pointer-events:auto;filter:url(#threshfxStrong)}
   
   .giant p{position:relative}
   .giant .seltxt{padding-right:4px;margin-right:-4px}
-    .giant p.hov{filter:url(index.html#threshfxHover) blur(1.1px)}
+    .giant p.hov{filter:url(#threshfxHover) blur(1.1px)}
     .giant p.hov .seltxt{color:#000;background:linear-gradient(#818181,#818181) 0 7px/100% 97px no-repeat}
   /* left-pointing arrow on the right of each line — follows the text color (grey, red on hover) */
   .giant p:not(.static) .seltxt::after{content:'';display:inline-block;width:32px;height:32px;margin-left:18px;vertical-align:14px;
@@ -190,7 +190,8 @@
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
   #carBand{position:absolute;left:3px;top:3064px;width:1018px;height:640px;z-index:6;background:#000;
     border-top:1px solid #a2a2a2;overflow:hidden}   /* no bottom line — planet runs to the page bottom */
-  #carBand canvas{display:block;cursor:grab}
+  #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
+  #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.70);pointer-events:none}
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
@@ -211,7 +212,7 @@
   #snakeBand .sb-overlay .art-slide.is-on{visibility:visible;z-index:1;animation:artZoomOut 6.8s cubic-bezier(.33,.02,.22,1) forwards}
   #snakeBand .sb-overlay .art-slide.is-on.is-in{animation:artZoomIn 6.8s cubic-bezier(.33,.02,.22,1) forwards}
   #snakeBand .sb-overlay button{font:inherit}
-  #snakeBand .sb-signal-art{position:absolute;left:50%;top:31px;transform:translateX(-50%);z-index:3;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:44px;line-height:34px;letter-spacing:-2.2px;color:#a2a2a2;text-transform:uppercase;text-shadow:2px 0 #000,-2px 0 rgba(255,0,0,.48),0 0 18px rgba(162,162,162,.28);filter:blur(.18px) url(index.html#threshfx);pointer-events:none;white-space:nowrap;animation:sbSignalGlitch 1.35s steps(2,end) infinite}
+  #snakeBand .sb-signal-art{position:absolute;left:50%;top:31px;transform:translateX(-50%);z-index:3;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:44px;line-height:34px;letter-spacing:-2.2px;color:#a2a2a2;text-transform:uppercase;text-shadow:2px 0 #000,-2px 0 rgba(255,0,0,.48),0 0 18px rgba(162,162,162,.28);filter:blur(.18px) url(#threshfx);pointer-events:none;white-space:nowrap;animation:sbSignalGlitch 1.35s steps(2,end) infinite}
   #snakeBand .sb-signal-art::before{content:'>>> ';font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:13px;letter-spacing:2px;color:#fff;vertical-align:7px;animation:diamondBlink .75s steps(1,end) infinite}
   #snakeBand .sb-signal-art::after{content:' <<<';font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:13px;letter-spacing:2px;color:#fff;vertical-align:7px;animation:diamondBlink .95s steps(1,end) infinite}
   #snakeBand .sb-hint{margin:0;font-size:8.5px;letter-spacing:1.5px;color:#7a7a7a;text-transform:uppercase}
@@ -235,7 +236,7 @@
   #snakeBand .sb-overlay::before{content:'';position:absolute;inset:0;z-index:1;background:repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 1px,transparent 1px 4px);mix-blend-mode:screen;pointer-events:none;animation:artScan 2.4s linear infinite}
   #snakeBand .sb-overlay::after{display:none}
   #snakeBand .sb-overlay .art-slide{filter:contrast(1.08) saturate(1.08)}
-  #snakeBand .sb-pixel-title{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:62px;line-height:45px;letter-spacing:-3.2px;color:#000;background:#ff0000;min-width:330px;display:inline-flex;align-items:center;justify-content:center;padding:14px 26px 12px;text-transform:uppercase;text-shadow:0 0 2px #000,3px 0 rgba(255,0,0,.45),-2px 0 rgba(0,0,0,.24);filter:blur(.25px) url(index.html#threshfx);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 0 28px rgba(255,0,0,.16);border:1px solid #ff0000;cursor:pointer;text-align:center;white-space:nowrap;appearance:none;-webkit-appearance:none}
+  #snakeBand .sb-pixel-title{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:62px;line-height:45px;letter-spacing:-3.2px;color:#000;background:#ff0000;min-width:330px;display:inline-flex;align-items:center;justify-content:center;padding:14px 26px 12px;text-transform:uppercase;text-shadow:0 0 2px #000,3px 0 rgba(255,0,0,.45),-2px 0 rgba(0,0,0,.24);filter:blur(.25px) url(#threshfx);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 0 28px rgba(255,0,0,.16);border:1px solid #ff0000;cursor:pointer;text-align:center;white-space:nowrap;appearance:none;-webkit-appearance:none}
   #snakeBand .sb-pixel-title:hover{background:#000;color:#fff;text-shadow:0 0 2px #000,3px 0 rgba(0,0,0,.32),-2px 0 rgba(255,0,0,.24)}
   #snakeBand .sb-pixel-title b{color:#050505;font-weight:400}
   #snakeBand .sb-pixel-title:hover b{color:#fff}
@@ -254,14 +255,14 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:3590px;width:600px;z-index:8;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
-    text-transform:uppercase;text-align:right;pointer-events:none}
+  #endcap{position:absolute;right:14px;top:3590px;width:600px;z-index:9;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+    text-transform:uppercase;text-align:right;pointer-events:none;text-shadow:0 0 14px #000,0 0 26px #000}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   #endcap .ec-kick{margin:5px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey);transform:translateX(2px)}
   #endcap .ec-kick b{color:#19e65a;font-weight:400;animation:ecBlink 2.4s ease-in-out infinite}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
   #endcap .ec-head{margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
-    letter-spacing:-6px;color:#383838;filter:url(index.html#threshfxStrong);height:168px;min-height:168px;overflow:visible}
+    letter-spacing:-6px;color:#383838;filter:url(#threshfxStrong);height:168px;min-height:168px;overflow:visible}
   #endcap .ec-cta{display:inline-block;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--red);text-decoration:none;padding:1px 0 2px 3px;line-height:12px;transform:translateX(2px)}
   #endcap .ec-cta::before{content:'';display:none;width:12px;height:9px;margin-right:5px;vertical-align:-1px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23ff0000'/></svg>") no-repeat center/contain}
   #endcap .ec-cta:hover{background:var(--red);color:#000}
@@ -276,7 +277,7 @@
   .sect{position:absolute;left:3px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase}
   .sect .sect-kick{margin:0 0 8px;font-size:6px;line-height:8px;letter-spacing:2px;color:var(--grey);text-align:right}
   .sect .sect-head{margin:0 0 26px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:92px;line-height:76px;
-    letter-spacing:-5.2px;color:#303030;filter:url(index.html#threshfxStrong);text-align:right}
+    letter-spacing:-5.2px;color:#303030;filter:url(#threshfxStrong);text-align:right}
   .sect .row{display:flex;justify-content:space-between;align-items:flex-start;gap:34px;border-top:1px solid #262626;padding:15px 2px}
   .sect .rows .row:last-child{border-bottom:1px solid #262626}
   .sect .row .rl{display:flex;gap:14px;align-items:baseline;flex:none;width:300px}
@@ -293,7 +294,7 @@
   .sect .stats > div:nth-child(4){transform:translateX(-5px)}
   .sect .stats > div:not(:first-child)::before{content:'';position:absolute;left:-10px;top:0;width:1px;height:34px;background:#262626}
   #faq{position:absolute;left:3px;top:1965px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
-  #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#303030;text-transform:uppercase;filter:url(index.html#threshfxStrong);transform:translateX(-10px)}
+  #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#303030;text-transform:uppercase;filter:url(#threshfxStrong);transform:translateX(-10px)}
   .faq-item{border-top:1px solid #262626}
   .faq-item:last-child{border-bottom:1px solid #262626}
   .faq-q{display:flex;justify-content:space-between;align-items:baseline;width:100%;background:none;border:0;transform:translateX(-3px);
@@ -307,7 +308,7 @@
   .faq-a p{margin:0 0 0 auto;padding:0 2px 14px;color:#6a6a6a;font-size:14px;line-height:18px;letter-spacing:-.6px;max-width:660px;text-transform:uppercase;text-align:right;transform:translateX(-3px)}
 
   #rgbBlur{position:fixed;left:0;right:0;bottom:0;height:200px;z-index:500;pointer-events:none}
-  #rgbBlur .b{position:absolute;inset:0;backdrop-filter:url(index.html#meltWave) blur(7px) saturate(1.5) contrast(1.08);-webkit-backdrop-filter:url(index.html#meltWave) blur(7px) saturate(1.5) contrast(1.08);
+  #rgbBlur .b{position:absolute;inset:0;backdrop-filter:url(#meltWave) blur(7px) saturate(1.5) contrast(1.08);-webkit-backdrop-filter:url(#meltWave) blur(7px) saturate(1.5) contrast(1.08);
     -webkit-mask-image:linear-gradient(to top,#000 0%,#000 30%,transparent 100%);mask-image:linear-gradient(to top,#000 0%,#000 30%,transparent 100%)}
   #rgbBlur .b2{position:absolute;inset:0;backdrop-filter:blur(34px) saturate(1.7) brightness(1.05);-webkit-backdrop-filter:blur(34px) saturate(1.7) brightness(1.05);
     -webkit-mask-image:linear-gradient(to top,#000 0%,#000 18%,transparent 60%);mask-image:linear-gradient(to top,#000 0%,#000 18%,transparent 60%)}
@@ -537,12 +538,12 @@
   <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 0 1 1"></feFuncA></feComponentTransfer>
 </filter>
 <filter id="threshfxStrong" x="-30%" y="-30%" width="160%" height="160%">
-  <feGaussianBlur stdDeviation="4.1"></feGaussianBlur>
-  <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 0 1 1 1 1"></feFuncA></feComponentTransfer>
+  <feGaussianBlur stdDeviation="1.15"></feGaussianBlur>
+  <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 1 1 1 1 1 1"></feFuncA></feComponentTransfer>
 </filter>
 <filter id="threshfxHover" x="-22%" y="-22%" width="144%" height="144%">
-  <feGaussianBlur stdDeviation="4.2"></feGaussianBlur>
-  <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 0 0 0 1 1"></feFuncA></feComponentTransfer>
+  <feGaussianBlur stdDeviation="1.2"></feGaussianBlur>
+  <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 0 1 1 1 1 1"></feFuncA></feComponentTransfer>
 </filter>
 <filter id="pixelfx2" x="-10%" y="-10%" width="120%" height="120%">
   <feFlood x="0" y="0" height="1" width="1"></feFlood>
@@ -1725,9 +1726,9 @@ function cLoad(){
       }
     });
     cRig.add(m);
-    const d = Math.max(s.x, s.y, s.z) * 0.98;   /* 2x bigger */
+    const d = Math.max(s.x, s.y, s.z) * 1.92;   /* almost full-height centered footer model, still no crop */
     cCamera.position.set(0, 0, d);                          /* dead-on, vertically centered */
-    cCamera.setViewOffset(CW, CH, CW * 0.52, 0, CW, CH);   /* half-planet: center just past right edge */
+    cCamera.clearViewOffset();                              /* footer model centered, not pushed right */
     cControls.target.set(0, 0, 0);
     cControls.update();
     if (g.animations.length) {                 /* built-in Sketchfab take: wheels etc. */
