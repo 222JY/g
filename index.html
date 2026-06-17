@@ -118,12 +118,12 @@
   .giant{position:absolute;left:-13px;top:633px;width:1024px;z-index:2;text-align:right;
     font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;
     text-transform:uppercase;pointer-events:none;--fill:0%}
-  .giant p{margin:0;color:#343434;cursor:pointer;pointer-events:auto;filter:url(#threshfxStrong)}
+  .giant p{margin:0;color:#151515;cursor:pointer;pointer-events:auto;filter:url(#threshfxStrong)}
   
   .giant p{position:relative}
   .giant .seltxt{padding-right:4px;margin-right:-4px}
     .giant p.hov{filter:url(#threshfxHover) blur(1.1px)}
-    .giant p.hov .seltxt{color:#000;background:linear-gradient(#818181,#818181) 0 7px/100% 97px no-repeat}
+    .giant p.hov .seltxt{color:#000;background:linear-gradient(#000,#000) 0 7px/100% 97px no-repeat}
   /* left-pointing arrow on the right of each line — follows the text color (grey, red on hover) */
   .giant p:not(.static) .seltxt::after{content:'';display:inline-block;width:32px;height:32px;margin-left:18px;vertical-align:14px;
     background:currentColor}
@@ -262,7 +262,7 @@
   #endcap .ec-kick b{color:#19e65a;font-weight:400;animation:ecBlink 2.4s ease-in-out infinite}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
   #endcap .ec-head{margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
-    letter-spacing:-6px;color:#383838;filter:url(#threshfxStrong);height:168px;min-height:168px;overflow:visible}
+    letter-spacing:-6px;color:#151515;filter:url(#threshfxStrong);height:168px;min-height:168px;overflow:visible}
   #endcap .ec-cta{display:inline-block;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--red);text-decoration:none;padding:1px 0 2px 3px;line-height:12px;transform:translateX(2px)}
   #endcap .ec-cta::before{content:'';display:none;width:12px;height:9px;margin-right:5px;vertical-align:-1px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23ff0000'/></svg>") no-repeat center/contain}
   #endcap .ec-cta:hover{background:var(--red);color:#000}
@@ -277,7 +277,7 @@
   .sect{position:absolute;left:3px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase}
   .sect .sect-kick{margin:0 0 8px;font-size:6px;line-height:8px;letter-spacing:2px;color:var(--grey);text-align:right}
   .sect .sect-head{margin:0 0 26px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:92px;line-height:76px;
-    letter-spacing:-5.2px;color:#303030;filter:url(#threshfxStrong);text-align:right}
+    letter-spacing:-5.2px;color:#111;filter:url(#threshfxStrong);text-align:right}
   .sect .row{display:flex;justify-content:space-between;align-items:flex-start;gap:34px;border-top:1px solid #262626;padding:15px 2px}
   .sect .rows .row:last-child{border-bottom:1px solid #262626}
   .sect .row .rl{display:flex;gap:14px;align-items:baseline;flex:none;width:300px}
@@ -294,7 +294,7 @@
   .sect .stats > div:nth-child(4){transform:translateX(-5px)}
   .sect .stats > div:not(:first-child)::before{content:'';position:absolute;left:-10px;top:0;width:1px;height:34px;background:#262626}
   #faq{position:absolute;left:3px;top:1965px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
-  #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#303030;text-transform:uppercase;filter:url(#threshfxStrong);transform:translateX(-10px)}
+  #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#111;text-transform:uppercase;filter:url(#threshfxStrong);transform:translateX(-10px)}
   .faq-item{border-top:1px solid #262626}
   .faq-item:last-child{border-bottom:1px solid #262626}
   .faq-q{display:flex;justify-content:space-between;align-items:baseline;width:100%;background:none;border:0;transform:translateX(-3px);
@@ -1726,7 +1726,7 @@ function cLoad(){
       }
     });
     cRig.add(m);
-    const d = Math.max(s.x, s.y, s.z) * 1.92;   /* almost full-height centered footer model, still no crop */
+    const d = Math.max(s.x, s.y, s.z) * 1.88;   /* near full-screen footer planet, no hard crop */
     cCamera.position.set(0, 0, d);                          /* dead-on, vertically centered */
     cCamera.clearViewOffset();                              /* footer model centered, not pushed right */
     cControls.target.set(0, 0, 0);
