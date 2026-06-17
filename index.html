@@ -845,7 +845,7 @@ const container = document.getElementById('scene3d');
 const scene = new THREE.Scene();
 scene.background = null;
 
-const camera = new THREE.PerspectiveCamera(30, container.clientWidth / container.clientHeight, 0.1, 100);
+const camera = new THREE.PerspectiveCamera(28.5, container.clientWidth / container.clientHeight, 0.1, 100);
 camera.position.set(-2.2, 1.9, -1.8);
 camera.lookAt(0, 0, 0);
 
@@ -900,14 +900,13 @@ scene.add(neonEdges);
 
 /* monitors + screens live in a rig so scroll-parallax rotates them while the floor stays */
 const rig = new THREE.Group();
-rig.scale.setScalar(1.05);
 scene.add(rig);
-/* nudge monitors ~120px screen-right: offset along camera-right axis */
+/* nudge monitors ~68px screen-right (40px requested + 28px canvas shift): offset along camera-right axis */
 {
   const camRight = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
   camRight.y = 0; camRight.normalize();
-  const visW = 2 * Math.tan(THREE.MathUtils.degToRad(30 / 2)) * camera.position.length() * camera.aspect;
-  rig.position.add(camRight.multiplyScalar(visW * 120 / 1024));
+  const visW = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.length() * camera.aspect;
+  rig.position.add(camRight.multiplyScalar(visW * 68 / 1024));
 }
 
 /* VIDEO SCREENS */
@@ -991,7 +990,7 @@ Promise.all([Promise.race([Promise.all([modelP, heroVideoP]), timeoutP]), minLoa
   // camera start: straight in front of the square red GO BOLD screen (s4, nearest to final view)
   s4.mesh.updateMatrixWorld();
   const normal = new THREE.Vector3(0, 0, -1).applyQuaternion(s4.mesh.quaternion); // side facing the final view
-  const dist = (0.644 / 2) / Math.tan(THREE.MathUtils.degToRad(15)) * 1.1;
+  const dist = (0.644 / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 1.1;
   introFromLook.copy(s4.mesh.position);
   introFromPos.copy(s4.mesh.position).addScaledVector(normal, dist);
   camera.position.copy(introFromPos);
