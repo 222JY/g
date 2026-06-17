@@ -19,7 +19,6 @@
 <link rel="preload" as="video" href="videos/766.mp4" crossorigin fetchpriority="high">
 <link rel="prefetch" as="video" href="videos/693.mp4" crossorigin>
 <link rel="prefetch" as="video" href="videos/677.mp4" crossorigin>
-<link rel="prefetch" as="fetch" href="https://unpkg.com/world-atlas@2.0.2/countries-110m.json" crossorigin>
 
 <style>
   @font-face{
@@ -169,9 +168,6 @@
   #globeZone{position:relative;width:1023px;height:562px;top:-40px;
     cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 3v18M3 12h18' stroke='white' stroke-width='2.6'/></svg>") 12 12, crosshair}
   #globeZone canvas{display:block}
-  #globePreloader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none;background:transparent;opacity:1;transition:opacity .35s ease}
-  #globePreloader img{width:58px;height:58px;object-fit:contain;opacity:.9}
-  #globePreloader.off{opacity:0}
   #globeStats{position:absolute;left:10px;bottom:10px;font-size:6px;letter-spacing:1px;color:#ffffff;z-index:7;pointer-events:none;display:flex;gap:6px;align-items:center}
   #themeBtn{pointer-events:auto;background:none;border:none;color:#fff;font:inherit;font-size:6px;letter-spacing:1px;padding:0;cursor:pointer}
   #themeBtn:hover{text-decoration:underline}
@@ -258,7 +254,7 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:4424px;width:600px;z-index:8;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:4314px;width:600px;z-index:8;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   #endcap .ec-kick{margin:5px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey);transform:translateX(2px)}
@@ -422,7 +418,7 @@
     <p>WEBSITE DEVELOPMENT</p>
   </div>
 
-  <div id="globeWrap"><div id="globeZone"><div id="globePreloader"><img src="images/3y0oCOkdKKRi0.webp" alt="loading"></div></div></div>
+  <div id="globeWrap"><div id="globeZone"></div></div>
 
   <div id="gBox"><span class="gb-x">[X]</span><span class="gb-t"></span><span class="gb-d"></span></div>
 
@@ -580,7 +576,7 @@
 
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 4744;   /* FAQ + planet band; page ends at the planet band */
+const PAGE_H = 4614;   /* FAQ + planet band; page ends at the planet band */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -809,7 +805,7 @@ function faqPush() {
   document.getElementById('statband').style.top = (2503 + extra) + 'px';
   document.getElementById('snakeBand').style.top = (2640 + extra) + 'px';
   carBandEl.style.top = (3064 + extra) + 'px';
-  document.getElementById('endcap').style.top = (4424 + extra) + 'px';
+  document.getElementById('endcap').style.top = (4314 + extra) + 'px';
   rescale();
 }
 document.querySelectorAll('.faq-item .faq-q').forEach(btn => btn.addEventListener('click', () => {
@@ -1260,7 +1256,9 @@ gComposer.renderTarget2.samples = 2;
 gComposer.render();
 
 const world = new THREE.Group();
-world.position.x = -0.27;   /* globe sits a bit left of center */
+const G_WORLD_X = -0.27;   /* globe sits a bit left of center */
+const G_ROLL_FROM_X = -1.75;
+world.position.x = G_ROLL_FROM_X;
 world.scale.setScalar(1.44);
 gScene.add(world);
 
@@ -1392,10 +1390,6 @@ fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
       const t0 = performance.now();
       while (jobs.length && performance.now() - t0 < 6) jobs.shift()();
       if (jobs.length) requestAnimationFrame(drain);
-      else {
-        const gp = document.getElementById('globePreloader');
-        if (gp) { gp.classList.add('off'); setTimeout(() => gp.remove(), 420); }
-      }
     })();
   });
 }
@@ -1568,12 +1562,19 @@ el.addEventListener('click', e => {
 
 const gClock = new THREE.Clock();
 let gVisible = true;
+let gRollStart = -1;
+const gRollEase = t => 1 - Math.pow(1 - t, 3);
 new IntersectionObserver(e => { gVisible = e[0].isIntersecting; }, { threshold: 0 }).observe(gContainer);
 function gAnimate() {
   requestAnimationFrame(gAnimate);
   if (!gVisible || document.hidden) return;
   const t = gClock.getElapsedTime();
-  globe.rotation.y = t * 0.12;
+  if (gRollStart < 0) gRollStart = performance.now();
+  const rollT = Math.min((performance.now() - gRollStart) / 1650, 1);
+  const rollE = gRollEase(rollT);
+  world.position.x = G_ROLL_FROM_X + (G_WORLD_X - G_ROLL_FROM_X) * rollE;
+  world.rotation.z = (1 - rollE) * Math.PI * 2.2;
+  globe.rotation.y = t * 0.12 + (1 - rollE) * Math.PI * 1.7;
   world.rotation.y += vy;
   world.rotation.x = THREE.MathUtils.clamp(world.rotation.x + vx, -0.6, 0.6);
   vy *= 0.985; vx *= 0.94;
@@ -1732,7 +1733,7 @@ function cLoad(){
       }
     });
     cRig.add(m);
-    const d = Math.max(s.x, s.y, s.z) * 0.98 * 2.52;   /* 1.4x smaller from previous size */
+    const d = Math.max(s.x, s.y, s.z) * 0.98 * 1.938;   /* 1.3x bigger from previous size */
     cCamera.position.set(0, 0, d);                          /* dead-on, vertically centered */
     cCamera.setViewOffset(CW, CH, CW * 0.52, 0, CW, CH);   /* half-planet: center just past right edge */
     cControls.target.set(0, 0, 0);
