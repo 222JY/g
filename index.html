@@ -188,10 +188,10 @@
   #vbMute:hover{color:#ff0000;border-color:#ff0000}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:3px;top:3064px;width:1018px;height:640px;z-index:6;background:#000;
+  #carBand{position:absolute;left:3px;top:3064px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
     border-top:1px solid #a2a2a2;overflow:hidden}   /* no bottom line — planet runs to the page bottom */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
-  #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.70);pointer-events:none}
+  #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
@@ -255,24 +255,17 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:3590px;width:600px;z-index:9;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:3685px;width:600px;z-index:9;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none;text-shadow:0 0 14px #000,0 0 26px #000}
   #endcap .ec-l,#endcap a{pointer-events:auto}
-  #endcap .ec-kick{margin:5px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey);transform:translateX(2px)}
+  #endcap .ec-kick{margin:0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey);transform:translate(3px,73px)}
   #endcap .ec-kick b{color:#19e65a;font-weight:400;animation:ecBlink 2.4s ease-in-out infinite}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
-  #endcap .ec-head{margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
-    letter-spacing:-6px;color:#242424;filter:url(#footerThreshStrong);height:168px;min-height:168px;overflow:visible}
-  #endcap .ec-cta{display:inline-block;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--red);text-decoration:none;padding:1px 0 2px 3px;line-height:12px;transform:translateX(2px)}
-  #endcap .ec-cta::before{content:'';display:none;width:12px;height:9px;margin-right:5px;vertical-align:-1px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23ff0000'/></svg>") no-repeat center/contain}
-  #endcap .ec-cta:hover{background:var(--red);color:#000}
-  #endcap .ec-cta:hover::before{display:inline-block;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'><path d='M2 0 L6 0 L6 7 L13 7 L13 3 L24 9 L13 15 L13 11 L2 11 Z' fill='%23000000'/></svg>") no-repeat center/contain}
-  #endcap .ec-svc{margin:22px 0 0;font-size:6px;line-height:9px;letter-spacing:1px;color:var(--grey);transform:translateX(2px)}
-  #endcap .ec-svc span{color:var(--dark)}
-  #endcap .ec-credit{margin:8px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--dark);transform:translateX(2px)}
-  #endcap .ec-credit a{color:var(--dark);text-decoration:none}
-  #endcap .ec-credit a:hover{color:var(--red)}
-  #endcap .ec-meta{margin:0 0 18px;transform:translateY(-30px)}
+  #endcap .ec-head{display:inline-block;margin:78px 0 0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
+    letter-spacing:-6px;color:#000;background:#818181;text-decoration:none;filter:url(#footerThreshStrong);height:84px;min-height:84px;overflow:visible;padding:2px 8px 0;pointer-events:auto;white-space:nowrap;text-shadow:none;transform:translateX(3px)}
+  #endcap .ec-head:hover{background:var(--red);color:#818181;text-shadow:none}
+  #endcap .ec-head.typing{background:#000;color:#818181}
+  #endcap .ec-meta{margin:0;transform:none}
   /* ---- content sections between FAQ and the globe ---- */
   .sect{position:absolute;left:3px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase}
   .sect .sect-kick{margin:0 0 8px;font-size:6px;line-height:8px;letter-spacing:2px;color:var(--grey);text-align:right}
@@ -505,12 +498,9 @@
 
   <div id="endcap">
     <div class="ec-meta">
-      <a class="ec-cta" href="mailto:HELLO@GOBOLD.LIVE">START A PROJECT</a>
       <p class="ec-kick"><b>●</b> AVAILABLE FOR NEW PROJECTS — Q3</p>
-      <p class="ec-svc">WEBSITES <span>/</span> AI INTEGRATIONS <span>/</span> BRANDING <span>/</span> 3D / WEB3<br>STRATEGY <span>/</span> DESIGN <span>/</span> DEVELOPMENT — END TO END, IN-HOUSE</p>
-      <p class="ec-credit">(+)~ GOBOLD 2026 — REMOTE-FIRST, WORLDWIDE / <a href="mailto:HELLO@GOBOLD.LIVE">HELLO@GOBOLD.LIVE</a></p>
     </div>
-    <h2 class="ec-head">LET'S<br>GO BOLD NOW</h2>
+    <a class="ec-head" href="mailto:HELLO@GOBOLD.LIVE">HELLO@GOBOLD.LIVE</a>
   </div>
 
 </div>
@@ -816,7 +806,7 @@ function faqPush() {
   document.getElementById('statband').style.top = (2503 + extra) + 'px';
   document.getElementById('snakeBand').style.top = (2640 + extra) + 'px';
   carBandEl.style.top = (3064 + extra) + 'px';
-  document.getElementById('endcap').style.top = (3380 + extra) + 'px';
+  document.getElementById('endcap').style.top = (3685 + extra) + 'px';
   rescale();
 }
 document.querySelectorAll('.faq-item .faq-q').forEach(btn => btn.addEventListener('click', () => {
@@ -1622,7 +1612,7 @@ import { AfterimagePass } from 'three/addons/postprocessing/AfterimagePass.js';
 import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
 
 const cWrap = document.getElementById('carBand');
-const CW = 1014, CH = 640;
+const CW = 1014, CH = Math.max(824, Math.round(cWrap.clientHeight || 824));
 const cRenderer = new THREE.WebGLRenderer({ antialias: true });
 cRenderer.setSize(CW, CH);
 cRenderer.setPixelRatio(1);
@@ -1730,10 +1720,12 @@ function cLoad(){
       }
     });
     cRig.add(m);
-    const d = Math.max(s.x, s.y, s.z) * 1.05;   /* much larger final footer planet */
-    cCamera.position.set(0, 0, d);                          /* dead-on, vertically centered */
-    cCamera.clearViewOffset();                              /* footer model centered, not pushed right */
-    cControls.target.set(0, 0, 0);
+    const globeMax = Math.max(s.x, s.y, s.z);
+    cRig.position.set(0, 0, 0);                              /* keep model pivot at true center */
+    const d = globeMax * 1.328;   /* 1.2x larger footer globe */
+    cCamera.position.set(0, 0, d);                          /* dead-on, rotation centered */
+    cCamera.setViewOffset(CW, CH, CW * 0.16 + 250, -CH * 0.12 - 300, CW, CH);   /* corrected: 500px lefter + 100px upper, pivot unchanged */
+    cControls.target.set(0, 0, 0);                          /* drag rotates through model center */
     cControls.update();
     if (g.animations.length) {                 /* built-in Sketchfab take: wheels etc. */
       cMixer = new THREE.AnimationMixer(m);
@@ -1825,7 +1817,7 @@ cAnimate();
 </script>
 
 <script>
-/* ---- typewriter reveal: LET'S GO BOLD + EST.2026 stats (matches FAQ / giant text) ---- */
+/* ---- typewriter reveal: footer email + EST.2026 stats (matches FAQ / giant text) ---- */
 (function(){
   function typeIn(el, opts){
     opts = opts || {};
@@ -1857,7 +1849,7 @@ cAnimate();
     obs.observe(el);
   }
   var ec = document.querySelector('#endcap .ec-head');
-  if (ec){ var runEc = typeIn(ec, { speed: 95, startAt: 1 }); onView(ec, function(){ runEc(); }); }
+  if (ec){ var runEc = typeIn(ec, { speed: 95, startAt: 1 }); onView(ec, function(){ ec.classList.add('typing'); runEc(function(){ ec.classList.remove('typing'); }); }); }
   var statWrap = document.getElementById('statband');
   var statDivs = statWrap ? statWrap.querySelectorAll('.stats > div') : [];
   if (statDivs.length){
