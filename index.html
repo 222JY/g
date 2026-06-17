@@ -188,8 +188,8 @@
   #vbMute:hover{color:#ff0000;border-color:#ff0000}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:3px;top:3064px;width:1018px;height:1250px;z-index:6;background:#000;
-    overflow:hidden}   /* no bottom line — planet runs to the page bottom */
+  #carBand{position:absolute;left:3px;top:3064px;width:1018px;height:640px;z-index:6;background:#000;
+    border-top:1px solid #a2a2a2;overflow:hidden}   /* no bottom line — planet runs to the page bottom */
   #carBand canvas{display:block;cursor:grab}
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
@@ -254,7 +254,7 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:4314px;width:600px;z-index:8;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:3380px;width:600px;z-index:8;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   #endcap .ec-kick{margin:5px 0 0;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey);transform:translateX(2px)}
@@ -509,7 +509,6 @@
     <p class="ec-credit">(+)~ GOBOLD 2026 — REMOTE-FIRST, WORLDWIDE / <a href="mailto:HELLO@GOBOLD.LIVE">HELLO@GOBOLD.LIVE</a></p>
   </div>
 
-
 </div>
 
 <!-- bottom rgb blur -->
@@ -576,7 +575,7 @@
 
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 4614;   /* FAQ + planet band; page ends at the planet band */
+const PAGE_H = 3704;   /* FAQ + planet band; page ends at the planet band */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -805,7 +804,7 @@ function faqPush() {
   document.getElementById('statband').style.top = (2503 + extra) + 'px';
   document.getElementById('snakeBand').style.top = (2640 + extra) + 'px';
   carBandEl.style.top = (3064 + extra) + 'px';
-  document.getElementById('endcap').style.top = (4314 + extra) + 'px';
+  document.getElementById('endcap').style.top = (3380 + extra) + 'px';
   rescale();
 }
 document.querySelectorAll('.faq-item .faq-q').forEach(btn => btn.addEventListener('click', () => {
@@ -852,7 +851,7 @@ camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
 renderer.setClearColor(0x000000, 0);
-renderer.setPixelRatio(1.3);
+renderer.setPixelRatio(1.5);
 renderer.setSize(container.clientWidth, container.clientHeight);
 container.appendChild(renderer.domElement);
 
@@ -1256,9 +1255,7 @@ gComposer.renderTarget2.samples = 2;
 gComposer.render();
 
 const world = new THREE.Group();
-const G_WORLD_X = -0.27;   /* globe sits a bit left of center */
-const G_ROLL_FROM_X = -1.75;
-world.position.x = G_ROLL_FROM_X;
+world.position.x = -0.27;   /* globe sits a bit left of center */
 world.scale.setScalar(1.44);
 gScene.add(world);
 
@@ -1562,19 +1559,12 @@ el.addEventListener('click', e => {
 
 const gClock = new THREE.Clock();
 let gVisible = true;
-let gRollStart = -1;
-const gRollEase = t => 1 - Math.pow(1 - t, 3);
 new IntersectionObserver(e => { gVisible = e[0].isIntersecting; }, { threshold: 0 }).observe(gContainer);
 function gAnimate() {
   requestAnimationFrame(gAnimate);
   if (!gVisible || document.hidden) return;
   const t = gClock.getElapsedTime();
-  if (gRollStart < 0) gRollStart = performance.now();
-  const rollT = Math.min((performance.now() - gRollStart) / 1650, 1);
-  const rollE = gRollEase(rollT);
-  world.position.x = G_ROLL_FROM_X + (G_WORLD_X - G_ROLL_FROM_X) * rollE;
-  world.rotation.z = (1 - rollE) * Math.PI * 2.2;
-  globe.rotation.y = t * 0.12 + (1 - rollE) * Math.PI * 1.7;
+  globe.rotation.y = t * 0.12;
   world.rotation.y += vy;
   world.rotation.x = THREE.MathUtils.clamp(world.rotation.x + vx, -0.6, 0.6);
   vy *= 0.985; vx *= 0.94;
@@ -1601,13 +1591,8 @@ function gAnimate() {
 /* start heavy work only after the 3D intro is done, so the preloader/zoom stays smooth */
 let gStarted = false;
 function gStart(){ if (gStarted) return; gStarted = true; buildLand(); gAnimate(); }
-function gStartIdle(){
-  const run = () => setTimeout(gStart, 250);
-  if ('requestIdleCallback' in window) requestIdleCallback(run, { timeout: 1800 });
-  else run();
-}
-window.addEventListener('gobold:introdone', gStartIdle, { once: true });
-setTimeout(gStartIdle, 5200);
+window.addEventListener('gobold:introdone', gStart, { once: true });
+setTimeout(gStart, 7500);
 </script>
 
 <!-- ===================== IMPALA '64 LOWRIDER (bottom band) ===================== -->
@@ -1625,7 +1610,7 @@ import { AfterimagePass } from 'three/addons/postprocessing/AfterimagePass.js';
 import { RGBShiftShader } from 'three/addons/shaders/RGBShiftShader.js';
 
 const cWrap = document.getElementById('carBand');
-const CW = 1014, CH = 1250;
+const CW = 1014, CH = 640;
 const cRenderer = new THREE.WebGLRenderer({ antialias: true });
 cRenderer.setSize(CW, CH);
 cRenderer.setPixelRatio(1);
@@ -1733,7 +1718,7 @@ function cLoad(){
       }
     });
     cRig.add(m);
-    const d = Math.max(s.x, s.y, s.z) * 0.98 * 1.938;   /* 1.3x bigger from previous size */
+    const d = Math.max(s.x, s.y, s.z) * 0.98;   /* 2x bigger */
     cCamera.position.set(0, 0, d);                          /* dead-on, vertically centered */
     cCamera.setViewOffset(CW, CH, CW * 0.52, 0, CW, CH);   /* half-planet: center just past right edge */
     cControls.target.set(0, 0, 0);
