@@ -65,7 +65,7 @@
   .brand a{text-decoration:none;font-weight:400;cursor:pointer;pointer-events:auto}
   #brandHov{color:var(--red);display:inline-block}
 
-  .tiny{font-family:'Anonymous Pro',monospace;font-size:5px;line-height:5px;letter-spacing:1px;white-space:nowrap;color:var(--grey)}
+  .tiny{font-family:'Anonymous Pro',monospace;font-size:4px;line-height:4px;letter-spacing:1px;white-space:nowrap;color:var(--grey)}
   .clocks .tiny{display:inline-block;background:#000;padding:3px 4px 2px 4px;box-shadow:0 0 0 3px #000}
   .clocks{position:absolute;left:0;top:0;width:760px;height:12px;z-index:80}
   .clocks a{color:var(--grey);text-decoration:none;background:#fff;display:inline-block;padding:1px 2px;
@@ -83,10 +83,10 @@
   #invertSite:hover,#invertSite.on{color:#000;background:var(--red)}
   body.site-inverted::after{content:'';position:fixed;inset:0;z-index:2147483647;pointer-events:none;background:rgba(255,255,255,.001);backdrop-filter:invert(1) hue-rotate(45deg) saturate(1.85) brightness(.50) contrast(1.72) grayscale(.18);-webkit-backdrop-filter:invert(1) hue-rotate(45deg) saturate(1.85) brightness(.50) contrast(1.72) grayscale(.18)}
   .switch-body{width:21px;height:11px;background:linear-gradient(145deg,#2a2a2a,#141414);border-radius:3px;position:relative;
-    box-shadow:inset -1px -1px 2px rgba(255,255,255,.05),inset 1px 1px 3px rgba(0,0,0,.9),0 2px 0 #000,0 3px 6px rgba(0,0,0,.5)}
-  .slot{position:absolute;top:2px;left:2px;width:17px;height:7px;background:#0a0a0a;border-radius:2px;box-shadow:inset 0 1px 2px rgba(0,0,0,.9)}
+    box-shadow:none}
+  .slot{position:absolute;top:2px;left:2px;width:17px;height:7px;background:#0a0a0a;border-radius:2px;box-shadow:none}
   .lever{width:6px;height:6px;background:linear-gradient(145deg,#ff2b2b,#7a0000);border-radius:2px;position:absolute;left:0;top:0;
-    transition:left .18s ease;box-shadow:0 1px 0 #000,0 2px 3px rgba(0,0,0,.6)}
+    transition:left .18s ease;box-shadow:none}
   .music.on .lever{left:11px}
   .equalizer{display:none;align-items:flex-end;height:10px;gap:1px;margin-left:4px}
   .music.on .equalizer{display:flex}
@@ -98,9 +98,9 @@
   @keyframes eq2{from{height:5%}to{height:80%}}
 
   .stamp-gif{position:absolute;left:0;top:0;width:71px;height:76px;object-fit:cover;background:#000;z-index:80}
-  #bottomFixed{position:fixed;left:5px;bottom:21px;width:1024px;z-index:2147483000;pointer-events:none;transform-origin:left bottom}
+  #bottomFixed{position:fixed;left:4px;bottom:21px;width:1024px;z-index:2147483000;pointer-events:none;transform-origin:left bottom}
   #bottomFixed .clocks{position:relative;left:0;top:0;width:760px;height:12px;pointer-events:auto}
-  #bottomFixed .stamp-gif{position:absolute;left:0;bottom:11px;top:auto;width:71px;height:76px;pointer-events:none}
+  #bottomFixed .stamp-gif{position:absolute;left:0;bottom:8px;top:auto;width:71px;height:76px;pointer-events:none}
 
   /* ---- 3D scene ---- */
   #scene3d{position:absolute;left:0;top:-5px;width:1024px;height:629px;z-index:4}
@@ -184,14 +184,14 @@
   #vbMute:hover{color:#ff0000;border-color:#ff0000}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:3px;top:3064px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
+  #carBand{position:absolute;left:3px;top:4317px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
     overflow:hidden}   /* no bottom line — planet runs to the page bottom */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
   #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
-  #snakeBand{position:absolute;left:7px;top:2400px;width:1010px;height:354px;z-index:8;background:#000;border:1px solid #ff2b2b;box-shadow:0 0 0 1px #000,0 0 22px rgba(255,43,43,.18);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
+  #snakeBand{position:absolute;left:7px;top:3823px;width:1010px;height:354px;z-index:8;background:#000;border:1px solid #ff2b2b;box-shadow:0 0 0 1px #000,0 0 22px rgba(255,43,43,.18);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
   #snakeBand .sb-bar{position:relative;display:flex;justify-content:flex-end;align-items:center;gap:8px;height:22px;padding:0 12px;border-bottom:1px solid #ff2b2b;text-transform:uppercase;letter-spacing:.5px;font-size:7px;line-height:7px;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;white-space:nowrap}
   #snakeBand .sb-slashes{position:relative;flex:1 1 auto;min-width:0;height:7px;overflow:hidden;color:#ff2b2b;letter-spacing:1.25px;line-height:7px;font-size:0;margin-right:6px}
   #snakeBand .sb-slashes::before{content:'////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////';position:absolute;left:-72px;top:0;font-size:7px;line-height:7px;letter-spacing:1.25px;white-space:nowrap;animation:slashMove 14s steps(36,end) infinite}
@@ -249,7 +249,7 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:3692px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:4945px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none;text-shadow:0 0 14px #000,0 0 26px #000}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   #endcap .ec-kick{margin:0;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey);transform:translate(3px,73px)}
@@ -259,7 +259,7 @@
     letter-spacing:-6px;color:#000;background:#818181;text-decoration:none;filter:url(#footerThreshStrong);height:84px;min-height:84px;overflow:visible;padding:2px 8px 0;pointer-events:auto;white-space:nowrap;text-shadow:none;transform:translateX(3px)}
   #endcap .ec-head:hover{background:var(--red);color:#818181;text-shadow:none}
   #endcap .ec-head.typing{background:#818181;color:#000}
-  #footerServices{position:absolute;left:7px;top:2776px;width:1010px;z-index:10;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;text-shadow:none;pointer-events:auto;font-family:'Anonymous Pro',monospace;text-transform:uppercase}
+  #footerServices{position:absolute;left:7px;top:2650px;width:1010px;z-index:10;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;text-shadow:none;pointer-events:auto;font-family:'Anonymous Pro',monospace;text-transform:uppercase}
   #footerServices .col{position:relative;padding-top:7px;padding-bottom:7px;min-width:0;text-align:left;border-top:1px solid #262626;border-bottom:1px solid #262626}
   #footerServices .col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:34px;background:#262626}
   #footerServices .col:last-child{text-align:left}
@@ -338,6 +338,62 @@
   #siteLoader .ldr-line::after{content:'';position:absolute;top:0;left:-32%;width:32%;height:100%;background:#fff;box-shadow:0 0 12px rgba(255,255,255,.95);animation:ldrSweep 1.15s linear infinite}
   #siteLoader .ldr-pct{font-family:'Kode Mono','Anonymous Pro',monospace;font-size:9px;letter-spacing:3px;color:#fff;text-transform:uppercase;opacity:.92}
   @keyframes ldrSweep{0%{left:-32%}100%{left:100%}}
+
+  /* ===================== PORTED v35 BLOCKS (under the 4-animation footer block) ===================== */
+
+  /* PROJECT INTAKE / SEND BRIEF */
+  #intake{position:absolute;left:7px;top:2960px;width:1010px;z-index:8;background:#000;border:1px solid #262626;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:hidden}
+  #intake .ik-bar{display:flex;align-items:center;gap:7px;height:24px;padding:0 12px;border-bottom:1px solid #262626;font-size:7px;letter-spacing:2px;color:#818181}
+  #intake .ik-dot{width:7px;height:7px;border-radius:50%;background:#262626}
+  #intake .ik-dot:nth-child(1){background:#7a0000}
+  #intake .ik-title{margin-left:8px;color:#6a6a6a}
+  #intake .ik-body{padding:18px 18px 20px;font-size:11px;line-height:18px;letter-spacing:.4px;color:#818181}
+  #intake .ik-line{margin:0;color:#6a6a6a;min-height:16px}
+  #intake .ik-line b{color:#19e65a;font-weight:400}
+  #intake .ik-prompt{margin:10px 0 14px;color:#cfcfcf}
+  #intake .ik-prompt::after{content:'█';color:var(--red);animation:ecBlink 1s steps(1) infinite;margin-left:2px}
+  #intake .ik-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  #intake .ik-chip{background:#000;border:1px solid #333;color:#9a9a9a;font:inherit;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:7px 12px;cursor:pointer}
+  #intake .ik-chip:hover{border-color:var(--red);color:#fff}
+  #intake .ik-chip.on{background:var(--red);border-color:var(--red);color:#000}
+  #intake .ik-foot{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  #intake .ik-send{font-family:'Anonymous Pro',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#000;background:#818181;text-decoration:none;padding:9px 16px}
+  #intake .ik-send:hover{background:var(--red);color:#000}
+  #intake .ik-sel{margin:0;font-size:8px;letter-spacing:1px;color:#6a6a6a}
+  #intake .ik-sel b{color:var(--red);font-weight:400}
+
+  /* CAPABILITIES MATRIX */
+  #capsMatrix{position:absolute;left:7px;top:3260px;width:1010px;z-index:8;background:#000;border:1px solid #262626;font-family:'Anonymous Pro',monospace;text-transform:uppercase;overflow:hidden}
+  #capsMatrix .cm-bar{display:flex;align-items:center;height:22px;padding:0 12px;border-bottom:1px solid #262626;font-size:7px;letter-spacing:2px;color:var(--red)}
+  #capsMatrix .cm-bar b{color:#818181;font-weight:400;margin-left:auto}
+  #capsMatrix .cm-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+  #capsMatrix .cm-cell{position:relative;min-height:96px;padding:12px 12px 10px;border-right:1px solid #161616;border-bottom:1px solid #161616;overflow:hidden;cursor:crosshair}
+  #capsMatrix .cm-cell:nth-child(4n){border-right:0}
+  #capsMatrix .cm-num{font-size:6px;letter-spacing:1px;color:var(--red)}
+  #capsMatrix .cm-l{display:block;margin-top:10px;font-family:'Kode Mono',monospace;font-size:14px;letter-spacing:-.4px;color:#cfcfcf}
+  #capsMatrix .cm-r{display:block;margin-top:8px;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#6a6a6a;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
+  #capsMatrix .cm-cell:hover{background:#0a0000}
+  #capsMatrix .cm-cell:hover .cm-l{color:var(--red);animation:cmFlick .5s steps(2) 1}
+  #capsMatrix .cm-cell:hover .cm-r{opacity:1;transform:none}
+  @keyframes cmFlick{0%,100%{opacity:1}20%{opacity:.3}40%{opacity:.9}60%{opacity:.4}}
+
+  /* STUDIO_OS */
+  #osBlock{position:absolute;left:7px;top:3575px;width:1010px;z-index:8;background:#000;border:1px solid #262626;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden}
+  #osBlock .os-bar{display:flex;align-items:center;gap:10px;height:24px;padding:0 12px;border-bottom:1px solid #262626;font-size:7px;letter-spacing:2px}
+  #osBlock .os-title{color:#cfcfcf}
+  #osBlock .os-ver{color:var(--red)}
+  #osBlock .os-stat{margin-left:auto;color:#19e65a}
+  #osBlock .os-stat::before{content:'';display:inline-block;width:5px;height:5px;background:#19e65a;margin-right:6px;vertical-align:1px;animation:ecBlink 1.2s steps(1) infinite}
+  #osBlock .os-rows{padding:14px 16px 6px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 40px}
+  #osBlock .os-row{display:flex;align-items:baseline;gap:10px;font-size:9px;line-height:11px;letter-spacing:1px;border-bottom:1px solid #161616;padding-bottom:8px}
+  #osBlock .os-n{color:var(--red);flex:0 0 auto}
+  #osBlock .os-k{color:#cfcfcf;flex:0 0 120px}
+  #osBlock .os-v{margin-left:auto;font-size:7px;letter-spacing:1px}
+  #osBlock .os-v::before{content:'● '}
+  #osBlock .os-v.ok{color:#19e65a}
+  #osBlock .os-v.opt{color:#818181}
+  #osBlock .os-log{margin:8px 16px 14px;font-family:'Kode Mono',monospace;font-size:8px;letter-spacing:1px;color:#6a6a6a;min-height:10px;border-top:1px solid #262626;padding-top:10px}
+  #osBlock .os-log b{color:var(--red);font-weight:400}
 </style>
 </head>
 <body>
@@ -554,6 +610,54 @@
     </div>
   </div>
 
+  <!-- ===== PORTED v35 BLOCKS (under the 4-animation footer block) ===== -->
+  <!-- send brief block -->
+  <div id="intake">
+    <div class="ik-bar"><span class="ik-dot"></span><span class="ik-dot"></span><span class="ik-dot"></span><span class="ik-title">GOBOLD://PROJECT_INTAKE</span></div>
+    <div class="ik-body">
+      <p class="ik-line" id="ikBoot"></p>
+      <p class="ik-prompt">START PROJECT / SELECT SIGNAL</p>
+      <div class="ik-chips">
+        <button class="ik-chip" data-v="WEBSITE">WEBSITE</button>
+        <button class="ik-chip" data-v="AI INTEGRATION">AI</button>
+        <button class="ik-chip" data-v="BRANDING">BRANDING</button>
+        <button class="ik-chip" data-v="3D / WEB3">3D</button>
+        <button class="ik-chip" data-v="FULL SYSTEM">FULL SYSTEM</button>
+      </div>
+      <div class="ik-foot">
+        <a class="ik-send" id="ikSend" href="mailto:HELLO@GOBOLD.LIVE?subject=NEW%20PROJECT%20%E2%80%94%20GOBOLD">SEND BRIEF →</a>
+        <p class="ik-sel" id="ikSel">&gt; NO SIGNAL SELECTED</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- capabilities matrix block -->
+  <div id="capsMatrix">
+    <div class="cm-bar">CAPABILITIES MATRIX<b>08 SYSTEMS</b></div>
+    <div class="cm-grid">
+      <div class="cm-cell"><span class="cm-num">01</span><span class="cm-l">WEBSITE CREATION</span><span class="cm-r">UI/UX · WEBFLOW · CUSTOM DEVELOPMENT</span></div>
+      <div class="cm-cell"><span class="cm-num">02</span><span class="cm-l">AI INTEGRATION</span><span class="cm-r">LLM · RAG · AGENTS · AUTOMATION</span></div>
+      <div class="cm-cell"><span class="cm-num">03</span><span class="cm-l">BRANDING</span><span class="cm-r">LOGO · ART DIRECTION · GUIDELINES</span></div>
+      <div class="cm-cell"><span class="cm-num">04</span><span class="cm-l">3D / WEB3</span><span class="cm-r">WEBGL · THREE.JS · SHADERS</span></div>
+      <div class="cm-cell"><span class="cm-num">05</span><span class="cm-l">MOTION</span><span class="cm-r">UI MOTION · TRANSITIONS · VIDEO</span></div>
+      <div class="cm-cell"><span class="cm-num">06</span><span class="cm-l">AUTOMATION</span><span class="cm-r">PIPELINES · WORKFLOWS · OPS</span></div>
+      <div class="cm-cell"><span class="cm-num">07</span><span class="cm-l">LAUNCH SYSTEMS</span><span class="cm-r">SEO · ANALYTICS · PERFORMANCE</span></div>
+      <div class="cm-cell"><span class="cm-num">08</span><span class="cm-l">RETAINERS</span><span class="cm-r">SUPPORT · ITERATION · GROWTH</span></div>
+    </div>
+  </div>
+
+  <!-- STUDIO_OS block -->
+  <div id="osBlock">
+    <div class="os-bar"><span class="os-title">STUDIO_OS</span><span class="os-ver">v2.6</span><span class="os-stat">ONLINE</span></div>
+    <div class="os-rows">
+      <div class="os-row"><span class="os-n">[01]</span><span class="os-k">STRATEGY</span><span class="os-v ok">SIGNAL LOCKED</span></div>
+      <div class="os-row"><span class="os-n">[02]</span><span class="os-k">IDENTITY</span><span class="os-v ok">VISUAL SYSTEM</span></div>
+      <div class="os-row"><span class="os-n">[03]</span><span class="os-k">WEBSITE</span><span class="os-v ok">LIVE PREVIEW</span></div>
+      <div class="os-row"><span class="os-n">[04]</span><span class="os-k">AI / 3D</span><span class="os-v opt">OPTIONAL MODULES</span></div>
+    </div>
+    <p class="os-log" id="osLog"></p>
+  </div>
+
   <div id="endcap">
     <div class="ec-meta">
       <p class="ec-kick"><b>●</b> AVAILABLE FOR NEW PROJECTS — Q3</p>
@@ -635,7 +739,7 @@
 
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 3860;   /* footer text sits at bottom */
+const PAGE_H = 4520;   /* footer text sits at bottom (extended for ported v35 blocks) */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -869,10 +973,14 @@ function faqPush() {
   document.querySelectorAll('.faq-item.open .faq-a p').forEach(p => extra += Math.min(p.offsetHeight, 220));
   window.__faqExtra = extra;
   /* opening a FAQ answer pushes everything below it down by the same amount */
-  document.getElementById('snakeBand').style.top = (2400 + extra) + 'px';
-  document.getElementById('footerServices').style.top = (2776 + extra) + 'px';
-  carBandEl.style.top = (3064 + extra) + 'px';
-  document.getElementById('endcap').style.top = (3692 + extra) + 'px';
+  var __pb;
+  if(__pb=document.getElementById('intake'))     __pb.style.top = (2960 + extra) + 'px';
+  if(__pb=document.getElementById('capsMatrix'))  __pb.style.top = (3260 + extra) + 'px';
+  if(__pb=document.getElementById('osBlock'))     __pb.style.top = (3575 + extra) + 'px';
+  document.getElementById('snakeBand').style.top = (3823 + extra) + 'px';
+  document.getElementById('footerServices').style.top = (2650 + extra) + 'px';
+  carBandEl.style.top = (4317 + extra) + 'px';
+  document.getElementById('endcap').style.top = (4945 + extra) + 'px';
   rescale();
 }
 document.querySelectorAll('.faq-item .faq-q').forEach(btn => btn.addEventListener('click', () => {
@@ -2023,6 +2131,52 @@ cAnimate();
     var runners = [].map.call(statDivs, function(d){ d.style.width = d.offsetWidth + 'px'; var b = d.querySelector('b'); b.style.whiteSpace = 'nowrap'; return typeIn(b, { speed: 60, startAt: 0 }); });
     onView(statWrap, function(){ runners.forEach(function(r){ r(); }); });
   }
+})();
+</script>
+
+<script>
+/* ===================== PORTED v35 BLOCKS: STUDIO_OS + INTAKE/SEND BRIEF ===================== */
+(function(){
+  function tw(node, full, speed, done){
+    if(!node)return; var i=0; node.textContent=' ';
+    (function st(){ i++; node.textContent=full.slice(0,i)+(i<full.length?'█':''); if(i<full.length) setTimeout(st,speed); else { node.textContent=full; if(done)done(); } })();
+  }
+  function onView(el, cb, rm){
+    if(!el)return; if(!('IntersectionObserver' in window)){ cb(); return; } var d=false;
+    var o=new IntersectionObserver(function(es){ if(d||!es.some(function(e){return e.isIntersecting;}))return; d=true;o.disconnect();cb(); },{threshold:0,rootMargin:rm||'0px 0px -8% 0px'});
+    o.observe(el);
+  }
+  /* STUDIO_OS - cycling boot log */
+  (function(){
+    var log=document.getElementById('osLog'); if(!log)return;
+    var msgs=[
+      '> BOOT OK — ALL SYSTEMS NOMINAL.',
+      '> SYNC: DESIGN ↔ DEV LOOP STABLE.',
+      '> AI MODULES: STANDBY / READY.',
+      '> PREVIEW CHANNEL: OPEN.',
+      '> AVAILABLE FOR NEW PROJECTS — Q3.'
+    ];
+    var mi=0, started=false;
+    function run(){ tw(log, msgs[mi%msgs.length], 22, function(){ setTimeout(function(){ mi++; run(); }, 2200); }); }
+    onView(log, function(){ if(started)return; started=true; run(); });
+  })();
+  /* INTAKE TERMINAL - boot + chip selection + mailto */
+  (function(){
+    var box=document.getElementById('intake'); if(!box)return;
+    onView(box, function(){ tw(document.getElementById('ikBoot'), '> INITIALISING PROJECT INTAKE... CONNECTION ESTABLISHED.', 16); });
+    var chips=[].slice.call(box.querySelectorAll('.ik-chip'));
+    var sel=document.getElementById('ikSel');
+    var send=document.getElementById('ikSend');
+    function update(){
+      var picked=chips.filter(function(c){return c.classList.contains('on');}).map(function(c){return c.getAttribute('data-v');});
+      sel.innerHTML = picked.length ? '&gt; SIGNAL: <b>'+picked.join(' / ')+'</b>' : '&gt; NO SIGNAL SELECTED';
+      var subj=encodeURIComponent('NEW PROJECT — '+(picked.length?picked.join(' / '):'GOBOLD'));
+      var body=encodeURIComponent('SERVICES: '+(picked.length?picked.join(', '):'(tell us what you need)')+'\n\nABOUT THE PROJECT:\n');
+      send.setAttribute('href','mailto:HELLO@GOBOLD.LIVE?subject='+subj+'&body='+body);
+    }
+    chips.forEach(function(c){ c.addEventListener('click', function(){ c.classList.toggle('on'); update(); }); });
+    update();
+  })();
 })();
 </script>
 
