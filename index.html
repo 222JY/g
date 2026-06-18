@@ -81,7 +81,8 @@
   #invertSite.on::before{content:'◑';color:#a2a2a2}
   #invertSite:hover::before,#invertSite.on::before{color:#000}
   #invertSite:hover,#invertSite.on{color:#000;background:var(--red)}
-  body.site-inverted #page,body.site-inverted #fixedLayer,body.site-inverted #fixedLayer2{filter:invert(1) hue-rotate(180deg) brightness(.76) contrast(1.22) grayscale(.08) saturate(1.05)}
+  body.site-inverted::after{content:'';position:fixed;inset:0;z-index:2147483647;pointer-events:none;background:rgba(255,255,255,.001);backdrop-filter:invert(1) hue-rotate(180deg) sepia(.42) saturate(3.4) hue-rotate(322deg) brightness(.62) contrast(1.78);-webkit-backdrop-filter:invert(1) hue-rotate(180deg) sepia(.42) saturate(3.4) hue-rotate(322deg) brightness(.62) contrast(1.78)}
+  body.site-inverted #invertSite:hover::before,body.site-inverted #invertSite.on::before{color:#fff}
   .music #state{color:#fff}
   .music.on #state{color:#ff2b2b}
   .switch-body{width:21px;height:11px;background:linear-gradient(145deg,#2a2a2a,#141414);border-radius:3px;position:relative;
