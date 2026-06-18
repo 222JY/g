@@ -76,6 +76,9 @@
   /* music toggle */
   .music{position:absolute;left:650px;top:5px;height:16px;display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none;font-family:'Anonymous Pro',monospace;background:#000;padding:0 4px 0 3px}
   .music .title{font-size:5px;letter-spacing:1px;color:var(--grey);white-space:nowrap}
+  #invertSite{position:absolute;left:748px;top:5px;height:16px;background:#000;border:0;color:var(--grey);font-family:'Anonymous Pro',monospace;font-size:5px;line-height:5px;letter-spacing:1px;padding:0 6px;cursor:pointer;text-transform:uppercase;white-space:nowrap}
+  #invertSite:hover,#invertSite.on{color:#000;background:var(--red)}
+  body.site-inverted{filter:invert(1)}
   .music #state{color:#fff}
   .music.on #state{color:#ff2b2b}
   .switch-body{width:21px;height:11px;background:linear-gradient(145deg,#2a2a2a,#141414);border-radius:3px;position:relative;
@@ -347,6 +350,7 @@
       <div class="equalizer-bar"><div class="progress"></div></div>
     </div>
   </div>
+  <button class="clickable" id="invertSite" type="button">INVERT SITE</button>
   <div class="clocks">
     <div class="tiny">
       LOCAL TIME [GMT+2]: <span id="localTime">--:--:--</span> / MIAMI [US]: <span id="usaTime">--:--:--</span> / SHANGHAI [CN]: <span id="chinaTime">--:--:--</span> / TOKYO [JP]: <span id="japanTime">--:--:--</span> / <a href="https://t-ko.live" target="_blank" rel="noopener">BY TVINENKO</a> © 2027
@@ -671,6 +675,11 @@ mtoggle.addEventListener('click', () => {
   if (musicOn) audio.play().catch(()=>{}); else { audio.pause(); audio.currentTime = 0; }
 });
 audio.addEventListener('ended', () => { musicOn = false; mtoggle.classList.remove('on'); mstate.textContent='OFF'; });
+const invertSiteBtn = document.getElementById('invertSite');
+if (invertSiteBtn) invertSiteBtn.addEventListener('click', () => {
+  document.body.classList.toggle('site-inverted');
+  invertSiteBtn.classList.toggle('on', document.body.classList.contains('site-inverted'));
+});
 
 /* ============ giant text white fill on scroll ============ */
 const giantEl = document.querySelector('.giant');
@@ -1907,7 +1916,7 @@ cAnimate();
     return {ctx,dpr:FOOTER_DPR};
   }
   function footerLoop(draw){
-    function step(){ requestAnimationFrame(step); if(!document.hidden) draw(); }
+    function step(){ requestAnimationFrame(step); draw(); }
     draw();
     requestAnimationFrame(step);
   }
