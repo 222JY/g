@@ -80,10 +80,7 @@
   #invertSite::before{content:'◐';display:inline-block;margin-right:5px;color:var(--red)}
   #invertSite.on::before{content:'◑';color:#a2a2a2}
   #invertSite:hover,#invertSite.on{color:#000;background:var(--red)}
-  body.site-inverted #page{filter:invert(1) brightness(.92) contrast(.9) saturate(.96)}
-  body.site-inverted #fixedLayer,body.site-inverted #fixedLayer2{filter:none}
-  body.site-inverted #fixedLayer2 .mail,body.site-inverted #fixedLayer2 .music,body.site-inverted #invertSite,body.site-inverted #fixedLayer2 .clocks .tiny{background:#000;color:var(--grey)}
-  body.site-inverted #invertSite.on{background:var(--red);color:#000}
+  body.site-inverted{filter:invert(1) brightness(.76) contrast(1.22) grayscale(.18) saturate(.88)}
   .music #state{color:#fff}
   .music.on #state{color:#ff2b2b}
   .switch-body{width:21px;height:11px;background:linear-gradient(145deg,#2a2a2a,#141414);border-radius:3px;position:relative;
@@ -1934,9 +1931,9 @@ cAnimate();
     (function draw(now){
       const a=(now||performance.now())*0.00072;
       ctx.clearRect(0,0,c.width,c.height);
-      const w=c.width,h=c.height,sc=Math.min(w,h)*0.48,cx=w*0.5,cy=h*0.5;
+      const w=c.width,h=c.height,sc=Math.min(w,h)*0.50,cx=w*0.5,cy=h*0.5;
       const ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(a*0.6),sb=Math.sin(a*0.6);
-      const P=V.map(function(v){var x=v[0],y=v[1],z=v[2]; var x1=x*ca-z*sa,z1=x*sa+z*ca; var y1=y*cb-z1*sb,z2=y*sb+z1*cb; var pr=2.8/(2.8+z2); return [cx+x1*sc*pr,cy+y1*sc*pr];});
+      const P=V.map(function(v){var x=v[0],y=v[1],z=v[2]; var x1=x*ca-z*sa,z1=x*sa+z*ca; var y1=y*cb-z1*sb,z2=y*sb+z1*cb; var pr=2.8/(2.8+z2); return [cx+x1*sc*pr*1.85,cy+y1*sc*pr*0.46];});
       ctx.strokeStyle=color; ctx.lineWidth=1.2*devicePixelRatio; ctx.beginPath();
       E.forEach(function(e){ctx.moveTo(P[e[0]][0],P[e[0]][1]);ctx.lineTo(P[e[1]][0],P[e[1]][1]);});
       ctx.stroke(); requestAnimationFrame(draw);
