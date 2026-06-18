@@ -67,7 +67,7 @@
 
   .tiny{font-family:'Anonymous Pro',monospace;font-size:5px;line-height:5px;letter-spacing:1px;white-space:nowrap;color:var(--grey)}
   .clocks .tiny{display:inline-block;background:#000;padding:5px 4px 4px 4px}
-  .clocks{position:absolute;left:112px;top:5px;width:530px;height:16px}
+  .clocks{position:absolute;left:112px;top:1px;width:530px;height:16px}
   .clocks a{color:var(--grey);text-decoration:none;background:#fff;display:inline-block;padding:1px 2px;
     transform-origin:left top;transition:transform .15s ease;position:relative}
   .clocks a::after{content:'';position:absolute;inset:-3px -18px}
@@ -166,6 +166,7 @@
     color:var(--red);font-family:'Anonymous Pro',monospace;font-size:8px;letter-spacing:2px;padding:6px 3px;
     cursor:pointer;writing-mode:vertical-rl;text-transform:uppercase}
   #thermalBtn:hover,#thermalBtn.on{background:var(--red);color:#000}
+  #fpsMeter{position:absolute;left:954px;top:280px;z-index:31;background:#000;color:#414141;font-family:'Anonymous Pro',monospace;font-size:7px;line-height:7px;letter-spacing:1px;padding:4px 3px;text-transform:uppercase;pointer-events:none}
 
   /* ---- FAQ ---- */
   #vidband{position:absolute;left:3px;top:1255px;width:1018px;height:660px;overflow:hidden;z-index:5;background:#000;border-top:1px solid #a2a2a2;border-bottom:1px solid #a2a2a2}
@@ -262,8 +263,8 @@
   #footerServices .col:hover .label{color:var(--red)}
   #footerServices .col:first-child{border-color:var(--red)}
   #footerServices .col:first-child .label{color:var(--red)}
-  #footerServices .wave{margin-top:12px;width:100%;height:42px;display:block}
-  #footerServices .cube3d,#footerServices .globe{margin-top:12px;width:100%;height:42px;display:block}
+  #footerServices .wave{display:none}
+  #footerServices .cube3d,#footerServices .globe{display:none}
   #footerServices .data-row{margin-top:14px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
   #footerServices .data-row .big{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#e9eaec;white-space:nowrap}
   #footerServices .data-row .big b{font-weight:400;color:var(--red)}
@@ -403,6 +404,7 @@
     <div id="preloader"><img src="images/3y0oCOkdKKRi0.webp" alt="loading"></div>
   </div>
 
+  <div id="fpsMeter">FPS --</div>
   <button id="thermalBtn">[ THERMAL ]</button>
 
   <div id="giantLine"></div>
@@ -495,7 +497,6 @@
       <div class="label">Website Creation</div>
       <div class="sub">Web · Product · Motion</div>
       <div class="reveal">UI/UX • WEBFLOW • DEVELOPMENT</div>
-      <canvas class="wave" id="footerWaveLeo"></canvas>
       <div class="data-row">
         <div class="big">In Build <b id="footerOrbDay">0</b> of <b>16</b></div>
         <div class="time"><span id="footerLeoTime">--:--:--</span> LIVE<span class="cursor">█</span></div>
@@ -509,7 +510,6 @@
       <div class="label">3D / Web3</div>
       <div class="sub">Immersive · Interactive</div>
       <div class="reveal">WEBGL • THREE.JS • MOTION</div>
-      <canvas class="cube3d" id="footerCube3d"></canvas>
       <div class="data-row">
         <div class="big">Scenes <b id="footerLunDay">0</b> of <b>12</b></div>
         <div class="time"><span id="footerLunTime">--:--:--</span> RENDER<span class="cursor">█</span></div>
@@ -523,7 +523,6 @@
       <div class="label">Branding</div>
       <div class="sub">Identity · Voice · System</div>
       <div class="reveal">LOGO • ART DIRECTION • GUIDES</div>
-      <canvas class="globe" id="footerAiGlobe"></canvas>
       <div class="data-row">
         <div class="big">Systems <b>4</b> Active</div>
         <div class="time">VISUAL SIGNAL<span class="cursor">█</span></div>
@@ -533,7 +532,6 @@
       <div class="label">AI Integration</div>
       <div class="sub">Automation · Intelligence</div>
       <div class="reveal">LLM • RAG • AGENTS</div>
-      <canvas class="wave" id="footerBrandWave"></canvas>
       <div class="data-row">
         <div class="big">Models <b>6</b> in Prod</div>
         <div class="time">INFERENCE LIVE<span class="cursor">█</span></div>
@@ -1207,11 +1205,14 @@ addEventListener('pointermove', e => {
     warpPass.uniforms.uMouse.value.set((e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height);
   } else { msX = 0; msY = 0; msOver = 0; }
 });
+const fpsMeter = document.getElementById('fpsMeter');
+let fpsFrames = 0, fpsLast = performance.now();
 const easeInOutCubic = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
 function animate(){
   requestAnimationFrame(animate);
   if (!visible || document.hidden) return;
   const nowMs = performance.now();
+  if (fpsMeter) { fpsFrames++; if (nowMs - fpsLast >= 500) { fpsMeter.textContent = 'FPS ' + Math.round(fpsFrames * 1000 / (nowMs - fpsLast)); fpsFrames = 0; fpsLast = nowMs; } }
   const dt = Math.min((nowMs - introPrev) / 1000, 0.05); introPrev = nowMs;
   if (introRunning) {
     if (introStart < 0) { introStart = nowMs; introPrev = nowMs; }
@@ -1886,83 +1887,7 @@ cAnimate();
     const now=Date.now(),period=92*60*1000;
     el.textContent=Math.ceil(((period-(now%period))/2)/60000);
   },3000);
-  const footerAnim = { visible:false };
-  const fsWrap = document.getElementById('footerServices');
-  if('IntersectionObserver' in window && fsWrap){
-    new IntersectionObserver(es=>{ footerAnim.visible = !!(es[0] && es[0].isIntersecting); }, {rootMargin:'180px 0px', threshold:0}).observe(fsWrap);
-  } else footerAnim.visible = true;
-  function footerLoop(draw){
-    draw(); // first frame exists, so the block is visible when you arrive
-    function step(){ requestAnimationFrame(step); if(footerAnim.visible && !document.hidden) draw(); }
-    requestAnimationFrame(step);
-  }
-  function waveform(canvasId,color,speed,amp){
-    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
-    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
-    resize(); window.addEventListener('resize',resize);
-    let phase=0;
-    footerLoop(function(){
-      ctx.clearRect(0,0,c.width,c.height); ctx.beginPath();
-      const w=c.width,h=c.height,mid=h/2;
-      for(let x=0;x<=w;x+=2){
-        const k=x/w, env=Math.sin(k*Math.PI);
-        const y=mid+Math.sin(k*14+phase)*amp*devicePixelRatio*env+Math.sin(k*40+phase*1.7)*amp*0.35*devicePixelRatio*env;
-        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-      }
-      ctx.strokeStyle=color; ctx.lineWidth=1.4*devicePixelRatio; ctx.shadowBlur=0; ctx.stroke();
-      phase+=speed;
-    });
-  }
-  function cube3d(canvasId,color){
-    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
-    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
-    resize(); window.addEventListener('resize',resize);
-    const V=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
-    const E=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
-    let a=0;
-    footerLoop(function(){
-      ctx.clearRect(0,0,c.width,c.height);
-      const w=c.width,h=c.height,sc=Math.min(w,h)*0.62,cx=w*0.5,cy=h*0.5;
-      const ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(a*0.6),sb=Math.sin(a*0.6);
-      const P=V.map(function(v){var x=v[0],y=v[1],z=v[2]; var x1=x*ca-z*sa,z1=x*sa+z*ca; var y1=y*cb-z1*sb,z2=y*sb+z1*cb; var pr=2.8/(2.8+z2); return [cx+x1*sc*pr,cy+y1*sc*pr];});
-      ctx.strokeStyle=color; ctx.lineWidth=1.2*devicePixelRatio; ctx.beginPath();
-      E.forEach(function(e){ctx.moveTo(P[e[0]][0],P[e[0]][1]);ctx.lineTo(P[e[1]][0],P[e[1]][1]);});
-      ctx.stroke(); a+=0.012;
-    });
-  }
-  function globe(canvasId,color){
-    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
-    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
-    resize(); window.addEventListener('resize',resize);
-    let rot=0;
-    function P(lat,lon,R,cx,cy){ const x=R*Math.cos(lat)*Math.sin(lon+rot),y=R*Math.sin(lat),z=R*Math.cos(lat)*Math.cos(lon+rot); return [cx+x,cy-y,z]; }
-    function line(pts){ for(let i=1;i<pts.length;i++){ const a=pts[i-1],b=pts[i]; ctx.globalAlpha=((a[2]+b[2])/2)>=0?0.95:0.2; ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke(); } }
-    footerLoop(function(){
-      const w=c.width,h=c.height,cx=w/2,cy=h/2,R=Math.min(w,h)/2-2*devicePixelRatio;
-      ctx.clearRect(0,0,w,h); ctx.strokeStyle=color; ctx.lineWidth=1*devicePixelRatio;
-      for(let i=0;i<6;i++){const lon=i*Math.PI/6;const p=[];for(let j=-16;j<=16;j++)p.push(P(j*Math.PI/32,lon,R,cx,cy));line(p);}
-      for(let i=-2;i<=2;i++){const lat=i*Math.PI/6;const p=[];for(let j=0;j<=48;j++)p.push(P(lat,j*Math.PI/24,R,cx,cy));line(p);}
-      ctx.globalAlpha=1; rot+=0.012;
-    });
-  }
-  function bars(canvasId,color,speed){
-    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
-    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
-    resize(); window.addEventListener('resize',resize);
-    let t=0;
-    footerLoop(function(){
-      const w=c.width,h=c.height,mid=h/2,dpr=devicePixelRatio; ctx.clearRect(0,0,w,h);
-      ctx.strokeStyle=color; ctx.lineWidth=1*dpr;
-      ctx.globalAlpha=0.22; ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(w,mid); ctx.stroke();
-      const p=t-Math.floor(t), x=p*w;
-      ctx.globalAlpha=1; ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(x,mid); ctx.stroke();
-      t+=speed;
-    });
-  }
-  waveform('footerWaveLeo','#ff3b30',0.06,7);
-  bars('footerBrandWave','#ff3b30',0.005);
-  cube3d('footerCube3d','#ff3b30');
-  globe('footerAiGlobe','#ff3b30');
+  /* TEMP FPS TEST: the four under-game canvas animations are fully removed in this build. */
 })();
 </script>
 
