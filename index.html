@@ -79,8 +79,12 @@
   #invertSite{position:absolute;left:748px;top:5px;height:16px;background:#000;border:0;color:var(--grey);font-family:'Anonymous Pro',monospace;font-size:5px;line-height:5px;letter-spacing:1px;padding:0 6px;cursor:pointer;text-transform:uppercase;white-space:nowrap}
   #invertSite::before{content:'◐';display:inline-block;margin-right:5px;color:var(--red)}
   #invertSite.on::before{content:'◑';color:#a2a2a2}
+  #invertSite:hover::before,#invertSite.on::before{color:#000}
   #invertSite:hover,#invertSite.on{color:#000;background:var(--red)}
   body.site-inverted{filter:invert(1) brightness(.76) contrast(1.22) grayscale(.18) saturate(.88)}
+  body.site-inverted #fixedLayer,body.site-inverted #fixedLayer2{filter:invert(1) brightness(1.22) contrast(.88) saturate(1.08)}
+  body.site-inverted #fixedLayer2 .mail,body.site-inverted #fixedLayer2 .music,body.site-inverted #invertSite,body.site-inverted #fixedLayer2 .clocks .tiny{background:#000;color:var(--grey)}
+  body.site-inverted #invertSite:hover,body.site-inverted #invertSite.on{background:var(--red);color:#000}
   .music #state{color:#fff}
   .music.on #state{color:#ff2b2b}
   .switch-body{width:21px;height:11px;background:linear-gradient(145deg,#2a2a2a,#141414);border-radius:3px;position:relative;
