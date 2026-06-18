@@ -80,10 +80,10 @@
   #invertSite::before{content:'◐';display:inline-block;margin-right:5px;color:var(--red)}
   #invertSite.on::before{content:'◑';color:#a2a2a2}
   #invertSite:hover,#invertSite.on{color:#000;background:var(--red)}
-  body.site-inverted #page{filter:invert(.88) grayscale(.22) brightness(.82) contrast(.9)}
+  body.site-inverted #page{filter:invert(1)}
   body.site-inverted #fixedLayer,body.site-inverted #fixedLayer2{filter:none}
-  body.site-inverted #fixedLayer2 .mail,body.site-inverted #fixedLayer2 .music,body.site-inverted #invertSite,body.site-inverted #fixedLayer2 .clocks .tiny{background:#111;color:#707070}
-  body.site-inverted #invertSite.on{background:#252525;color:#a2a2a2}
+  body.site-inverted #fixedLayer2 .mail,body.site-inverted #fixedLayer2 .music,body.site-inverted #invertSite,body.site-inverted #fixedLayer2 .clocks .tiny{background:#000;color:var(--grey)}
+  body.site-inverted #invertSite.on{background:var(--red);color:#000}
   .music #state{color:#fff}
   .music.on #state{color:#ff2b2b}
   .switch-body{width:21px;height:11px;background:linear-gradient(145deg,#2a2a2a,#141414);border-radius:3px;position:relative;
@@ -1912,8 +1912,8 @@ cAnimate();
     const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
     function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
     resize(); window.addEventListener('resize',resize);
-    let phase=0;
-    (function draw(){
+    (function draw(now){
+      const phase=(now||performance.now())*speed*0.06;
       ctx.clearRect(0,0,c.width,c.height); ctx.beginPath();
       const w=c.width,h=c.height,mid=h/2;
       for(let x=0;x<=w;x+=2){
@@ -1922,7 +1922,7 @@ cAnimate();
         x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
       }
       ctx.strokeStyle=color; ctx.lineWidth=1.4*devicePixelRatio; ctx.shadowBlur=0; ctx.stroke();
-      phase+=speed; requestAnimationFrame(draw);
+      requestAnimationFrame(draw);
     })();
   }
   function cube3d(canvasId,color){
@@ -1931,44 +1931,43 @@ cAnimate();
     resize(); window.addEventListener('resize',resize);
     const V=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
     const E=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
-    let a=0;
-    (function draw(){
+    (function draw(now){
+      const a=(now||performance.now())*0.00072;
       ctx.clearRect(0,0,c.width,c.height);
       const w=c.width,h=c.height,sc=Math.min(w,h)*0.62,cx=w*0.5,cy=h*0.5;
       const ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(a*0.6),sb=Math.sin(a*0.6);
       const P=V.map(function(v){var x=v[0],y=v[1],z=v[2]; var x1=x*ca-z*sa,z1=x*sa+z*ca; var y1=y*cb-z1*sb,z2=y*sb+z1*cb; var pr=2.8/(2.8+z2); return [cx+x1*sc*pr,cy+y1*sc*pr];});
       ctx.strokeStyle=color; ctx.lineWidth=1.2*devicePixelRatio; ctx.beginPath();
       E.forEach(function(e){ctx.moveTo(P[e[0]][0],P[e[0]][1]);ctx.lineTo(P[e[1]][0],P[e[1]][1]);});
-      ctx.stroke(); a+=0.012; requestAnimationFrame(draw);
+      ctx.stroke(); requestAnimationFrame(draw);
     })();
   }
   function globe(canvasId,color){
     const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
     function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
     resize(); window.addEventListener('resize',resize);
-    let rot=0;
-    function P(lat,lon,R,cx,cy){ const x=R*Math.cos(lat)*Math.sin(lon+rot),y=R*Math.sin(lat),z=R*Math.cos(lat)*Math.cos(lon+rot); return [cx+x,cy-y,z]; }
+    function P(lat,lon,R,cx,cy,rot){ const x=R*Math.cos(lat)*Math.sin(lon+rot),y=R*Math.sin(lat),z=R*Math.cos(lat)*Math.cos(lon+rot); return [cx+x,cy-y,z]; }
     function line(pts){ for(let i=1;i<pts.length;i++){ const a=pts[i-1],b=pts[i]; ctx.globalAlpha=((a[2]+b[2])/2)>=0?0.95:0.2; ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke(); } }
-    (function draw(){
+    (function draw(now){
+      const rot=(now||performance.now())*0.00072;
       const w=c.width,h=c.height,cx=w/2,cy=h/2,R=Math.min(w,h)/2-2*devicePixelRatio;
       ctx.clearRect(0,0,w,h); ctx.strokeStyle=color; ctx.lineWidth=1*devicePixelRatio;
-      for(let i=0;i<6;i++){const lon=i*Math.PI/6;const p=[];for(let j=-16;j<=16;j++)p.push(P(j*Math.PI/32,lon,R,cx,cy));line(p);}
-      for(let i=-2;i<=2;i++){const lat=i*Math.PI/6;const p=[];for(let j=0;j<=48;j++)p.push(P(lat,j*Math.PI/24,R,cx,cy));line(p);}
-      ctx.globalAlpha=1; rot+=0.012; requestAnimationFrame(draw);
+      for(let i=0;i<6;i++){const lon=i*Math.PI/6;const p=[];for(let j=-16;j<=16;j++)p.push(P(j*Math.PI/32,lon,R,cx,cy,rot));line(p);}
+      for(let i=-2;i<=2;i++){const lat=i*Math.PI/6;const p=[];for(let j=0;j<=48;j++)p.push(P(lat,j*Math.PI/24,R,cx,cy,rot));line(p);}
+      ctx.globalAlpha=1; requestAnimationFrame(draw);
     })();
   }
   function bars(canvasId,color,speed){
     const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
     function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
     resize(); window.addEventListener('resize',resize);
-    let t=0;
-    (function draw(){
+    (function draw(now){
       const w=c.width,h=c.height,mid=h/2,dpr=devicePixelRatio; ctx.clearRect(0,0,w,h);
       ctx.strokeStyle=color; ctx.lineWidth=1*dpr;
       ctx.globalAlpha=0.22; ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(w,mid); ctx.stroke();
-      const p=t-Math.floor(t), x=p*w;
+      const p=((now||performance.now())*speed*0.06)%1, x=p*w;
       ctx.globalAlpha=1; ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(x,mid); ctx.stroke();
-      t+=speed; requestAnimationFrame(draw);
+      requestAnimationFrame(draw);
     })();
   }
   waveform('footerWaveLeo','#ff3b30',0.06,7);
