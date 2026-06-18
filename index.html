@@ -80,7 +80,10 @@
   #invertSite::before{content:'◐';display:inline-block;margin-right:5px;color:var(--red)}
   #invertSite.on::before{content:'◑';color:#a2a2a2}
   #invertSite:hover,#invertSite.on{color:#000;background:var(--red)}
-  body.site-inverted{filter:invert(1)}
+  body.site-inverted #page{filter:invert(1) brightness(.72) contrast(1.28) saturate(.9)}
+  body.site-inverted #fixedLayer,body.site-inverted #fixedLayer2{filter:none}
+  body.site-inverted #fixedLayer2 .mail,body.site-inverted #fixedLayer2 .music,body.site-inverted #invertSite,body.site-inverted #fixedLayer2 .clocks .tiny{background:#000;color:#6f6f6f}
+  body.site-inverted #invertSite.on{background:#2a2a2a;color:#a2a2a2}
   .music #state{color:#fff}
   .music.on #state{color:#ff2b2b}
   .switch-body{width:21px;height:11px;background:linear-gradient(145deg,#2a2a2a,#141414);border-radius:3px;position:relative;
@@ -268,19 +271,8 @@
   #footerServices .col:hover .label{color:var(--red)}
   #footerServices .col:first-child{border-color:var(--red)}
   #footerServices .col:first-child .label{color:var(--red)}
-  /* footer service line FX: CSS/SVG version, no JS canvas loops = smoother entering viewport */
-  #footerServices .linefx{margin-top:12px;width:100%;height:42px;display:block;overflow:hidden;contain:layout paint;transform:translateZ(0);will-change:transform;backface-visibility:hidden}
-  #footerServices .linefx svg{width:100%;height:42px;display:block;overflow:visible}
-  #footerServices .linefx path,#footerServices .linefx line,#footerServices .linefx polyline,#footerServices .linefx ellipse,#footerServices .linefx rect{vector-effect:non-scaling-stroke;shape-rendering:geometricPrecision}
-  #footerServices .linefx .red{stroke:#ff3b30;fill:none;stroke-width:1.25;opacity:.95}
-  #footerServices .linefx .dim{stroke:#ff3b30;fill:none;stroke-width:1;opacity:.22}
-  #footerServices .linefx.wave .red{stroke-dasharray:18 12;animation:footerDash 1.8s linear infinite}
-  #footerServices .linefx.bars .bar{transform-origin:left center;animation:footerBar 3.4s linear infinite}
-  #footerServices .linefx.cube .spin{transform-origin:50% 50%;animation:footerSpin 5.2s linear infinite}
-  #footerServices .linefx.globe .spin{transform-origin:50% 50%;animation:footerSpin 6.8s linear infinite}
-  @keyframes footerDash{to{stroke-dashoffset:-60}}
-  @keyframes footerBar{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
-  @keyframes footerSpin{to{transform:rotate(360deg)}}
+  #footerServices .wave{margin-top:12px;width:100%;height:42px;display:block}
+  #footerServices .cube3d,#footerServices .globe{margin-top:12px;width:100%;height:42px;display:block}
   #footerServices .data-row{margin-top:14px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
   #footerServices .data-row .big{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#e9eaec;white-space:nowrap}
   #footerServices .data-row .big b{font-weight:400;color:var(--red)}
@@ -514,7 +506,7 @@
       <div class="label">Website Creation</div>
       <div class="sub">Web · Product · Motion</div>
       <div class="reveal">UI/UX • WEBFLOW • DEVELOPMENT</div>
-      <div class="linefx wave" id="footerWaveLeo" aria-hidden="true"><svg viewBox="0 0 240 42" preserveAspectRatio="none"><path class="dim" d="M0 21H240"/><polyline class="red" points="0,23 15,16 30,25 45,14 60,22 75,19 90,27 105,15 120,21 135,17 150,24 165,13 180,22 195,18 210,26 225,16 240,21"/></svg></div>
+      <canvas class="wave" id="footerWaveLeo"></canvas>
       <div class="data-row">
         <div class="big">In Build <b id="footerOrbDay">0</b> of <b>16</b></div>
         <div class="time"><span id="footerLeoTime">--:--:--</span> LIVE<span class="cursor">█</span></div>
@@ -528,7 +520,7 @@
       <div class="label">3D / Web3</div>
       <div class="sub">Immersive · Interactive</div>
       <div class="reveal">WEBGL • THREE.JS • MOTION</div>
-      <div class="linefx cube" id="footerCube3d" aria-hidden="true"><svg viewBox="0 0 240 42" preserveAspectRatio="none"><g class="spin"><path class="dim" d="M96 11H144L160 21L144 31H96L80 21Z"/><path class="red" d="M96 11L80 21L96 31M144 11L160 21L144 31M96 11L112 21L96 31M144 11L128 21L144 31M80 21H160M112 21H128"/></g></svg></div>
+      <canvas class="cube3d" id="footerCube3d"></canvas>
       <div class="data-row">
         <div class="big">Scenes <b id="footerLunDay">0</b> of <b>12</b></div>
         <div class="time"><span id="footerLunTime">--:--:--</span> RENDER<span class="cursor">█</span></div>
@@ -542,7 +534,7 @@
       <div class="label">Branding</div>
       <div class="sub">Identity · Voice · System</div>
       <div class="reveal">LOGO • ART DIRECTION • GUIDES</div>
-      <div class="linefx globe" id="footerAiGlobe" aria-hidden="true"><svg viewBox="0 0 240 42" preserveAspectRatio="none"><g class="spin"><ellipse class="red" cx="120" cy="21" rx="32" ry="15"/><ellipse class="dim" cx="120" cy="21" rx="18" ry="15"/><ellipse class="dim" cx="120" cy="21" rx="32" ry="6"/><line class="dim" x1="88" y1="21" x2="152" y2="21"/><line class="dim" x1="120" y1="6" x2="120" y2="36"/></g></svg></div>
+      <canvas class="globe" id="footerAiGlobe"></canvas>
       <div class="data-row">
         <div class="big">Systems <b>4</b> Active</div>
         <div class="time">VISUAL SIGNAL<span class="cursor">█</span></div>
@@ -552,7 +544,7 @@
       <div class="label">AI Integration</div>
       <div class="sub">Automation · Intelligence</div>
       <div class="reveal">LLM • RAG • AGENTS</div>
-      <div class="linefx bars" id="footerBrandWave" aria-hidden="true"><svg viewBox="0 0 240 42" preserveAspectRatio="none"><line class="dim" x1="0" y1="21" x2="240" y2="21"/><rect class="red bar" x="0" y="20" width="240" height="2"/></svg></div>
+      <canvas class="wave" id="footerBrandWave"></canvas>
       <div class="data-row">
         <div class="big">Models <b>6</b> in Prod</div>
         <div class="time">INFERENCE LIVE<span class="cursor">█</span></div>
@@ -1916,7 +1908,72 @@ cAnimate();
     const now=Date.now(),period=92*60*1000;
     el.textContent=Math.ceil(((period-(now%period))/2)/60000);
   },3000);
-  /* Footer line FX now uses CSS/SVG; no JS canvas animation loops. */
+  function waveform(canvasId,color,speed,amp){
+    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
+    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
+    resize(); window.addEventListener('resize',resize);
+    (function draw(now){
+      const phase=(now||performance.now())*speed*0.06;
+      ctx.clearRect(0,0,c.width,c.height); ctx.beginPath();
+      const w=c.width,h=c.height,mid=h/2;
+      for(let x=0;x<=w;x+=2){
+        const k=x/w, env=Math.sin(k*Math.PI);
+        const y=mid+Math.sin(k*14+phase)*amp*devicePixelRatio*env+Math.sin(k*40+phase*1.7)*amp*0.35*devicePixelRatio*env;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle=color; ctx.lineWidth=1.4*devicePixelRatio; ctx.shadowBlur=0; ctx.stroke();
+      requestAnimationFrame(draw);
+    })();
+  }
+  function cube3d(canvasId,color){
+    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
+    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
+    resize(); window.addEventListener('resize',resize);
+    const V=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
+    const E=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+    (function draw(now){
+      const a=(now||performance.now())*0.00072;
+      ctx.clearRect(0,0,c.width,c.height);
+      const w=c.width,h=c.height,sc=Math.min(w,h)*0.62,cx=w*0.5,cy=h*0.5;
+      const ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(a*0.6),sb=Math.sin(a*0.6);
+      const P=V.map(function(v){var x=v[0],y=v[1],z=v[2]; var x1=x*ca-z*sa,z1=x*sa+z*ca; var y1=y*cb-z1*sb,z2=y*sb+z1*cb; var pr=2.8/(2.8+z2); return [cx+x1*sc*pr,cy+y1*sc*pr];});
+      ctx.strokeStyle=color; ctx.lineWidth=1.2*devicePixelRatio; ctx.beginPath();
+      E.forEach(function(e){ctx.moveTo(P[e[0]][0],P[e[0]][1]);ctx.lineTo(P[e[1]][0],P[e[1]][1]);});
+      ctx.stroke(); requestAnimationFrame(draw);
+    })();
+  }
+  function globe(canvasId,color){
+    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
+    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
+    resize(); window.addEventListener('resize',resize);
+    function P(lat,lon,R,cx,cy,rot){ const x=R*Math.cos(lat)*Math.sin(lon+rot),y=R*Math.sin(lat),z=R*Math.cos(lat)*Math.cos(lon+rot); return [cx+x,cy-y,z]; }
+    function line(pts){ for(let i=1;i<pts.length;i++){ const a=pts[i-1],b=pts[i]; ctx.globalAlpha=((a[2]+b[2])/2)>=0?0.95:0.2; ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke(); } }
+    (function draw(now){
+      const rot=(now||performance.now())*0.00072;
+      const w=c.width,h=c.height,cx=w/2,cy=h/2,R=Math.min(w,h)/2-2*devicePixelRatio;
+      ctx.clearRect(0,0,w,h); ctx.strokeStyle=color; ctx.lineWidth=1*devicePixelRatio;
+      for(let i=0;i<6;i++){const lon=i*Math.PI/6;const p=[];for(let j=-16;j<=16;j++)p.push(P(j*Math.PI/32,lon,R,cx,cy,rot));line(p);}
+      for(let i=-2;i<=2;i++){const lat=i*Math.PI/6;const p=[];for(let j=0;j<=48;j++)p.push(P(lat,j*Math.PI/24,R,cx,cy,rot));line(p);}
+      ctx.globalAlpha=1; requestAnimationFrame(draw);
+    })();
+  }
+  function bars(canvasId,color,speed){
+    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
+    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
+    resize(); window.addEventListener('resize',resize);
+    (function draw(now){
+      const w=c.width,h=c.height,mid=h/2,dpr=devicePixelRatio; ctx.clearRect(0,0,w,h);
+      ctx.strokeStyle=color; ctx.lineWidth=1*dpr;
+      ctx.globalAlpha=0.22; ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(w,mid); ctx.stroke();
+      const p=((now||performance.now())*speed*0.06)%1, x=p*w;
+      ctx.globalAlpha=1; ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(x,mid); ctx.stroke();
+      requestAnimationFrame(draw);
+    })();
+  }
+  waveform('footerWaveLeo','#ff3b30',0.06,7);
+  bars('footerBrandWave','#ff3b30',0.005);
+  cube3d('footerCube3d','#ff3b30');
+  globe('footerAiGlobe','#ff3b30');
 })();
 </script>
 
