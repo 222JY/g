@@ -184,7 +184,7 @@
   #vbMute:hover{color:#ff0000;border-color:#ff0000}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:3px;top:4317px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
+  #carBand{position:absolute;left:3px;top:4480px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
     overflow:hidden}   /* no bottom line — planet runs to the page bottom */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
   #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
@@ -249,7 +249,7 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:4945px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:5108px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none;text-shadow:0 0 14px #000,0 0 26px #000}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   #endcap .ec-kick{margin:0;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:6px;line-height:8px;letter-spacing:1px;color:var(--grey);transform:translate(3px,73px)}
@@ -394,6 +394,16 @@
   #osBlock .os-v.opt{color:#818181}
   #osBlock .os-log{margin:8px 16px 14px;font-family:'Kode Mono',monospace;font-size:8px;letter-spacing:1px;color:#6a6a6a;min-height:10px;border-top:1px solid #262626;padding-top:10px}
   #osBlock .os-log b{color:var(--red);font-weight:400}
+
+  /* GOBOLD AGENCY — full-width big text under the game block (matches .giant color + threshold) */
+  #bigAgency{position:absolute;left:0;top:4240px;width:1024px;z-index:2;display:flex;justify-content:space-between;align-items:baseline;padding:0 8px;box-sizing:border-box;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:150px;line-height:120px;letter-spacing:-2px;text-transform:uppercase;color:#242424;filter:url(#threshfxXStrong);pointer-events:none;white-space:nowrap}
+  #bigAgency span{display:block;margin:0}
+
+  /* services — moving marquee line (p--l, tight letters, BIG visible threshold), non-interactive */
+  #bigMail{position:absolute;left:0;top:2380px;width:1024px;height:260px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
+  #bigMail .mailTrack{display:flex;flex-shrink:0;align-items:center;white-space:nowrap;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:300px;line-height:1;letter-spacing:-16px;text-transform:uppercase;color:#242424;animation:mailMarquee 44s linear infinite}
+  #bigMail .mailItem{padding-right:150px}
+  @keyframes mailMarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 </style>
 </head>
 <body>
@@ -556,6 +566,19 @@
     </div>
   </div>
 
+  <!-- GOBOLD AGENCY — full-width big text under the game block -->
+  <div id="bigAgency"><span>GOBOLD</span><span>AGENCY</span></div>
+
+  <!-- services — moving marquee line (non-interactive) -->
+  <div id="bigMail" aria-hidden="true">
+    <div class="mailTrack">
+      <span class="mailItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
+      <span class="mailItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
+      <span class="mailItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
+      <span class="mailItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
+    </div>
+  </div>
+
   <div id="carBand">
   </div>
 
@@ -693,6 +716,14 @@
   <feGaussianBlur stdDeviation="0.55" result="soft"></feGaussianBlur>
   <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 8 -3.2"></feColorMatrix>
 </filter>
+<filter id="threshfxXStrong" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+  <feGaussianBlur stdDeviation="0.8" result="soft"></feGaussianBlur>
+  <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 16 -7"></feColorMatrix>
+</filter>
+<filter id="threshfxXXStrong" x="-32%" y="-32%" width="164%" height="164%" color-interpolation-filters="sRGB">
+  <feGaussianBlur stdDeviation="3.6" result="soft"></feGaussianBlur>
+  <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10"></feColorMatrix>
+</filter>
 <filter id="threshfxHover" x="-18%" y="-18%" width="136%" height="136%" color-interpolation-filters="sRGB">
   <feGaussianBlur stdDeviation="0.65" result="soft"></feGaussianBlur>
   <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 8 -3.4"></feColorMatrix>
@@ -739,7 +770,7 @@
 
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 4520;   /* footer text sits at bottom (extended for ported v35 blocks) */
+const PAGE_H = 4683;   /* footer text sits at bottom (ported v35 blocks + GOBOLD AGENCY; services marquee relocated under FAQ) */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -979,8 +1010,10 @@ function faqPush() {
   if(__pb=document.getElementById('osBlock'))     __pb.style.top = (3575 + extra) + 'px';
   document.getElementById('snakeBand').style.top = (3823 + extra) + 'px';
   document.getElementById('footerServices').style.top = (2650 + extra) + 'px';
-  carBandEl.style.top = (4317 + extra) + 'px';
-  document.getElementById('endcap').style.top = (4945 + extra) + 'px';
+  if(__pb=document.getElementById('bigAgency'))   __pb.style.top = (4240 + extra) + 'px';
+  if(__pb=document.getElementById('bigMail'))     __pb.style.top = (2380 + extra) + 'px';
+  carBandEl.style.top = (4480 + extra) + 'px';
+  document.getElementById('endcap').style.top = (5108 + extra) + 'px';
   rescale();
 }
 document.querySelectorAll('.faq-item .faq-q').forEach(btn => btn.addEventListener('click', () => {
