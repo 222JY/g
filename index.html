@@ -900,7 +900,7 @@ camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance', stencil: false, depth: true });
 renderer.setClearColor(0x000000, 0);
-const HERO_DPR = 1.2; // optimized GPU resolution, all postprocessing kept
+const HERO_DPR = 1.0; // optimized GPU resolution, all postprocessing kept
 renderer.setPixelRatio(HERO_DPR);
 renderer.setSize(container.clientWidth, container.clientHeight);
 container.appendChild(renderer.domElement);
@@ -1198,9 +1198,7 @@ new ResizeObserver(() => {
 
 /* RENDER LOOP — pauses when tab hidden or scene scrolled away */
 let visible = true;
-function syncHeroVideos(on){ screens.forEach(s => { try { if(on) s.v.play().catch(()=>{}); else s.v.pause(); } catch(e){} }); }
-new IntersectionObserver(e => { visible = e[0].isIntersecting; syncHeroVideos(visible && !document.hidden); }, { threshold: 0 }).observe(container);
-document.addEventListener('visibilitychange', () => syncHeroVideos(visible && !document.hidden));
+new IntersectionObserver(e => { visible = e[0].isIntersecting; }, { threshold: 0 }).observe(container);
 /* very slight camera-rig reaction to mouse over the hero */
 let msX = 0, msY = 0, msOver = 0, msXs = 0, msYs = 0;
 let echoTex = null;
@@ -1896,37 +1894,40 @@ cAnimate();
     const now=Date.now(),period=92*60*1000;
     el.textContent=Math.ceil(((period-(now%period))/2)/60000);
   },3000);
-  const footerAnim = { visible:false };
-  const fsWrap = document.getElementById('footerServices');
-  if('IntersectionObserver' in window && fsWrap){
-    new IntersectionObserver(es=>{ footerAnim.visible = !!(es[0] && es[0].isIntersecting); }, {rootMargin:'180px 0px', threshold:0}).observe(fsWrap);
-  } else footerAnim.visible = true;
+  const FOOTER_DPR = Math.min(window.devicePixelRatio || 1, 1.25);
+  function prepFooterCanvas(c){
+    const ctx=c.getContext('2d');
+    function resize(){
+      const w=Math.max(1,Math.round(c.clientWidth*FOOTER_DPR));
+      const h=Math.max(1,Math.round(c.clientHeight*FOOTER_DPR));
+      if(c.width!==w) c.width=w;
+      if(c.height!==h) c.height=h;
+    }
+    resize(); window.addEventListener('resize',resize,{passive:true});
+    return {ctx,dpr:FOOTER_DPR};
+  }
   function footerLoop(draw){
-    draw(); // first frame visible; animation runs only near the footer/game section
-    function step(){ requestAnimationFrame(step); if(footerAnim.visible && !document.hidden) draw(); }
+    function step(){ requestAnimationFrame(step); if(!document.hidden) draw(); }
+    draw();
     requestAnimationFrame(step);
   }
   function waveform(canvasId,color,speed,amp){
-    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
-    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
-    resize(); window.addEventListener('resize',resize);
+    const c=document.getElementById(canvasId); if(!c) return; const {ctx,dpr}=prepFooterCanvas(c);
     let phase=0;
     footerLoop(function(){
       ctx.clearRect(0,0,c.width,c.height); ctx.beginPath();
-      const w=c.width,h=c.height,mid=h/2;
-      for(let x=0;x<=w;x+=2){
+      const w=c.width,h=c.height,mid=h/2,step=Math.max(2,Math.round(2*dpr));
+      for(let x=0;x<=w;x+=step){
         const k=x/w, env=Math.sin(k*Math.PI);
-        const y=mid+Math.sin(k*14+phase)*amp*devicePixelRatio*env+Math.sin(k*40+phase*1.7)*amp*0.35*devicePixelRatio*env;
+        const y=mid+Math.sin(k*14+phase)*amp*dpr*env+Math.sin(k*40+phase*1.7)*amp*0.35*dpr*env;
         x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
       }
-      ctx.strokeStyle=color; ctx.lineWidth=1.4*devicePixelRatio; ctx.shadowBlur=0; ctx.stroke();
+      ctx.strokeStyle=color; ctx.lineWidth=1.4*dpr; ctx.shadowBlur=0; ctx.stroke();
       phase+=speed;
     });
   }
   function cube3d(canvasId,color){
-    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
-    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
-    resize(); window.addEventListener('resize',resize);
+    const c=document.getElementById(canvasId); if(!c) return; const {ctx,dpr}=prepFooterCanvas(c);
     const V=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
     const E=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
     let a=0;
@@ -1935,33 +1936,29 @@ cAnimate();
       const w=c.width,h=c.height,sc=Math.min(w,h)*0.62,cx=w*0.5,cy=h*0.5;
       const ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(a*0.6),sb=Math.sin(a*0.6);
       const P=V.map(function(v){var x=v[0],y=v[1],z=v[2]; var x1=x*ca-z*sa,z1=x*sa+z*ca; var y1=y*cb-z1*sb,z2=y*sb+z1*cb; var pr=2.8/(2.8+z2); return [cx+x1*sc*pr,cy+y1*sc*pr];});
-      ctx.strokeStyle=color; ctx.lineWidth=1.2*devicePixelRatio; ctx.beginPath();
+      ctx.strokeStyle=color; ctx.lineWidth=1.2*dpr; ctx.beginPath();
       E.forEach(function(e){ctx.moveTo(P[e[0]][0],P[e[0]][1]);ctx.lineTo(P[e[1]][0],P[e[1]][1]);});
       ctx.stroke(); a+=0.012;
     });
   }
   function globe(canvasId,color){
-    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
-    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
-    resize(); window.addEventListener('resize',resize);
+    const c=document.getElementById(canvasId); if(!c) return; const {ctx,dpr}=prepFooterCanvas(c);
     let rot=0;
     function P(lat,lon,R,cx,cy){ const x=R*Math.cos(lat)*Math.sin(lon+rot),y=R*Math.sin(lat),z=R*Math.cos(lat)*Math.cos(lon+rot); return [cx+x,cy-y,z]; }
     function line(pts){ for(let i=1;i<pts.length;i++){ const a=pts[i-1],b=pts[i]; ctx.globalAlpha=((a[2]+b[2])/2)>=0?0.95:0.2; ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke(); } }
     footerLoop(function(){
-      const w=c.width,h=c.height,cx=w/2,cy=h/2,R=Math.min(w,h)/2-2*devicePixelRatio;
-      ctx.clearRect(0,0,w,h); ctx.strokeStyle=color; ctx.lineWidth=1*devicePixelRatio;
+      const w=c.width,h=c.height,cx=w/2,cy=h/2,R=Math.min(w,h)/2-2*dpr;
+      ctx.clearRect(0,0,w,h); ctx.strokeStyle=color; ctx.lineWidth=1*dpr;
       for(let i=0;i<6;i++){const lon=i*Math.PI/6;const p=[];for(let j=-16;j<=16;j++)p.push(P(j*Math.PI/32,lon,R,cx,cy));line(p);}
       for(let i=-2;i<=2;i++){const lat=i*Math.PI/6;const p=[];for(let j=0;j<=48;j++)p.push(P(lat,j*Math.PI/24,R,cx,cy));line(p);}
       ctx.globalAlpha=1; rot+=0.012;
     });
   }
   function bars(canvasId,color,speed){
-    const c=document.getElementById(canvasId); if(!c) return; const ctx=c.getContext('2d');
-    function resize(){c.width=c.clientWidth*devicePixelRatio;c.height=c.clientHeight*devicePixelRatio;}
-    resize(); window.addEventListener('resize',resize);
+    const c=document.getElementById(canvasId); if(!c) return; const {ctx,dpr}=prepFooterCanvas(c);
     let t=0;
     footerLoop(function(){
-      const w=c.width,h=c.height,mid=h/2,dpr=devicePixelRatio; ctx.clearRect(0,0,w,h);
+      const w=c.width,h=c.height,mid=h/2; ctx.clearRect(0,0,w,h);
       ctx.strokeStyle=color; ctx.lineWidth=1*dpr;
       ctx.globalAlpha=0.22; ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(w,mid); ctx.stroke();
       const p=t-Math.floor(t), x=p*w;
