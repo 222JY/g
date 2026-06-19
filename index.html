@@ -45,6 +45,7 @@
   #fixedLayer2 a,#fixedLayer2 .clickable{pointer-events:auto}
   body.gb-loading #fixedLayer2 .mail,body.gb-loading #fixedLayer2 .music,body.gb-loading #fixedLayer2 #invertSite,body.gb-loading #fixedLayer2 .icons{display:none}
   body:not(.gb-scaled) .brand,body:not(.gb-scaled) #bottomFixed{opacity:0}
+  body.gb-loading #bottomFixed{display:none}
   #page{position:relative;width:1024px;transform-origin:0 0}
 
   /* ---- header ---- */
@@ -108,8 +109,12 @@
 
   /* ---- 3D scene ---- */
   #scene3d{position:absolute;left:0;top:-5px;width:1024px;height:629px;z-index:4}
-  #scene3d canvas{display:block;width:100%!important;height:100%!important;cursor:grab}
-  #scene3d canvas:active{cursor:grabbing}
+  #scene3d canvas{display:block;width:100%!important;height:100%!important;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 3v18M3 12h18' stroke='white' stroke-width='2.6'/></svg>") 12 12, crosshair}
+  #scene3d canvas:active{cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 3v18M3 12h18' stroke='white' stroke-width='2.6'/></svg>") 12 12, crosshair}
+  #sceneCursorLines{position:absolute;inset:0;z-index:6;pointer-events:none;display:none}
+  #sceneCursorLines .v,#sceneCursorLines .h{position:absolute;background:#818181;opacity:.72;box-shadow:none}
+  #sceneCursorLines .v{width:.8px;top:0;bottom:0}
+  #sceneCursorLines .h{height:.8px;left:0;right:0}
   #preloader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform:translateY(-100px);z-index:3}
   #preloader img{width:80px;height:80px;object-fit:contain;pointer-events:none}
 
@@ -176,10 +181,16 @@
   #thermalBtn{position:absolute;left:50%;top:280px;transform:translateX(-50%);z-index:30;height:16px;background:#000;border:0;
     color:#a2a2a2;font-family:'Anonymous Pro',monospace;font-size:5px;line-height:5px;letter-spacing:1px;padding:0 6px;
     cursor:pointer;writing-mode:horizontal-tb;text-transform:uppercase;white-space:nowrap}
-  #thermalBtn::before{content:'◈';display:inline-block;margin-right:5px;color:var(--red)}
-  #thermalBtn:hover::before,#thermalBtn.on::before{color:#000}
+  #thermalBtn::before{content:'';display:inline-block;width:7px;height:7px;margin-right:5px;vertical-align:-1px;background:url('images/thermal-target-small.svg') center/contain no-repeat;filter:saturate(1.7) contrast(1.3)}
+  #thermalBtn:hover::before,#thermalBtn.on::before{filter:saturate(2.2) contrast(1.8) brightness(.35)}
   #thermalBtn:hover,#thermalBtn.on{background:var(--red);color:#000}
-  #fpsMeter{position:absolute;left:954px;top:280px;z-index:31;background:#000;color:#414141;font-family:'Anonymous Pro',monospace;font-size:7px;line-height:7px;letter-spacing:1px;padding:4px 3px;text-transform:uppercase;pointer-events:none}
+  #thermalBtn.hot{background:var(--red);color:#000}
+  #thermalBtn.hot::before{filter:saturate(2.2) contrast(1.8) brightness(.35)}
+  #thermalIconBtn{position:absolute;left:50%;top:230px;transform:translateX(-50%);z-index:31;width:44px;height:44px;padding:0;border:0;background:transparent;cursor:pointer;overflow:visible;mix-blend-mode:normal}
+  #thermalIconBtn img{display:block;width:44px;height:44px;object-fit:contain;filter:none;transition:none}
+  #thermalIconBtn::after{content:'';position:absolute;inset:0;pointer-events:none;background:transparent;opacity:0}
+  #thermalIconBtn:hover img,#thermalIconBtn.on img,#thermalIconBtn.hot img{filter:brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(7450%) hue-rotate(358deg) brightness(108%) contrast(116%);transform:scale(1.06)}
+  #thermalIconBtn:hover::after,#thermalIconBtn.on::after,#thermalIconBtn.hot::after{background:transparent;opacity:0}
 
   /* ---- FAQ ---- */
   #vidband{position:absolute;left:3px;top:1255px;width:1018px;height:660px;overflow:hidden;z-index:5;background:#000;border-top:1px solid #a2a2a2;border-bottom:1px solid #a2a2a2}
@@ -482,9 +493,9 @@
 
   <div id="scene3d">
     <div id="preloader"><img src="images/3y0oCOkdKKRi0.webp" alt="loading"></div>
+    <div id="sceneCursorLines"><span class="v"></span><span class="h"></span></div>
   </div>
-
-  <div id="fpsMeter">FPS --</div>
+  <button id="thermalIconBtn" type="button" aria-label="Thermal effect"><img src="images/thermal-target.svg" alt=""></button>
   <button id="thermalBtn">THERMAL EFFECT</button>
 
   <div id="giantLine"></div>
@@ -798,6 +809,26 @@ document.body.classList.add('gb-scaled');
 addEventListener('resize', rescale);
 
 
+
+/* first 3D custom cursor guide lines */
+(function(){
+  const scene = document.getElementById('scene3d');
+  const lines = document.getElementById('sceneCursorLines');
+  if (!scene || !lines) return;
+  const v = lines.querySelector('.v'), h = lines.querySelector('.h');
+  scene.addEventListener('mouseenter', () => { lines.style.display = 'block'; });
+  scene.addEventListener('mouseleave', () => { lines.style.display = 'none'; });
+  scene.addEventListener('mousemove', e => {
+    const r = scene.getBoundingClientRect();
+    const sx = scene.offsetWidth / r.width;
+    const sy = scene.offsetHeight / r.height;
+    const x = (e.clientX - r.left) * sx;
+    const y = (e.clientY - r.top) * sy;
+    v.style.left = x + 'px';
+    h.style.top = y + 'px';
+  });
+})();
+
 /* ============ music toggle ============ */
 const audio = new Audio();
 audio.preload = 'none';
@@ -838,10 +869,10 @@ giantLines.forEach(el => { el.innerHTML = '<span class="seltxt">' + el.innerHTML
   }
   function step() {
     if (p >= parts.length) return;
-    i++;
+    i += 2;
     draw();
-    if (i < parts[p].__full.length) setTimeout(step, 23);
-    else { parts[p].textContent = parts[p].__full; p++; i = 0; setTimeout(step, 23); }
+    if (i < parts[p].__full.length) setTimeout(step, 1);
+    else { parts[p].textContent = parts[p].__full; p++; i = 0; setTimeout(step, 1); }
   }
   step();
 })();
@@ -1318,7 +1349,16 @@ let thermalOn = false;
 /* prewarm thermal+afterimage shaders so the first toggle doesn't hitch */
 { afterPass.enabled = true; composer.render(); afterPass.enabled = false; }
 const thermalBtn = document.getElementById('thermalBtn');
-thermalBtn.addEventListener('click', () => { thermalOn = !thermalOn; thermalBtn.classList.toggle('on', thermalOn); });
+const thermalIconBtn = document.getElementById('thermalIconBtn');
+function toggleThermal(){ thermalOn = !thermalOn; thermalBtn.classList.toggle('on', thermalOn); if (thermalIconBtn) thermalIconBtn.classList.toggle('on', thermalOn); }
+thermalBtn.addEventListener('click', toggleThermal);
+if (thermalIconBtn) {
+  thermalIconBtn.addEventListener('click', toggleThermal);
+  thermalIconBtn.addEventListener('mouseenter', () => thermalBtn.classList.add('hot'));
+  thermalIconBtn.addEventListener('mouseleave', () => thermalBtn.classList.remove('hot'));
+  thermalBtn.addEventListener('mouseenter', () => thermalIconBtn.classList.add('hot'));
+  thermalBtn.addEventListener('mouseleave', () => thermalIconBtn.classList.remove('hot'));
+}
 
 /* POWERSHOT — early-2000s digicam ISP look (WebGL port of powershot-threejs preset), always on */
 const PowershotShader = {
@@ -1388,15 +1428,12 @@ addEventListener('pointermove', e => {
     warpPass.uniforms.uMouse.value.set((e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height);
   } else { msX = 0; msY = 0; msOver = 0; }
 });
-const fpsMeter = document.getElementById('fpsMeter');
-let fpsFrames = 0, fpsLast = performance.now();
 const introLookNow = new THREE.Vector3();
 const easeInOutCubic = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
 function animate(){
   requestAnimationFrame(animate);
   if (!visible || document.hidden) return;
   const nowMs = performance.now();
-  if (fpsMeter) { fpsFrames++; if (nowMs - fpsLast >= 500) { fpsMeter.textContent = 'FPS ' + Math.round(fpsFrames * 1000 / (nowMs - fpsLast)); fpsFrames = 0; fpsLast = nowMs; } }
   const dt = Math.min((nowMs - introPrev) / 1000, 0.05); introPrev = nowMs;
   if (introRunning) {
     if (introStart < 0) { introStart = nowMs; introPrev = nowMs; }
