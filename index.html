@@ -55,7 +55,7 @@
   .icons .hovzone img{position:absolute;inset:auto;left:-62px;top:0;width:94px;height:31px;opacity:0;transition:opacity .25s ease}
   .icons .hovzone img.on{opacity:1}
 
-  .mail{position:absolute;right:6px;top:5px;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:12px;letter-spacing:0;text-transform:uppercase;
+  .mail{position:absolute;right:6px;top:5px;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:12px;letter-spacing:-.6px;text-transform:uppercase;
     text-decoration:none;background:#000;padding:2px 4px 3px 4px;line-height:14px;}
   .mail:hover{background:#fff}
   .mail::before{content:'';display:none;width:12px;height:9px;margin-right:5px;vertical-align:-1px;
@@ -64,9 +64,9 @@
 
   .brand{position:absolute;left:0;top:0;width:1024px;display:block;z-index:3;font-family:'p--l','Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:48px;line-height:38px;letter-spacing:-2.6px;text-transform:uppercase;color:var(--red);filter:url(#threshfxStrong);pointer-events:none}
   .brand p{margin:0;background:transparent;display:block;padding:0;color:var(--red)}
-  .brand .r{color:var(--red)}
+  .brand .r{color:var(--grey)}
   .brand a{text-decoration:none;font-weight:400;cursor:pointer;pointer-events:auto}
-  #brandHov{color:var(--red);display:inline-block}
+  #brandHov{color:var(--grey);display:inline-block}
 
   .tiny{font-family:'Anonymous Pro',monospace;font-size:4px;line-height:4px;letter-spacing:1px;white-space:nowrap;color:var(--grey)}
   .clocks .tiny{display:inline-block;background:#000;padding:3px 4px 2px 4px;box-shadow:0 0 0 3px #000}
@@ -81,16 +81,16 @@
   .music .title{font-size:5px;letter-spacing:1px;color:#a2a2a2;white-space:nowrap}
   .music:hover{background:var(--red)}
   .music:hover .title{color:#000}
-  #invertSite{position:absolute;left:748px;top:5px;height:16px;background:#000;border:0;color:#a2a2a2;font-family:'Anonymous Pro',monospace;font-size:5px;line-height:5px;letter-spacing:1px;padding:0 6px;cursor:pointer;text-transform:uppercase;white-space:nowrap}
+  #invertSite{position:absolute;left:741px;top:5px;height:16px;background:#000;border:0;color:#a2a2a2;font-family:'Anonymous Pro',monospace;font-size:5px;line-height:5px;letter-spacing:1px;padding:0 6px;cursor:pointer;text-transform:uppercase;white-space:nowrap}
   #invertSite::before{content:'◐';display:inline-block;margin-right:5px;color:var(--red)}
   #invertSite.on::before{content:'◑';color:#a2a2a2}
   #invertSite:hover::before,#invertSite.on::before{color:#000}
   #invertSite:hover,#invertSite.on{color:#000;background:var(--red)}
   body.site-inverted::after{content:'';position:fixed;inset:0;z-index:2147483647;pointer-events:none;background:rgba(255,255,255,.001);backdrop-filter:invert(1) hue-rotate(45deg) saturate(1.85) brightness(.50) contrast(1.72) grayscale(.18);-webkit-backdrop-filter:invert(1) hue-rotate(45deg) saturate(1.85) brightness(.50) contrast(1.72) grayscale(.18)}
-  .switch-body{width:21px;height:11px;background:linear-gradient(145deg,#2a2a2a,#141414);border-radius:3px;position:relative;
+  .switch-body{width:21px;height:11px;background:transparent;border-radius:3px;position:relative;
     box-shadow:none}
-  .slot{position:absolute;top:2px;left:2px;width:17px;height:7px;background:#0a0a0a;border-radius:2px;box-shadow:none}
-  .lever{width:6px;height:6px;background:linear-gradient(145deg,#ff2b2b,#7a0000);border-radius:2px;position:absolute;left:0;top:0;
+  .slot{position:absolute;top:2px;left:2px;width:17px;height:7px;background:#242424;border-radius:2px;box-shadow:none}
+  .lever{width:6px;height:6px;background:linear-gradient(145deg,#a2a2a2,#6f6f6f);border-radius:2px;position:absolute;left:0;top:0;
     transition:left .18s ease;box-shadow:none}
   .music.on .lever{left:11px}
   .equalizer{display:none;align-items:flex-end;height:10px;gap:1px;margin-left:4px}
@@ -103,7 +103,7 @@
   @keyframes eq2{from{height:5%}to{height:80%}}
 
   .stamp-gif{position:absolute;left:0;top:0;width:71px;height:76px;object-fit:cover;background:#000;z-index:80}
-  #bottomFixed{position:fixed;left:4px;bottom:4px;width:1024px;z-index:2147483000;pointer-events:none;transform-origin:left bottom}
+  #bottomFixed{position:fixed;left:4px;bottom:0;width:1024px;z-index:2147483000;pointer-events:none;transform-origin:left bottom}
   #bottomFixed .clocks{position:relative;left:0;top:0;width:760px;height:12px;pointer-events:auto}
   #bottomFixed .stamp-gif{position:absolute;left:0;bottom:0;top:auto;width:71px;height:76px;pointer-events:none}
 
@@ -179,18 +179,13 @@
   /* ---- bottom RGB-blur strip ---- */
   /* ---- thermal toggle ---- */
   #thermalBtn{position:absolute;left:50%;top:280px;transform:translateX(-50%);z-index:30;height:16px;background:#000;border:0;
-    color:#a2a2a2;font-family:'Anonymous Pro',monospace;font-size:5px;line-height:5px;letter-spacing:1px;padding:0 6px;
-    cursor:pointer;writing-mode:horizontal-tb;text-transform:uppercase;white-space:nowrap}
-  #thermalBtn::before{content:'';display:inline-block;width:7px;height:7px;margin-right:5px;vertical-align:-1px;background:url('images/thermal-target-small.svg') center/contain no-repeat;filter:saturate(1.7) contrast(1.3)}
-  #thermalBtn:hover::before,#thermalBtn.on::before{filter:saturate(2.2) contrast(1.8) brightness(.35)}
+    color:#a2a2a2;font-family:'Anonymous Pro',monospace;font-size:5px;line-height:1;letter-spacing:1px;padding:0 6px;
+    cursor:pointer;writing-mode:horizontal-tb;text-transform:uppercase;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center}
+  #thermalBtn::before{content:'';display:inline-block;flex:0 0 auto;width:9px;height:9px;margin-right:5px;background:url('images/thermal-target-small.svg') center/contain no-repeat;filter:saturate(1.7) contrast(1.3)}
+  #thermalBtn:hover::before,#thermalBtn.on::before{filter:brightness(0) saturate(100%)}
   #thermalBtn:hover,#thermalBtn.on{background:var(--red);color:#000}
   #thermalBtn.hot{background:var(--red);color:#000}
-  #thermalBtn.hot::before{filter:saturate(2.2) contrast(1.8) brightness(.35)}
-  #thermalIconBtn{position:absolute;left:50%;top:230px;transform:translateX(-50%);z-index:31;width:44px;height:44px;padding:0;border:0;background:transparent;cursor:pointer;overflow:visible;mix-blend-mode:normal}
-  #thermalIconBtn img{display:block;width:44px;height:44px;object-fit:contain;filter:none;transition:none}
-  #thermalIconBtn::after{content:'';position:absolute;inset:0;pointer-events:none;background:transparent;opacity:0}
-  #thermalIconBtn:hover img,#thermalIconBtn.on img,#thermalIconBtn.hot img{filter:brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(7450%) hue-rotate(358deg) brightness(108%) contrast(116%);transform:scale(1.06)}
-  #thermalIconBtn:hover::after,#thermalIconBtn.on::after,#thermalIconBtn.hot::after{background:transparent;opacity:0}
+  #thermalBtn.hot::before{filter:brightness(0) saturate(100%)}
 
   /* ---- FAQ ---- */
   #vidband{position:absolute;left:3px;top:1255px;width:1018px;height:660px;overflow:hidden;z-index:5;background:#000;border-top:1px solid #a2a2a2;border-bottom:1px solid #a2a2a2}
@@ -419,9 +414,10 @@
   #bigAgency span{display:block;margin:0}
 
   /* services — moving marquee line (p--l, tight letters, BIG visible threshold), non-interactive */
-  #bigMail{position:absolute;left:0;top:2380px;width:1024px;height:260px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
-  #bigMail .mailTrack{display:flex;flex-shrink:0;align-items:center;white-space:nowrap;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:300px;line-height:1;letter-spacing:-16px;text-transform:uppercase;color:#242424;animation:mailMarquee 158.4s linear infinite}
+  #bigMail{position:absolute;left:0;top:2320px;width:1024px;height:380px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
+  #bigMail .mailTrack{position:relative;z-index:1;display:flex;flex-shrink:0;align-items:center;white-space:nowrap;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:300px;line-height:1;letter-spacing:-16px;text-transform:uppercase;color:#242424;animation:mailMarquee 158.4s linear infinite}
   #bigMail .mailItem{padding-right:150px}
+  #bigMailTrail{position:absolute;left:0;top:0;width:100%;height:100%;mix-blend-mode:normal;pointer-events:none;z-index:3}
   @keyframes mailMarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 </style>
 </head>
@@ -495,7 +491,6 @@
     <div id="preloader"><img src="images/3y0oCOkdKKRi0.webp" alt="loading"></div>
     <div id="sceneCursorLines"><span class="v"></span><span class="h"></span></div>
   </div>
-  <button id="thermalIconBtn" type="button" aria-label="Thermal effect"><img src="images/thermal-target.svg" alt=""></button>
   <button id="thermalBtn">THERMAL EFFECT</button>
 
   <div id="giantLine"></div>
@@ -589,6 +584,7 @@
       <span class="mailItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
       <span class="mailItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
     </div>
+    <canvas id="bigMailTrail" width="1024" height="380"></canvas>
   </div>
 
   <div id="carBand">
@@ -976,11 +972,23 @@ const vbBand = document.getElementById('vidband');
 const vbTr = document.getElementById('vbTrail');
 const vbCtx = vbTr.getContext('2d');
 const trPts = [];
+const bigMailBand = document.getElementById('bigMail');
+const bigMailTr = document.getElementById('bigMailTrail');
+const bigMailCtx = bigMailTr ? bigMailTr.getContext('2d') : null;
+const bigMailPts = [];
 addEventListener('pointermove', e => {
   const r = vbBand.getBoundingClientRect();
   const x = e.clientX - r.left, y = e.clientY - r.top;
-  if (x < 0 || y < 0 || x > r.width || y > r.height) return;
-  trPts.push({ x: x * (1014 / r.width), y: y * (660 / r.height), t: performance.now() });
+  if (x >= 0 && y >= 0 && x <= r.width && y <= r.height) {
+    trPts.push({ x: x * (1014 / r.width), y: y * (660 / r.height), t: performance.now() });
+  }
+  if (bigMailBand && bigMailTr) {
+    const br = bigMailBand.getBoundingClientRect();
+    const bx = e.clientX - br.left, by = e.clientY - br.top;
+    if (bx >= 0 && by >= 0 && bx <= br.width && by <= br.height) {
+      bigMailPts.push({ x: bx * (1024 / br.width), y: by * (380 / br.height), t: performance.now() });
+    }
+  }
 });
 (function trLoop() {
   requestAnimationFrame(trLoop);
@@ -996,6 +1004,20 @@ addEventListener('pointermove', e => {
     vbCtx.moveTo(trPts[i - 1].x, trPts[i - 1].y);
     vbCtx.lineTo(trPts[i].x, trPts[i].y);
     vbCtx.stroke();
+  }
+  if (bigMailCtx) {
+    while (bigMailPts.length && now - bigMailPts[0].t > LIFE) bigMailPts.shift();
+    bigMailCtx.clearRect(0, 0, 1024, 380);
+    bigMailCtx.lineCap = bigMailCtx.lineJoin = 'round';
+    for (let i = 1; i < bigMailPts.length; i++) {
+      const a = 1 - (now - bigMailPts[i].t) / LIFE;
+      bigMailCtx.strokeStyle = 'rgba(36,36,36,' + a.toFixed(3) + ')';
+      bigMailCtx.lineWidth = 25;
+      bigMailCtx.beginPath();
+      bigMailCtx.moveTo(bigMailPts[i - 1].x, bigMailPts[i - 1].y);
+      bigMailCtx.lineTo(bigMailPts[i].x, bigMailPts[i].y);
+      bigMailCtx.stroke();
+    }
   }
 })();
 
@@ -1349,16 +1371,8 @@ let thermalOn = false;
 /* prewarm thermal+afterimage shaders so the first toggle doesn't hitch */
 { afterPass.enabled = true; composer.render(); afterPass.enabled = false; }
 const thermalBtn = document.getElementById('thermalBtn');
-const thermalIconBtn = document.getElementById('thermalIconBtn');
-function toggleThermal(){ thermalOn = !thermalOn; thermalBtn.classList.toggle('on', thermalOn); if (thermalIconBtn) thermalIconBtn.classList.toggle('on', thermalOn); }
+function toggleThermal(){ thermalOn = !thermalOn; thermalBtn.classList.toggle('on', thermalOn); }
 thermalBtn.addEventListener('click', toggleThermal);
-if (thermalIconBtn) {
-  thermalIconBtn.addEventListener('click', toggleThermal);
-  thermalIconBtn.addEventListener('mouseenter', () => thermalBtn.classList.add('hot'));
-  thermalIconBtn.addEventListener('mouseleave', () => thermalBtn.classList.remove('hot'));
-  thermalBtn.addEventListener('mouseenter', () => thermalIconBtn.classList.add('hot'));
-  thermalBtn.addEventListener('mouseleave', () => thermalIconBtn.classList.remove('hot'));
-}
 
 /* POWERSHOT — early-2000s digicam ISP look (WebGL port of powershot-threejs preset), always on */
 const PowershotShader = {
