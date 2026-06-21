@@ -48,7 +48,8 @@
   #fixedLayer a,#fixedLayer .clickable{pointer-events:auto}
   #fixedLayer2{position:fixed;top:0;left:0;width:1024px;transform-origin:0 0;z-index:2147482990;pointer-events:none}
   #fixedLayer2 a,#fixedLayer2 .clickable{pointer-events:auto}
-  body.gb-loading #fixedLayer2 .mail,body.gb-loading #fixedLayer2 .music,body.gb-loading #fixedLayer2 #invertSite,body.gb-loading #fixedLayer2 .icons,body.gb-loading #fixedLayer2 .fixed-stamp-gif,body.gb-loading #miniMap{display:none}
+  body.gb-loading #fixedLayer,body.gb-loading #fixedLayer2,body.gb-loading #miniMap{display:none!important}
+  body.gb-loading #fixedLayer2 .mail,body.gb-loading #fixedLayer2 .music,body.gb-loading #fixedLayer2 #invertSite,body.gb-loading #fixedLayer2 .icons,body.gb-loading #fixedLayer2 .fixed-stamp-gif{display:none!important}
   body:not(.gb-scaled) .brand{opacity:0}
   #page{position:relative;width:1024px;transform-origin:0 0}
 
@@ -230,10 +231,10 @@
   #vbSeekMiniPreview.on{display:block}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:3px;top:3994px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
-    overflow:hidden}   /* original footer 3D framing restored */
+  #carBand{position:absolute;left:3px;top:3994px;width:1018px;height:824px;min-height:0;z-index:6;background:#000;
+    overflow:hidden}   /* footer 3D fills to the bottom; no extra body gap */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
-  #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
+  #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.10);pointer-events:none}
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
@@ -830,7 +831,7 @@
 
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 4813;   /* footer contact cluster moved up 25px; original 3D framing restored */
+const PAGE_H = 4818;   /* page ends exactly with the footer 3D block */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -1484,9 +1485,11 @@ Promise.all([Promise.race([Promise.all([modelP, heroVideoP]), timeoutP]), minLoa
       const sl = document.getElementById('siteLoader');
       if (sl) {
         sl.classList.add('content-out');
-        document.body.classList.remove('gb-loading');
-        if (window.__startBrandTypewriter) setTimeout(window.__startBrandTypewriter, 120);
         setTimeout(() => sl.classList.add('open'), 120);
+        setTimeout(() => {
+          document.body.classList.remove('gb-loading');
+          if (window.__startBrandTypewriter) window.__startBrandTypewriter();
+        }, 1160);
         setTimeout(() => { if (sl.parentNode) sl.remove(); }, 1420);
       }
     });
@@ -2208,9 +2211,9 @@ function cLoad(){
     cRig.add(m);
     const globeMax = Math.max(s.x, s.y, s.z);
     cRig.position.set(0, 0, 0);                              /* keep model pivot at true center */
-    const d = globeMax * 1.328;   /* original footer globe scale */
+    const d = globeMax * 1.18;   /* closer footer camera: larger globe fills bottom */
     cCamera.position.set(0, 0, d);                          /* dead-on, rotation centered */
-    cCamera.setViewOffset(CW, CH, CW * 0.16 + 315, -CH * 0.12 - 300, CW, CH);   /* original footer model framing */
+    cCamera.setViewOffset(CW, CH, CW * 0.16 + 315, -CH * 0.12 + 55, CW, CH);   /* uncrop/lower footer globe into bottom edge */
     cControls.target.set(0, 0, 0);                          /* drag rotates through model center */
     cControls.update();
     if (g.animations.length) {                 /* built-in Sketchfab take: wheels etc. */
