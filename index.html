@@ -44,9 +44,9 @@
   ::selection{background:#a2a2a2;color:#000}
 
   /* ---- scaled design layers (1024px design width) ---- */
-  #fixedLayer{position:fixed;top:0;left:0;width:1024px;transform-origin:0 0;z-index:50;pointer-events:none;mix-blend-mode:exclusion}
+  #fixedLayer{position:fixed;top:0;left:0;width:1024px;transform-origin:0 0;z-index:50;pointer-events:none;mix-blend-mode:normal}
   #fixedLayer a,#fixedLayer .clickable{pointer-events:auto}
-  #fixedLayer2{position:fixed;top:0;left:0;width:1024px;transform-origin:0 0;z-index:2147482990;pointer-events:none}
+  #fixedLayer2{position:fixed;top:0;left:0;width:1024px;transform-origin:0 0;z-index:2147482990;pointer-events:none;mix-blend-mode:normal}
   #fixedLayer2 a,#fixedLayer2 .clickable{pointer-events:auto}
   body.gb-loading #fixedLayer,body.gb-loading #fixedLayer2,body.gb-loading #miniMap{display:none!important}
   body.gb-loading #fixedLayer2 .mail,body.gb-loading #fixedLayer2 .music,body.gb-loading #fixedLayer2 #invertSite,body.gb-loading #fixedLayer2 .icons,body.gb-loading #fixedLayer2 .fixed-stamp-gif{display:none!important}
@@ -231,10 +231,10 @@
   #vbSeekMiniPreview.on{display:block}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:3px;top:3994px;width:1018px;height:824px;min-height:0;z-index:6;background:#000;
-    overflow:hidden}   /* footer 3D fills to the bottom; no extra body gap */
+  #carBand{position:absolute;left:3px;top:3994px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
+    overflow:hidden}   /* original footer 3D framing */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
-  #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.10);pointer-events:none}
+  #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
@@ -311,15 +311,15 @@
   #endcap .ec-head span{display:inline-block;transform:translate(-6px,3px)}
   #endcap .ec-head:hover{background:var(--red);color:#000;text-shadow:none}
   #footerServices{position:absolute;left:7px;top:2230px;width:1010px;z-index:10;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;text-shadow:none;pointer-events:auto;font-family:'Anonymous Pro',monospace;text-transform:uppercase}
-  #footerServices .col{position:relative;padding-top:9px;padding-bottom:9px;min-width:0;text-align:left;border-top:1px solid #262626;border-bottom:1px solid #262626}
-  #footerServices .col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:34px;background:#262626}
+  #footerServices .col{position:relative;padding-top:9px;padding-bottom:9px;min-width:0;text-align:left;border-top:0;border-bottom:0}
+  #footerServices .col:not(:first-child)::before{display:none}
   #footerServices .col:last-child{text-align:left}
   #footerServices .label{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#e9eaec;white-space:nowrap}
   #footerServices .sub{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#818181;margin-top:5px;white-space:nowrap}
   #footerServices .reveal{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#818181;margin-top:6px;white-space:nowrap}
-  #footerServices .col:hover{border-color:var(--red)}
+  #footerServices .col:hover{border-color:transparent}
   #footerServices .col:hover .label{color:var(--red)}
-  #footerServices .col:first-child{border-color:var(--red)}
+  #footerServices .col:first-child{border-color:transparent}
   #footerServices .col:first-child .label{color:var(--red)}
   #footerServices .wave{margin-top:14px;width:100%;height:55px;display:block}
   #footerServices .cube3d,#footerServices .globe{margin-top:14px;width:100%;height:55px;display:block}
@@ -831,7 +831,7 @@
 
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 4818;   /* page ends exactly with the footer 3D block */
+const PAGE_H = 4813;   /* footer contact cluster moved up 25px; original 3D framing */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -2211,9 +2211,9 @@ function cLoad(){
     cRig.add(m);
     const globeMax = Math.max(s.x, s.y, s.z);
     cRig.position.set(0, 0, 0);                              /* keep model pivot at true center */
-    const d = globeMax * 1.18;   /* closer footer camera: larger globe fills bottom */
+    const d = globeMax * 1.328;   /* original footer globe scale */
     cCamera.position.set(0, 0, d);                          /* dead-on, rotation centered */
-    cCamera.setViewOffset(CW, CH, CW * 0.16 + 315, -CH * 0.12 + 55, CW, CH);   /* uncrop/lower footer globe into bottom edge */
+    cCamera.setViewOffset(CW, CH, CW * 0.16 + 315, -CH * 0.12 - 300, CW, CH);   /* original footer model framing */
     cControls.target.set(0, 0, 0);                          /* drag rotates through model center */
     cControls.update();
     if (g.animations.length) {                 /* built-in Sketchfab take: wheels etc. */
