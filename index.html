@@ -231,7 +231,7 @@
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
   #carBand{position:absolute;left:3px;top:3994px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
-    overflow:hidden}   /* no bottom line — planet runs to the page bottom */
+    overflow:hidden}   /* original footer 3D framing restored */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
   #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
   #carBand canvas:active{cursor:grabbing}
@@ -278,12 +278,12 @@
   #snakeBand .sb-metric b{color:#fff;font-weight:700}
   #snakeBand .sb-home{display:none;margin-left:12px;background:#000;border:1px solid #ff2b2b;color:#ff2b2b;font:inherit;letter-spacing:1px;cursor:pointer;padding:3px 7px 4px;text-transform:uppercase;line-height:7px;transition:none}.sb-home:hover{background:#ff2b2b;color:#000;border-color:#ff2b2b}
   #snakeBand.is-playing .sb-home{display:inline-block}
-  #snakeBand .sb-stage::after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 2px),radial-gradient(ellipse at 50% 46%,rgba(255,255,255,.018) 0%,transparent 36%,rgba(0,0,0,.40) 100%);background-size:100% 2px,100% 100%;mix-blend-mode:multiply;opacity:.34;z-index:4;animation:screenScanFine 1.7s linear infinite}
-  #snakeBand .sb-overlay::before{content:'';position:absolute;inset:0;z-index:2;background:repeating-linear-gradient(90deg,rgba(150,150,150,.055) 0 1px,transparent 1px 9px);background-size:96px 100%;mix-blend-mode:screen;pointer-events:none;animation:gameGreyLines 5.2s linear infinite;opacity:.34}
+  #snakeBand .sb-stage::after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.52) 0 1px,rgba(255,0,0,.055) 1px 2px,transparent 2px 4px),radial-gradient(ellipse at 50% 46%,rgba(255,255,255,.022) 0%,transparent 36%,rgba(0,0,0,.42) 100%);background-size:100% 4px,100% 100%;mix-blend-mode:multiply;opacity:.72;z-index:4;animation:screenScanFine 1.15s linear infinite}
+  #snakeBand .sb-overlay::before{content:'';position:absolute;inset:0;z-index:2;background:repeating-linear-gradient(0deg,rgba(255,255,255,.08) 0 1px,rgba(0,0,0,.55) 1px 2px,transparent 2px 5px),repeating-linear-gradient(90deg,rgba(150,150,150,.07) 0 1px,transparent 1px 7px);background-size:100% 5px,84px 100%;mix-blend-mode:screen;pointer-events:none;animation:gameGreyLines 4.2s linear infinite;opacity:.55}
   #snakeBand .sb-overlay::after{display:none}
   #snakeBand .sb-stage::before{display:none}
   @keyframes gameGreyLines{0%{background-position:0 0}100%{background-position:96px 0}}
-  #snakeBand .sb-overlay .art-slide{filter:grayscale(.18) contrast(1.12) saturate(.92) brightness(.82)}
+  #snakeBand .sb-overlay .art-slide{filter:contrast(1.14) saturate(1.04) brightness(.84)}
   #snakeBand .sb-overlay .sb-play-btn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;margin:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;text-transform:uppercase;color:#000;background:var(--red);border:1px solid var(--red);padding:7px 14px;cursor:pointer;white-space:nowrap;appearance:none;-webkit-appearance:none;transition:none}
   #snakeBand .sb-overlay .sb-play-btn:hover{background:#000;color:var(--red);border-color:transparent}
   @keyframes sbSignalGlitch{0%,100%{transform:translateX(-50%) skewX(0deg);opacity:1}18%{transform:translateX(calc(-50% - 2px)) skewX(-3deg);opacity:.86}20%{transform:translateX(calc(-50% + 3px)) skewX(2deg);opacity:1}48%{text-shadow:4px 0 #000,-3px 0 rgba(255,0,0,.7),0 0 22px rgba(255,0,0,.42)}50%{transform:translateX(calc(-50% + 1px)) scaleY(.96)}72%{transform:translateX(calc(-50% - 1px))}74%{transform:translateX(-50%)}}
@@ -301,11 +301,11 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:4652px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:4627px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none;text-shadow:0 0 14px #000,0 0 26px #000}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
-  #endcap .ec-head{display:inline-block;margin:148px 0 0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
+  #endcap .ec-head{display:inline-block;margin:112px 0 0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:104px;line-height:84px;
     letter-spacing:-6px;color:#818181;background:#000;text-decoration:none;filter:url(#footerThreshStrong);height:84px;min-height:84px;overflow:visible;padding:2px 8px 0;pointer-events:auto;white-space:nowrap;text-shadow:none;transform:translateX(-1px)}
   #endcap .ec-head span{display:inline-block;transform:translate(-6px,3px)}
   #endcap .ec-head:hover{background:var(--red);color:#000;text-shadow:none}
@@ -392,7 +392,7 @@
   /* ===================== PORTED v35 BLOCKS (under the 4-animation footer block) ===================== */
 
   /* PROJECT INTAKE / SEND BRIEF */
-  #intake{position:absolute;right:70px;top:4514px;width:360px;z-index:8;background:transparent;border:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:visible;padding:12px 0 0}
+  #intake{position:absolute;right:70px;top:4489px;width:360px;z-index:8;background:transparent;border:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:visible;padding:12px 0 0}
   #intake.shake{animation:intakeShake .24s steps(2,end)}
   @keyframes intakeShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
   #intake .ik-bar{display:flex;align-items:center;justify-content:flex-start;gap:10px;height:14px;padding:0;border-bottom:0;font-size:6px;line-height:6px;letter-spacing:1.4px;color:#6a6a6a;text-align:left}
@@ -425,7 +425,7 @@
   #intake .ik-back:hover{color:var(--red)}
   #intake .ik-note{margin:0;font-size:7px;letter-spacing:.8px;color:#6a6a6a;min-height:9px}
   #intake .ik-note b{color:var(--red);font-weight:400}
-  #contactDivider{position:absolute;right:70px;top:4705px;width:360px;z-index:9;display:flex;align-items:center;gap:9px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;color:#818181;text-transform:uppercase;pointer-events:none}
+  #contactDivider{position:absolute;right:70px;top:4680px;width:360px;z-index:9;display:flex;align-items:center;gap:9px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;color:#818181;text-transform:uppercase;pointer-events:none}
   #contactDivider::before,#contactDivider::after{content:'';height:1px;background:#262626;flex:1 1 auto}
   #contactDivider span{display:inline-block;color:#818181;background:transparent;padding:0}
 
@@ -502,7 +502,7 @@
   <div class="ldr-shutter bottom"></div>
   <div class="ldr-content">
     <div class="ldr-line"></div>
-    <div class="ldr-pct" id="ldrPct">LOADING 000%</div>
+    <div class="ldr-pct" id="ldrPct">LOADING 0%</div>
   </div>
 </div>
 <script>
@@ -515,9 +515,9 @@
     videos: new URL('videos/', document.baseURI).href
   });
   var n=0; window.__gbLoaderDone=false;
-  function show(){ pct.textContent='LOADING '+String(Math.floor(n)).padStart(3,'0')+'%'; }
+  function show(){ pct.textContent='LOADING '+Math.floor(n)+'%'; }
   var timer=setInterval(function(){
-    n=Math.min(window.__gbLoaderDone?100:93, n + (window.__gbLoaderDone?12:(2+Math.random()*6)));
+    n=Math.min(window.__gbLoaderDone?100:98, n + (window.__gbLoaderDone?16:(2+Math.random()*6)));
     show();
     if(n>=100) clearInterval(timer);
   },140);
@@ -603,14 +603,7 @@
     <div class="sb-stage">
       <canvas id="sbCanvas" width="1000" height="300"></canvas>
       <div class="sb-overlay" id="sbOverlay">
-        <img class="art-slide is-on" src="images/game-art-1.png" alt="GOBOLD game artwork">
-        <img class="art-slide" src="images/game-art-2.png" alt="GOBOLD game artwork 2">
-        <img class="art-slide" src="images/game-art-4.png" alt="GOBOLD game artwork 4">
-        <img class="art-slide" src="images/game-art-9.png" alt="GOBOLD game artwork 9">
-        <img class="art-slide" src="images/game-art-10.png" alt="GOBOLD game artwork 10">
-        <img class="art-slide" src="images/game-art-12.png" alt="GOBOLD game artwork 12">
-        <img class="art-slide" src="images/game-art-14.png" alt="GOBOLD game artwork 14">
-        <img class="art-slide" src="images/game-art-15.png" alt="GOBOLD game artwork 15">
+        <img class="art-slide is-on" src="images/game-art-15.png" alt="GOBOLD game artwork 15">
         <div class="game-title">BRAND THE SNAKE</div>
         <button id="sbStart" class="sb-play-btn" type="button">PLAY GAME →</button>
       </div>
@@ -837,7 +830,7 @@
 
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 4866;   /* footer text sits at bottom (ported v35 blocks + GOBOLD AGENCY; services marquee relocated under FAQ) */
+const PAGE_H = 4813;   /* footer contact cluster moved up 25px; original 3D framing restored */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -1269,7 +1262,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && gBox.classList.cont
 gBox.querySelector('.gb-x').addEventListener('click', gbClose);
 
 const carBandEl = document.getElementById('carBand');
-const faqPushIds = ['capsMatrix','snakeBand','bigAgency','carBand','intake','endcap','contactDivider'];
+const faqPushIds = ['capsMatrix','snakeBand','carBand','intake','endcap','contactDivider'];
 const faqBaseTops = {};
 function readTopPx(el){ return parseFloat((el.style && el.style.top) || getComputedStyle(el).top) || 0; }
 function captureFaqBaseTops(){
@@ -1453,9 +1446,9 @@ const videoP = new Promise(res => {
   s4.v.addEventListener('loadeddata', res, { once: true });
   s4.v.addEventListener('canplay', res, { once: true });
 });
-const timeoutP = new Promise(res => setTimeout(res, 5200)); // safety only: don't get stuck
-const heroVideoP = Promise.race([videoP, new Promise(res => setTimeout(res, 2600))]); // don't wait forever on video buffering
-const minLoaderP = new Promise(res => setTimeout(res, 950)); // fast, but not a blink
+const timeoutP = new Promise(res => setTimeout(res, 3200)); // safety only: don't get stuck
+const heroVideoP = Promise.race([videoP, new Promise(res => setTimeout(res, 1600))]); // don't wait forever on video buffering
+const minLoaderP = new Promise(res => setTimeout(res, 650)); // fast, but not a blink
 
 const INTRO_HOLD = 0;     // no pause — pull back immediately after preload
 const INTRO_DUR = 3500;
@@ -2215,9 +2208,9 @@ function cLoad(){
     cRig.add(m);
     const globeMax = Math.max(s.x, s.y, s.z);
     cRig.position.set(0, 0, 0);                              /* keep model pivot at true center */
-    const d = globeMax * 1.328;   /* 1.2x larger footer globe */
+    const d = globeMax * 1.328;   /* original footer globe scale */
     cCamera.position.set(0, 0, d);                          /* dead-on, rotation centered */
-    cCamera.setViewOffset(CW, CH, CW * 0.16 + 315, -CH * 0.12 - 300, CW, CH);   /* corrected: 65px less left than previous, pivot unchanged */
+    cCamera.setViewOffset(CW, CH, CW * 0.16 + 315, -CH * 0.12 - 300, CW, CH);   /* original footer model framing */
     cControls.target.set(0, 0, 0);                          /* drag rotates through model center */
     cControls.update();
     if (g.animations.length) {                 /* built-in Sketchfab take: wheels etc. */
@@ -2303,7 +2296,7 @@ cAnimate();
   addEventListener('keydown',e=>{ if(e.key==='Escape'&&alive){showArt();return;} if(!hover&&!alive&&!infoTimer)return; let used=true,k=e.key; if(k==='ArrowUp'||k==='w'||k==='W')setDir(0,-1); else if(k==='ArrowDown'||k==='s'||k==='S')setDir(0,1); else if(k==='ArrowLeft'||k==='a'||k==='A')setDir(-1,0); else if(k==='ArrowRight'||k==='d'||k==='D')setDir(1,0); else if(k===' '||k==='p'||k==='P')togglePause(); else used=false; if(used){e.preventDefault(); if(infoTimer)beginPlay();} });
   cv.addEventListener('pointerdown',e=>{touchStart={x:e.clientX,y:e.clientY};}); cv.addEventListener('pointerup',e=>{ if(!touchStart)return; const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y; touchStart=null; if(Math.hypot(dx,dy)<18){ if(!alive&&!infoTimer)launch(); return; } if(Math.abs(dx)>Math.abs(dy))setDir(dx>0?1:-1,0); else setDir(0,dy>0?1:-1); if(infoTimer)beginPlay(); });
   btn.addEventListener('click',function(e){ e.stopPropagation(); launch(); }); if(home)home.addEventListener('click',showArt); cv.addEventListener('dblclick',showArt);
-  var slides=document.querySelectorAll('#sbOverlay .art-slide'); if(slides.length>1){ var si=0, zin=false, slideTimer=0; slides[si].classList.remove('is-in'); function nextArt(){ slides[si].classList.remove('is-on','is-in'); si=(si+1)%slides.length; zin=!zin; slides[si].classList.toggle('is-in', zin); slides[si].classList.add('is-on'); } function queueArt(){ clearTimeout(slideTimer); slideTimer=setTimeout(function(){ nextArt(); queueArt(); },6000); } queueArt(); ov.addEventListener('pointermove',function(e){ var r=ov.getBoundingClientRect(); ov.style.setProperty('--mx',(e.clientX-r.left)+'px'); ov.style.setProperty('--my',(e.clientY-r.top)+'px'); }); ov.addEventListener('click',function(e){ if(e.target===btn||btn.contains(e.target)) return; nextArt(); queueArt(); }); }
+  /* Single game-art-15 hero only — removed rotating/noisy game-art slideshow code. */
   if('IntersectionObserver' in window){ new IntersectionObserver(es=>{inView=es[0].isIntersecting;},{threshold:.01}).observe(band); }
   reset(); draw(); requestAnimationFrame(loop);
 })();
