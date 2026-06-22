@@ -1,25 +1,24 @@
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>GOBOLD — Digital Agency [Website Creation | AI | Branding | 3D]</title>
-<meta name="description" content="GOBOLD — digital agency specializing in website creation, AI, branding and 3D [WEB3].">
-
+<meta content="GOBOLD — digital agency specializing in website creation, AI, branding and 3D [WEB3]." name="description"/>
 <!-- Fonts: only what the design uses, loaded async-friendly -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400;700&family=Anonymous+Pro:wght@400;700&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Cossette+Titre:400&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400;700&amp;family=Anonymous+Pro:wght@400;700&amp;family=ZCOOL+QingKe+HuangYou&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css?family=Cossette+Titre:400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols&amp;family=Noto+Sans+Symbols+2&amp;display=swap" rel="stylesheet"/>
 <!-- GitHub Pages build: keep runtime assets relative to /g/ so models/ and videos/ stay local. -->
-<link rel="preconnect" href="https://unpkg.com" crossorigin>
-<link rel="preconnect" href="https://esm.sh" crossorigin>
-<link rel="preload" as="fetch" href="models/cyberpunk_screens.gltf" crossorigin fetchpriority="high">
-<link rel="preload" as="image" href="models/baseColor_1.jpg" fetchpriority="high">
-<link rel="preload" as="video" href="videos/9765.mp4" crossorigin fetchpriority="high">
-<link rel="preload" as="video" href="videos/766.mp4" crossorigin fetchpriority="high">
-<link rel="prefetch" as="video" href="videos/693.mp4" crossorigin>
-<link rel="prefetch" as="video" href="videos/677.mp4" crossorigin>
-
+<link crossorigin="" href="https://unpkg.com" rel="preconnect"/>
+<link crossorigin="" href="https://esm.sh" rel="preconnect"/>
+<link as="fetch" crossorigin="" fetchpriority="high" href="models/cyberpunk_screens.gltf" rel="preload"/>
+<link as="image" fetchpriority="high" href="models/baseColor_1.jpg" rel="preload"/>
+<link as="video" crossorigin="" fetchpriority="high" href="videos/9765.mp4" rel="preload"/>
+<link as="video" crossorigin="" fetchpriority="high" href="videos/766.mp4" rel="preload"/>
+<link as="video" crossorigin="" href="videos/693.mp4" rel="prefetch"/>
+<link as="video" crossorigin="" href="videos/677.mp4" rel="prefetch"/>
 <style>
   @font-face{
     font-family:'p--l';
@@ -31,7 +30,7 @@
     src:url("fonts/2159.ttf") format('truetype');
     font-weight:400;font-style:normal;font-display:swap;
   }
-  :root{ --red:#ff0000; --grey:#818181; --dark:#414141; }
+  :root{ --red:#ff0000; --orange:#ff5a00; --grey:#818181; --dark:#414141; }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:#000;}
   html{scrollbar-width:thin;scrollbar-color:#ff0000 #000;}
@@ -231,7 +230,7 @@
   #vbSeekMiniPreview.on{display:block}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:3px;top:3994px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
+  #carBand{position:absolute;left:23px;top:3994px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
     overflow:hidden}   /* original footer 3D framing */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
   #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
@@ -310,25 +309,28 @@
     letter-spacing:-6px;color:#818181;background:#000;text-decoration:none;filter:url(#footerThreshStrong);height:84px;min-height:84px;overflow:visible;padding:2px 8px 0;pointer-events:auto;white-space:nowrap;text-shadow:none;transform:translateX(-1px)}
   #endcap .ec-head span{display:inline-block;transform:translate(-6px,3px)}
   #endcap .ec-head:hover{background:var(--red);color:#000;text-shadow:none}
-  #footerServices{position:absolute;left:7px;top:2230px;width:1010px;z-index:10;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;text-shadow:none;pointer-events:auto;font-family:'Anonymous Pro',monospace;text-transform:uppercase}
-  #footerServices .col{position:relative;padding-top:9px;padding-bottom:9px;min-width:0;text-align:left;border-top:0;border-bottom:0}
-  #footerServices .col:not(:first-child)::before{display:none}
-  #footerServices .col:last-child{text-align:left}
-  #footerServices .label{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#e9eaec;white-space:nowrap}
-  #footerServices .sub{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#818181;margin-top:5px;white-space:nowrap}
-  #footerServices .reveal{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#818181;margin-top:6px;white-space:nowrap}
-  #footerServices .col:hover{border-color:transparent}
-  #footerServices .col:hover .label{color:var(--red)}
-  #footerServices .col:first-child{border-color:transparent}
-  #footerServices .col:first-child .label{color:var(--red)}
-  #footerServices .wave{margin-top:14px;width:100%;height:55px;display:block}
-  #footerServices .cube3d,#footerServices .globe{margin-top:14px;width:100%;height:55px;display:block}
-  #footerServices .data-row{margin-top:18px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-  #footerServices .data-row .big{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#e9eaec;white-space:nowrap}
-  #footerServices .data-row .big b{font-weight:400;color:var(--red)}
-  #footerServices .data-row .time{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#818181;white-space:nowrap}
-  #footerServices .cursor{display:inline-block;width:4px;animation:ecBlink 1s steps(1) infinite;color:var(--red)}
-  #footerServices .data-row.second{margin-top:10px}
+  #processServices{position:absolute;left:7px;top:2230px;width:1010px;z-index:10;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;text-shadow:none;pointer-events:auto;font-family:'Anonymous Pro',monospace;text-transform:uppercase}
+  #processServices .col{position:relative;min-height:150px;padding-top:9px;padding-bottom:9px;min-width:0;text-align:left;border-top:1px solid #262626;border-bottom:1px solid #262626}
+  #processServices .col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:34px;background:#262626}
+  #processServices .col:last-child{text-align:left}
+  #processServices .label{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#e9eaec;white-space:nowrap}
+  #processServices .sub{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#818181;margin-top:5px;white-space:nowrap}
+  #processServices .reveal{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#818181;margin-top:6px;white-space:nowrap}
+  #processServices .col:hover{border-color:var(--red)}
+  #processServices .col:hover .label{color:var(--red)}
+  #processServices .col:first-child{border-color:#262626}
+  #processServices .col:first-child:hover{border-color:var(--red)}
+  #processServices .col:first-child .label{color:#e9eaec}
+  #processServices .col:hover .label{color:var(--red);animation:cmFlick .5s steps(2) 1}
+  #processServices .col:hover .data-row{opacity:1;transform:none}
+  #processServices .wave{margin-top:18px;width:100%;height:72px;display:block}
+  #processServices .cube3d,#processServices .globe{margin-top:18px;width:100%;height:72px;display:block}
+  #processServices .data-row{margin-top:18px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
+  #processServices .data-row .big{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#e9eaec;white-space:nowrap}
+  #processServices .data-row .big b{font-weight:400;color:var(--red)}
+  #processServices .data-row .time{font-family:'Anonymous Pro',monospace;font-size:6px;line-height:5px;letter-spacing:1px;color:#818181;white-space:nowrap}
+  #processServices .cursor{display:inline-block;width:4px;animation:ecBlink 1s steps(1) infinite;color:var(--red)}
+  #processServices .data-row.second{margin-top:10px}
   #endcap .ec-meta{margin:0;transform:none}
   /* ---- content sections between FAQ and the globe ---- */
   .sect{position:absolute;left:3px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase}
@@ -430,20 +432,32 @@
   #contactDivider::before,#contactDivider::after{content:'';height:1px;background:#262626;flex:1 1 auto}
   #contactDivider span{display:inline-block;color:#818181;background:transparent;padding:0}
 
-  /* CAPABILITIES MATRIX */
-  #capsMatrix{position:absolute;left:7px;top:3323px;width:1010px;z-index:8;background:#000;border:1px solid #262626;font-family:'Anonymous Pro',monospace;text-transform:uppercase;overflow:hidden}
-  #capsMatrix .cm-bar{display:flex;align-items:center;height:22px;padding:0 12px;border-bottom:1px solid #262626;font-size:7px;letter-spacing:2px;color:var(--red)}
-  #capsMatrix .cm-bar b{color:#818181;font-weight:400;margin-left:auto}
-  #capsMatrix .cm-grid{display:grid;grid-template-columns:repeat(4,1fr)}
-  #capsMatrix .cm-cell{position:relative;min-height:96px;padding:12px 12px 10px;border-right:1px solid #161616;border-bottom:1px solid #161616;overflow:hidden;cursor:crosshair}
-  #capsMatrix .cm-cell:nth-child(4n){border-right:0}
-  #capsMatrix .cm-num{font-size:6px;letter-spacing:1px;color:var(--red)}
-  #capsMatrix .cm-l{display:block;margin-top:10px;font-family:'Kode Mono',monospace;font-size:14px;letter-spacing:-.4px;color:#cfcfcf}
-  #capsMatrix .cm-r{display:block;margin-top:8px;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#6a6a6a;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
-  #capsMatrix .cm-cell:hover{background:#0a0000}
-  #capsMatrix .cm-cell:hover .cm-l{color:var(--red);animation:cmFlick .5s steps(2) 1}
-  #capsMatrix .cm-cell:hover .cm-r{opacity:1;transform:none}
+  /* SERVICES heading + services matrix */
+  #servicesHead{position:absolute;left:3px;top:3314px;width:1018px;z-index:8;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);text-align:right;transform:translate(-10px,4px);pointer-events:none}
+  #servicesMatrix{position:absolute;left:7px;top:3428px;width:1010px;height:244px;z-index:8;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;pointer-events:auto;color:#818181}
+  #servicesMatrix .sm-col{position:relative;min-width:0;height:244px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:13px 0 12px;overflow:hidden;background:transparent}
+  #servicesMatrix .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
+  #servicesMatrix .sm-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:14px}
+  #servicesMatrix .sm-title{display:block;width:max-content;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:16px;line-height:16px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:10px;white-space:nowrap;cursor:crosshair}
+  #servicesMatrix .sm-copy{margin:0;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#777;max-width:218px;min-height:54px}
+  #servicesMatrix .sm-signal{position:absolute;left:0;right:0;bottom:53px;height:62px;border-top:1px solid #181818;border-bottom:1px solid #181818;overflow:hidden;background:repeating-linear-gradient(90deg,rgba(255,0,0,.10) 0 1px,transparent 1px 13px)}
+  #servicesMatrix .sm-signal::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--red);opacity:.42;transform:translateY(-50%)}
+  #servicesMatrix .sm-signal::after{content:'';position:absolute;left:var(--x,8%);top:18px;width:38px;height:24px;border:1px solid var(--red);background:rgba(255,0,0,.06);box-shadow:0 0 18px rgba(255,0,0,.18);animation:smPulse 3.4s steps(2,end) infinite}
+  #servicesMatrix .sm-col:nth-child(2) .sm-signal::after{--x:28%;animation-delay:.35s}
+  #servicesMatrix .sm-col:nth-child(3) .sm-signal::after{--x:52%;animation-delay:.7s}
+  #servicesMatrix .sm-col:nth-child(4) .sm-signal::after{--x:68%;animation-delay:1.05s}
+  #servicesMatrix .sm-foot{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;font-size:6px;line-height:6px;letter-spacing:1px;color:#818181;border-top:1px solid #181818;padding-top:10px;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
+  #servicesMatrix .sm-foot b{font-weight:400;color:#e9eaec}
+  #servicesMatrix .sm-foot span:last-child{color:var(--red)}
+  #servicesMatrix .sm-col:hover{border-color:var(--red)}
+  #servicesMatrix .sm-col:hover::before{background:var(--red);opacity:1}
+  #servicesMatrix .sm-col:first-child{border-color:var(--red)}
+  #servicesMatrix .sm-col:hover .sm-title{color:var(--red);animation:cmFlick .5s steps(2) 1}
+  #servicesMatrix .sm-col:hover .sm-signal{background-color:#080000}
+  #servicesMatrix .sm-col:hover .sm-foot{opacity:1;transform:none}
   @keyframes cmFlick{0%,100%{opacity:1}20%{opacity:.3}40%{opacity:.9}60%{opacity:.4}}
+  @keyframes smPulse{0%,100%{opacity:.82;transform:translateX(0)}30%{opacity:.38;transform:translateX(7px)}58%{opacity:1;transform:translateX(-3px)}72%{opacity:.55}}
+
 
 
   /* GOBOLD AGENCY — full-width big text under the game block (matches .giant color + threshold) */
@@ -459,52 +473,45 @@
 </style>
 </head>
 <body class="gb-loading">
-
 <!-- ===================== FIXED HEADER ===================== -->
 <div id="fixedLayer2"><a class="mail" href="mailto:HELLO@GOBOLD.LIVE">HELLO@GOBOLD.LIVE</a>
-  <div class="music clickable" id="musicToggle">
-    <div class="switch-body"><div class="slot"><div class="lever"></div></div></div>
-    <div class="title">MUSIC <span id="state">OFF</span></div>
-    <div class="equalizer">
-      <div class="equalizer-bar"><div class="progress"></div></div>
-      <div class="equalizer-bar"><div class="progress"></div></div>
-      <div class="equalizer-bar"><div class="progress"></div></div>
-      <div class="equalizer-bar"><div class="progress"></div></div>
-    </div>
-  </div>
-  <button class="clickable" id="invertSite" type="button">INVERT SITE</button>
-  <div class="icons clickable" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-    <img src="images/icons-strip.png" alt="GOBOLD icons">
-    <div class="hovzone"><img src="images/icons-strip-hover.png" alt=""></div>
-  </div>
-  <img class="fixed-stamp-gif" src="images/stamp.webp" alt="GO. BOLD. 2026">
-
-
-
-  <div class="brand">
-    <p><a class="r" id="brandHov" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span id="brandWord">GOBOLD™</span></a><span id="brandRest1"> Digital Agency specializing in</span><br><span id="brandRest2">WEBSITE CREATION / AI / BRANDING / 3D WEB3</span></p>
-  </div>
-
+<div class="music clickable" id="musicToggle">
+<div class="switch-body"><div class="slot"><div class="lever"></div></div></div>
+<div class="title">MUSIC <span id="state">OFF</span></div>
+<div class="equalizer">
+<div class="equalizer-bar"><div class="progress"></div></div>
+<div class="equalizer-bar"><div class="progress"></div></div>
+<div class="equalizer-bar"><div class="progress"></div></div>
+<div class="equalizer-bar"><div class="progress"></div></div>
+</div>
+</div>
+<button class="clickable" id="invertSite" type="button">INVERT SITE</button>
+<div class="icons clickable" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+<img alt="GOBOLD icons" src="images/icons-strip.png"/>
+<div class="hovzone"><img alt="" src="images/icons-strip-hover.png"/></div>
+</div>
+<img alt="GO. BOLD. 2026" class="fixed-stamp-gif" src="images/stamp.webp"/>
+<div class="brand">
+<p><a class="r" id="brandHov" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span id="brandWord">GOBOLD™</span></a><span id="brandRest1"> Digital Agency specializing in</span><br/><span id="brandRest2">WEBSITE CREATION / AI / BRANDING / 3D WEB3</span></p>
+</div>
 </div>
 <div id="fixedLayer">
 </div>
-
-<nav id="miniMap" aria-label="GOBOLD minimap">
-  <a href="#page" data-target="#page" data-y="0" data-section="main">MAIN</a>
-  <a href="#giantLine" data-target="#giantLine" data-y="560" data-section="about">ABOUT</a>
-  <a href="#bigmovingtext" data-target="#bigmovingtext" data-y="1950" data-section="services">SERVICES</a>
-  <a href="#faq" data-target="#faq" data-y="2350" data-section="faq">FAQ</a>
-  <a href="#endcap" data-target="#endcap" data-bottom="true" data-section="contact">CONTACT</a>
+<nav aria-label="GOBOLD minimap" id="miniMap">
+<a data-section="main" data-target="#page" data-y="0" href="#page">MAIN</a>
+<a data-section="about" data-target="#giantLine" data-y="560" href="#giantLine">ABOUT</a>
+<a data-section="services" data-target="#bigmovingtext" data-y="1950" href="#bigmovingtext">SERVICES</a>
+<a data-section="faq" data-target="#faq" data-y="2350" href="#faq">FAQ</a>
+<a data-bottom="true" data-section="contact" data-target="#endcap" href="#endcap">CONTACT</a>
 </nav>
-
 <!-- ===================== FULL-PAGE PRELOADER ===================== -->
 <div id="siteLoader">
-  <div class="ldr-shutter top"></div>
-  <div class="ldr-shutter bottom"></div>
-  <div class="ldr-content">
-    <div class="ldr-line"></div>
-    <div class="ldr-pct" id="ldrPct">LOADING 0%</div>
-  </div>
+<div class="ldr-shutter top"></div>
+<div class="ldr-shutter bottom"></div>
+<div class="ldr-content">
+<div class="ldr-line"></div>
+<div class="ldr-pct" id="ldrPct">LOADING 0%</div>
+</div>
 </div>
 <script>
 (function(){
@@ -525,284 +532,280 @@
   window.__gbFinishLoader=function(){ window.__gbLoaderDone=true; n=100; show(); };
 })();
 </script>
-
 <!-- ===================== PAGE CONTENT ===================== -->
 <div id="page">
-
-  <div id="scene3d">
-    <div id="preloader"><img src="images/3y0oCOkdKKRi0.webp" alt="loading"></div>
-    <div id="sceneCursorLines"><span class="v"></span><span class="h"></span></div>
-  </div>
-  <button id="thermalBtn">THERMAL EFFECT</button>
-  <div id="thermalHint">(i) rotate 3d, scroll to continue</div>
-
-  <div id="giantLine"></div>
-
-  <div class="giant">
-    <p class="static">GOBOLD Digital Agency specializing in</p>
-    <p>INTEGRATIONS AI</p>
-    <p>3D WEB.3</p>
-    <p>BRANDING</p>
-    <p>WEBSITE DESIGN</p>
-    <p>WEBSITE DEVELOPMENT</p>
-  </div>
-
-  <div id="globeWrap"><div id="globeZone"></div></div>
-
-  <div id="gBox"><span class="gb-x">[X]</span><span class="gb-t"></span><span class="gb-d"></span></div>
-
-  <div id="vidband">
-    <video id="ytv" class="video-replace" src="media/tt.mp4" muted loop playsinline autoplay preload="auto"></video>
-    <canvas id="vbTrail" width="1014" height="660"></canvas>
-    <input id="vbSeek" type="range" min="0" max="1000" value="0" aria-label="Video position">
-    <div id="vbSeekPreview" aria-hidden="true"></div>
-    <div id="vbSeekMiniPreview" aria-hidden="true"></div>
-    <button id="vbRelocate" type="button">VIDEO FX 01</button>
-    <button id="vbMute" type="button">SOUND OFF</button>
-    <div class="vb-scan"></div>
-  </div>
-
-  <div id="faq">
-    <p class="faq-head">FAQ</p>
-    <div class="faq-item">
-      <button class="faq-q">What does GOBOLD do?<span>[+]</span></button>
-      <div class="faq-a"><p>Websites, AI integrations, branding and 3D / WEB3 experiences. Strategy, design and development — end to end, in-house.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q">How long does a project take?<span>[+]</span></button>
-      <div class="faq-a"><p>A landing page: 2–3 weeks. A full website: 4–8 weeks. Branding or AI integration: depends on scope — we lock the timeline before we start.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q">How much does it cost?<span>[+]</span></button>
-      <div class="faq-a"><p>Every project is scoped individually. Send a short brief to <a href="mailto:HELLO@GOBOLD.LIVE">HELLO@GOBOLD.LIVE</a> and you get an estimate within 48 hours.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q">How do we start?<span>[+]</span></button>
-      <div class="faq-a"><p>Email us → quick call → proposal with scope, timeline and price → we build. You follow the progress on a live preview link the whole way.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q">Do you work worldwide?<span>[+]</span></button>
-      <div class="faq-a"><p>Yes. Remote-first, shipping for clients in every time zone — check the clocks at the top.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q">Who will I actually work with?<span>[+]</span></button>
-      <div class="faq-a"><p>A small senior team — no account managers, no hand-offs. You talk directly to the people designing and building your project.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q">Do you maintain projects after launch?<span>[+]</span></button>
-      <div class="faq-a"><p>Yes. We offer ongoing support, iteration and retainers — or a clean handover with docs if you'd rather run it in-house.</p></div>
-    </div>
-  </div>
-
-
-  <div id="snakeBand">
-    <div class="sb-bar">
-      <span class="sb-slashes">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span>
-      <span class="sb-title">EDEN RUN</span>
-      <span class="sb-score">SCORE <b id="sbScore">00</b><span class="sb-sep">/</span>BEST <b id="sbBest">00</b><span class="sb-metric">LVL <b id="sbLevel">01</b></span><span class="sb-metric">COMBO <b id="sbCombo">x1</b></span><button class="sb-home" id="sbHome" type="button">BACK</button></span>
-    </div>
-    <div class="sb-stage">
-      <canvas id="sbCanvas" width="1000" height="300"></canvas>
-      <div class="sb-overlay" id="sbOverlay">
-        <img class="art-slide is-on" src="images/game-art-15.png" alt="GOBOLD game artwork 15">
-        <div class="game-title">BRAND THE SNAKE</div>
-        <button id="sbStart" class="sb-play-btn" type="button">PLAY GAME →</button>
-      </div>
-      <div class="sb-info hidden" id="sbInfo">
-        <div class="sb-keys">
-          <span class="kc kc-up">↑</span>
-          <div class="kc-row"><span class="kc">←</span><span class="kc">↓</span><span class="kc">→</span></div>
-        </div>
-        <div class="sb-goal"><i class="px-snake"></i><i class="px-arr"></i><i class="px-apple"></i></div>
-        <div class="sb-help"><b>WASD</b> / ARROWS <span>/</span> SPACE PAUSE</div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- services — moving marquee line (non-interactive) -->
-  <div id="bigmovingtext" aria-hidden="true">
-    <div class="bigmovingtextTrack">
-      <span class="bigmovingtextItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
-      <span class="bigmovingtextItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
-      <span class="bigmovingtextItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
-      <span class="bigmovingtextItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
-    </div>
-    <canvas id="bigmovingtextTrail" width="1024" height="316"></canvas>
-  </div>
-
-  <div id="carBand">
-  </div>
-
-  <div id="footerServices" aria-label="GOBOLD services">
-    <div class="col warm">
-      <div class="label">Website Creation</div>
-      <div class="sub">Web · Product · Motion</div>
-      <div class="reveal">UI/UX • WEBFLOW • DEVELOPMENT</div>
-      <canvas class="wave" id="footerWaveLeo"></canvas>
-      <div class="data-row">
-        <div class="big">In Build <b id="footerOrbDay">0</b> of <b>16</b></div>
-        <div class="time"><span id="footerLeoTime">--:--:--</span> LIVE<span class="cursor">█</span></div>
-      </div>
-      <div class="data-row second">
-        <div class="big">Next Handoff</div>
-        <div class="time"><b id="footerLeoRise">12</b> DAYS</div>
-      </div>
-    </div>
-    <div class="col cold">
-      <div class="label">3D / Web3</div>
-      <div class="sub">Immersive · Interactive</div>
-      <div class="reveal">WEBGL • THREE.JS • MOTION</div>
-      <canvas class="cube3d" id="footerCube3d"></canvas>
-      <div class="data-row">
-        <div class="big">Scenes <b id="footerLunDay">0</b> of <b>12</b></div>
-        <div class="time"><span id="footerLunTime">--:--:--</span> RENDER<span class="cursor">█</span></div>
-      </div>
-      <div class="data-row second">
-        <div class="big">Framerate</div>
-        <div class="time"><b>60</b> FPS</div>
-      </div>
-    </div>
-    <div class="col warm">
-      <div class="label">Branding</div>
-      <div class="sub">Identity · Voice · System</div>
-      <div class="reveal">LOGO • ART DIRECTION • GUIDES</div>
-      <canvas class="globe" id="footerAiGlobe"></canvas>
-      <div class="data-row">
-        <div class="big">Systems <b>4</b> Active</div>
-        <div class="time">VISUAL SIGNAL<span class="cursor">█</span></div>
-      </div>
-    </div>
-    <div class="col warm ai-side">
-      <div class="label">AI Integration</div>
-      <div class="sub">Automation · Intelligence</div>
-      <div class="reveal">LLM • RAG • AGENTS</div>
-      <canvas class="wave" id="footerBrandWave"></canvas>
-      <div class="data-row">
-        <div class="big">Models <b>6</b> in Prod</div>
-        <div class="time">INFERENCE LIVE<span class="cursor">█</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== PORTED v35 BLOCKS (under the 4-animation footer block) ===== -->
-  <!-- send brief block -->
-  <div id="intake">
-    <div class="ik-bar"><span class="ik-status">GO LIVE</span></div>
-    <div class="ik-body">
-      <p class="ik-prompt" id="ikPrompt">CHOOSE REQUIRED SERVICES</p>
-      <div class="ik-step is-on" data-step="services">
-        <p class="ik-label">WHAT SHOULD WE BUILD FOR YOU?</p>
-        <div class="ik-chips">
-          <button class="ik-chip" data-group="service" data-v="FULL WEBSITE">FULL WEBSITE</button>
-          <button class="ik-chip" data-group="service" data-v="LANDING PAGE">LANDING PAGE</button>
-          <button class="ik-chip" data-group="service" data-v="ECOMMERCE">ECOMMERCE</button>
-          <button class="ik-chip" data-group="service" data-v="AI INTEGRATIONS">AI INTEGRATIONS</button>
-          <button class="ik-chip" data-group="service" data-v="3D INTEGRATIONS">3D INTEGRATIONS</button>
-          <button class="ik-chip" data-group="service" data-v="SOCIAL MEDIA">SOCIAL MEDIA</button>
-          <button class="ik-chip" data-group="service" data-v="GAMIFICATIONS">GAMIFICATIONS</button>
-        </div>
-      </div>
-      <div class="ik-step" data-step="budget">
-        <p class="ik-label">WHAT BUDGET RANGE SHOULD WE PLAN AROUND?</p>
-        <div class="ik-chips">
-          <button class="ik-chip" data-group="budget" data-v="UNDER 5K">UNDER 5K</button>
-          <button class="ik-chip" data-group="budget" data-v="5-7K">5-7K</button>
-          <button class="ik-chip" data-group="budget" data-v="7-10K">7-10K</button>
-          <button class="ik-chip" data-group="budget" data-v="10-15K">10-15K</button>
-          <button class="ik-chip" data-group="budget" data-v="15K+">15K+</button>
-        </div>
-      </div>
-      <div class="ik-step" data-step="email">
-        <p class="ik-label">WE’LL CONTACT YOU SOON</p>
-        <p class="ik-email-error" id="ikEmailError">ENTER EMAIL</p>
-        <input class="ik-email" id="ikEmail" type="email" placeholder="EMAIL@DOMAIN.COM" autocomplete="email">
-      </div>
-      <div class="ik-foot">
-        <button class="ik-send" id="ikNext" type="button">NEXT →</button>
-        <button class="ik-back is-hidden" id="ikBack" type="button">← BACK</button>
-        <p class="ik-note" id="ikNote"></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- capabilities matrix block -->
-  <div id="capsMatrix">
-    <div class="cm-bar">CAPABILITIES MATRIX<b>08 SYSTEMS</b></div>
-    <div class="cm-grid">
-      <div class="cm-cell"><span class="cm-num">01</span><span class="cm-l">WEBSITE CREATION</span><span class="cm-r">UI/UX · WEBFLOW · CUSTOM DEVELOPMENT</span></div>
-      <div class="cm-cell"><span class="cm-num">02</span><span class="cm-l">AI INTEGRATION</span><span class="cm-r">LLM · RAG · AGENTS · AUTOMATION</span></div>
-      <div class="cm-cell"><span class="cm-num">03</span><span class="cm-l">BRANDING</span><span class="cm-r">LOGO · ART DIRECTION · GUIDELINES</span></div>
-      <div class="cm-cell"><span class="cm-num">04</span><span class="cm-l">3D / WEB3</span><span class="cm-r">WEBGL · THREE.JS · SHADERS</span></div>
-      <div class="cm-cell"><span class="cm-num">05</span><span class="cm-l">MOTION</span><span class="cm-r">UI MOTION · TRANSITIONS · VIDEO</span></div>
-      <div class="cm-cell"><span class="cm-num">06</span><span class="cm-l">AUTOMATION</span><span class="cm-r">PIPELINES · WORKFLOWS · OPS</span></div>
-      <div class="cm-cell"><span class="cm-num">07</span><span class="cm-l">LAUNCH SYSTEMS</span><span class="cm-r">SEO · ANALYTICS · PERFORMANCE</span></div>
-      <div class="cm-cell"><span class="cm-num">08</span><span class="cm-l">RETAINERS</span><span class="cm-r">SUPPORT · ITERATION · GROWTH</span></div>
-    </div>
-  </div>
-
-
-  <div id="contactDivider"><span>OR EMAIL US DIRECTLY ↓</span></div>
-
-  <div id="endcap">
-    <div class="ec-meta"></div>
-    <a class="ec-head" href="mailto:HELLO@GOBOLD.LIVE"><span>HELLO@GOBOLD.LIVE</span></a>
-  </div>
-
+<div id="scene3d">
+<div id="preloader"><img alt="loading" src="images/3y0oCOkdKKRi0.webp"/></div>
+<div id="sceneCursorLines"><span class="v"></span><span class="h"></span></div>
 </div>
-
+<button id="thermalBtn">THERMAL EFFECT</button>
+<div id="thermalHint">(i) rotate 3d, scroll to continue</div>
+<div id="giantLine"></div>
+<div class="giant">
+<p class="static">GOBOLD Digital Agency specializing in</p>
+<p>INTEGRATIONS AI</p>
+<p>3D WEB.3</p>
+<p>BRANDING</p>
+<p>WEBSITE DESIGN</p>
+<p>WEBSITE DEVELOPMENT</p>
+</div>
+<div id="globeWrap"><div id="globeZone"></div></div>
+<div id="gBox"><span class="gb-x">[X]</span><span class="gb-t"></span><span class="gb-d"></span></div>
+<div id="vidband">
+<video autoplay="" class="video-replace" id="ytv" loop="" muted="" playsinline="" preload="auto" src="media/tt.mp4"></video>
+<canvas height="660" id="vbTrail" width="1014"></canvas>
+<input aria-label="Video position" id="vbSeek" max="1000" min="0" type="range" value="0"/>
+<div aria-hidden="true" id="vbSeekPreview"></div>
+<div aria-hidden="true" id="vbSeekMiniPreview"></div>
+<button id="vbRelocate" type="button">VIDEO FX 01</button>
+<button id="vbMute" type="button">SOUND OFF</button>
+<div class="vb-scan"></div>
+</div>
+<div id="faq">
+<p class="faq-head">FAQ</p>
+<div class="faq-item">
+<button class="faq-q">What does GOBOLD do?<span>[+]</span></button>
+<div class="faq-a"><p>Websites, AI integrations, branding and 3D / WEB3 experiences. Strategy, design and development — end to end, in-house.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">How long does a project take?<span>[+]</span></button>
+<div class="faq-a"><p>A landing page: 2–3 weeks. A full website: 4–8 weeks. Branding or AI integration: depends on scope — we lock the timeline before we start.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">How much does it cost?<span>[+]</span></button>
+<div class="faq-a"><p>Every project is scoped individually. Send a short brief to <a href="mailto:HELLO@GOBOLD.LIVE">HELLO@GOBOLD.LIVE</a> and you get an estimate within 48 hours.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">How do we start?<span>[+]</span></button>
+<div class="faq-a"><p>Email us → quick call → proposal with scope, timeline and price → we build. You follow the progress on a live preview link the whole way.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">Do you work worldwide?<span>[+]</span></button>
+<div class="faq-a"><p>Yes. Remote-first, shipping for clients in every time zone — check the clocks at the top.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">Who will I actually work with?<span>[+]</span></button>
+<div class="faq-a"><p>A small senior team — no account managers, no hand-offs. You talk directly to the people designing and building your project.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q">Do you maintain projects after launch?<span>[+]</span></button>
+<div class="faq-a"><p>Yes. We offer ongoing support, iteration and retainers — or a clean handover with docs if you'd rather run it in-house.</p></div>
+</div>
+</div>
+<div id="snakeBand">
+<div class="sb-bar">
+<span class="sb-slashes">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span>
+<span class="sb-title">EDEN RUN</span>
+<span class="sb-score">SCORE <b id="sbScore">00</b><span class="sb-sep">/</span>BEST <b id="sbBest">00</b><span class="sb-metric">LVL <b id="sbLevel">01</b></span><span class="sb-metric">COMBO <b id="sbCombo">x1</b></span><button class="sb-home" id="sbHome" type="button">BACK</button></span>
+</div>
+<div class="sb-stage">
+<canvas height="300" id="sbCanvas" width="1000"></canvas>
+<div class="sb-overlay" id="sbOverlay">
+<img alt="GOBOLD game artwork 15" class="art-slide is-on" src="images/game-art-15.png"/>
+<div class="game-title">BRAND THE SNAKE</div>
+<button class="sb-play-btn" id="sbStart" type="button">PLAY GAME →</button>
+</div>
+<div class="sb-info hidden" id="sbInfo">
+<div class="sb-keys">
+<span class="kc kc-up">↑</span>
+<div class="kc-row"><span class="kc">←</span><span class="kc">↓</span><span class="kc">→</span></div>
+</div>
+<div class="sb-goal"><i class="px-snake"></i><i class="px-arr"></i><i class="px-apple"></i></div>
+<div class="sb-help"><b>WASD</b> / ARROWS <span>/</span> SPACE PAUSE</div>
+</div>
+</div>
+</div>
+<!-- services — moving marquee line (non-interactive) -->
+<div aria-hidden="true" id="bigmovingtext">
+<div class="bigmovingtextTrack">
+<span class="bigmovingtextItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
+<span class="bigmovingtextItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
+<span class="bigmovingtextItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
+<span class="bigmovingtextItem">WEBSITE DESIGN DEVELOPMENT BRANDING 3D</span>
+</div>
+<canvas height="316" id="bigmovingtextTrail" width="1024"></canvas>
+</div>
+<div id="carBand">
+</div>
+<div aria-label="GOBOLD process" id="processServices">
+<div class="col warm">
+<div class="label">AUDIT THE MOVE</div>
+<div class="sub">Strategy Signal</div>
+<div class="reveal">POSITIONING • COMPETITOR READ • OFFER ANGLE</div>
+<canvas class="wave" id="footerWaveLeo"></canvas>
+<div class="data-row">
+<div class="big">Input</div>
+<div class="time">BRIEF / MARKET / GOAL</div>
+</div>
+<div class="data-row second">
+<div class="big">Path Locked</div>
+<div class="time">01 PHASE</div>
+</div>
+</div>
+<div class="col cold">
+<div class="label">DESIGN THE EDGE</div>
+<div class="sub">Interface System</div>
+<div class="reveal">ART DIRECTION • UI SYSTEM • MOTION</div>
+<canvas class="cube3d" id="footerCube3d"></canvas>
+<div class="data-row">
+<div class="big">Output</div>
+<div class="time">FIGMA / MOTION / COPY</div>
+</div>
+<div class="data-row second">
+<div class="big">Visual Machine</div>
+<div class="time">02 PHASE</div>
+</div>
+</div>
+<div class="col warm">
+<div class="label">CODE THE WORLD</div>
+<div class="sub">Build Engine</div>
+<div class="reveal">FRONT-END • WEBGL • AUTOMATION</div>
+<canvas class="globe" id="footerAiGlobe"></canvas>
+<div class="data-row">
+<div class="big">Stack</div>
+<div class="time">WEB / 3D / AI</div>
+</div>
+</div>
+<div class="col warm ai-side">
+<div class="label">SHIP + ITERATE</div>
+<div class="sub">Launch Loop</div>
+<div class="reveal">QA • TRACKING • PERFORMANCE</div>
+<canvas class="wave" id="footerBrandWave"></canvas>
+<div class="data-row">
+<div class="big">Status</div>
+<div class="time">LIVE / TRACK / SCALE</div>
+</div>
+</div>
+</div>
+<!-- ===== PORTED v35 BLOCKS (under the 4-animation footer block) ===== -->
+<!-- send brief block -->
+<div id="intake">
+<div class="ik-bar"><span class="ik-status">GO LIVE</span></div>
+<div class="ik-body">
+<p class="ik-prompt" id="ikPrompt">CHOOSE REQUIRED SERVICES</p>
+<div class="ik-step is-on" data-step="services">
+<p class="ik-label">WHAT SHOULD WE BUILD FOR YOU?</p>
+<div class="ik-chips">
+<button class="ik-chip" data-group="service" data-v="FULL WEBSITE">FULL WEBSITE</button>
+<button class="ik-chip" data-group="service" data-v="LANDING PAGE">LANDING PAGE</button>
+<button class="ik-chip" data-group="service" data-v="ECOMMERCE">ECOMMERCE</button>
+<button class="ik-chip" data-group="service" data-v="AI INTEGRATIONS">AI INTEGRATIONS</button>
+<button class="ik-chip" data-group="service" data-v="3D INTEGRATIONS">3D INTEGRATIONS</button>
+<button class="ik-chip" data-group="service" data-v="SOCIAL MEDIA">SOCIAL MEDIA</button>
+<button class="ik-chip" data-group="service" data-v="GAMIFICATIONS">GAMIFICATIONS</button>
+</div>
+</div>
+<div class="ik-step" data-step="budget">
+<p class="ik-label">WHAT BUDGET RANGE SHOULD WE PLAN AROUND?</p>
+<div class="ik-chips">
+<button class="ik-chip" data-group="budget" data-v="UNDER 5K">UNDER 5K</button>
+<button class="ik-chip" data-group="budget" data-v="5-7K">5-7K</button>
+<button class="ik-chip" data-group="budget" data-v="7-10K">7-10K</button>
+<button class="ik-chip" data-group="budget" data-v="10-15K">10-15K</button>
+<button class="ik-chip" data-group="budget" data-v="15K+">15K+</button>
+</div>
+</div>
+<div class="ik-step" data-step="email">
+<p class="ik-label">WE’LL CONTACT YOU SOON</p>
+<p class="ik-email-error" id="ikEmailError">ENTER EMAIL</p>
+<input autocomplete="email" class="ik-email" id="ikEmail" placeholder="EMAIL@DOMAIN.COM" type="email"/>
+</div>
+<div class="ik-foot">
+<button class="ik-send" id="ikNext" type="button">NEXT →</button>
+<button class="ik-back is-hidden" id="ikBack" type="button">← BACK</button>
+<p class="ik-note" id="ikNote"></p>
+</div>
+</div>
+</div>
+<p id="servicesHead">WHAT WE DO</p>
+<div aria-label="GOBOLD services matrix" id="servicesMatrix">
+<div class="sm-col">
+<span class="sm-k">01 / WEBSITE CREATION</span>
+<span class="sm-title">WEBSITE CREATION</span>
+<p class="sm-copy">WEB · PRODUCT · MOTION. UI/UX, WEBFLOW AND DEVELOPMENT SYSTEMS BUILT END TO END.</p>
+<div class="sm-signal"></div>
+<div class="sm-foot"><b>IN BUILD</b><span>0 OF 16 / LIVE</span></div>
+</div>
+<div class="sm-col">
+<span class="sm-k">02 / 3D WEB3</span>
+<span class="sm-title">3D / WEB3</span>
+<p class="sm-copy">IMMERSIVE · INTERACTIVE. WEBGL, THREE.JS AND MOTION SCENES FOR HIGH-SIGNAL DIGITAL WORLDS.</p>
+<div class="sm-signal"></div>
+<div class="sm-foot"><b>SCENES</b><span>0 OF 12 / RENDER</span></div>
+</div>
+<div class="sm-col">
+<span class="sm-k">03 / BRANDING</span>
+<span class="sm-title">BRANDING</span>
+<p class="sm-copy">IDENTITY · VOICE · SYSTEM. LOGO, ART DIRECTION AND GUIDES FOR A SHARP VISUAL LANGUAGE.</p>
+<div class="sm-signal"></div>
+<div class="sm-foot"><b>SYSTEMS</b><span>4 ACTIVE / VISUAL SIGNAL</span></div>
+</div>
+<div class="sm-col">
+<span class="sm-k">04 / AI INTEGRATION</span>
+<span class="sm-title">AI INTEGRATION</span>
+<p class="sm-copy">AUTOMATION · INTELLIGENCE. LLM, RAG AND AGENTS CONNECTED INTO REAL PRODUCT WORKFLOWS.</p>
+<div class="sm-signal"></div>
+<div class="sm-foot"><b>MODELS</b><span>6 IN PROD / INFERENCE LIVE</span></div>
+</div>
+</div>
+<div id="contactDivider"><span>OR EMAIL US DIRECTLY ↓</span></div>
+<div id="endcap">
+<div class="ec-meta"></div>
+<a class="ec-head" href="mailto:HELLO@GOBOLD.LIVE"><span>HELLO@GOBOLD.LIVE</span></a>
+</div>
+</div>
 <!-- bottom rgb blur -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="pixelfx" x="-5%" y="-5%" width="110%" height="110%">
-  <feFlood x="1" y="1" height="1" width="1"></feFlood>
-  <feComposite width="4" height="4"></feComposite>
-  <feTile result="a"></feTile>
-  <feComposite in="SourceGraphic" in2="a" operator="in"></feComposite>
-  <feMorphology operator="dilate" radius="2"></feMorphology>
+<svg aria-hidden="true" height="0" style="position:absolute" width="0"><filter height="110%" id="pixelfx" width="110%" x="-5%" y="-5%">
+<feflood height="1" width="1" x="1" y="1"></feflood>
+<fecomposite height="4" width="4"></fecomposite>
+<fetile result="a"></fetile>
+<fecomposite in="SourceGraphic" in2="a" operator="in"></fecomposite>
+<femorphology operator="dilate" radius="2"></femorphology>
 </filter>
-<filter id="pixelfx3" x="-15%" y="-15%" width="130%" height="130%">
-  <feGaussianBlur stdDeviation="2.2" result="b"></feGaussianBlur>
-  <feTurbulence id="thTurb" type="fractalNoise" baseFrequency="0.16" numOctaves="2" seed="3" result="n"></feTurbulence>
-  <feDisplacementMap id="thDisp" in="b" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G" result="d"></feDisplacementMap>
-  <feFlood x="0" y="0" height="1" width="1"></feFlood>
-  <feComposite width="2" height="2"></feComposite>
-  <feTile result="a"></feTile>
-  <feComposite in="d" in2="a" operator="in"></feComposite>
-  <feComponentTransfer><feFuncA type="discrete" tableValues="0 0 1 1 1"></feFuncA></feComponentTransfer>
+<filter height="130%" id="pixelfx3" width="130%" x="-15%" y="-15%">
+<fegaussianblur result="b" stddeviation="2.2"></fegaussianblur>
+<feturbulence basefrequency="0.16" id="thTurb" numoctaves="2" result="n" seed="3" type="fractalNoise"></feturbulence>
+<fedisplacementmap id="thDisp" in="b" in2="n" result="d" scale="9" xchannelselector="R" ychannelselector="G"></fedisplacementmap>
+<feflood height="1" width="1" x="0" y="0"></feflood>
+<fecomposite height="2" width="2"></fecomposite>
+<fetile result="a"></fetile>
+<fecomposite in="d" in2="a" operator="in"></fecomposite>
+<fecomponenttransfer><fefunca tablevalues="0 0 1 1 1" type="discrete"></fefunca></fecomponenttransfer>
 </filter>
-<filter id="threshfx" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
-  <feGaussianBlur stdDeviation="0.45" result="soft"></feGaussianBlur>
-  <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 7 -2.8"></feColorMatrix>
+<filter color-interpolation-filters="sRGB" height="130%" id="threshfx" width="130%" x="-15%" y="-15%">
+<fegaussianblur result="soft" stddeviation="0.45"></fegaussianblur>
+<fecolormatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 7 -2.8"></fecolormatrix>
 </filter>
-<filter id="threshfxStrong" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
-  <feGaussianBlur stdDeviation="0.55" result="soft"></feGaussianBlur>
-  <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 8 -3.2"></feColorMatrix>
+<filter color-interpolation-filters="sRGB" height="140%" id="threshfxStrong" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="soft" stddeviation="0.55"></fegaussianblur>
+<fecolormatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 8 -3.2"></fecolormatrix>
 </filter>
-<filter id="threshfxXStrong" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
-  <feGaussianBlur stdDeviation="0.8" result="soft"></feGaussianBlur>
-  <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 16 -7"></feColorMatrix>
+<filter color-interpolation-filters="sRGB" height="150%" id="threshfxXStrong" width="150%" x="-25%" y="-25%">
+<fegaussianblur result="soft" stddeviation="0.8"></fegaussianblur>
+<fecolormatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 16 -7"></fecolormatrix>
 </filter>
-<filter id="threshfxXXStrong" x="-32%" y="-32%" width="164%" height="164%" color-interpolation-filters="sRGB">
-  <feGaussianBlur stdDeviation="3.6" result="soft"></feGaussianBlur>
-  <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10"></feColorMatrix>
+<filter color-interpolation-filters="sRGB" height="164%" id="threshfxXXStrong" width="164%" x="-32%" y="-32%">
+<fegaussianblur result="soft" stddeviation="3.6"></fegaussianblur>
+<fecolormatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10"></fecolormatrix>
 </filter>
-<filter id="threshfxHover" x="-18%" y="-18%" width="136%" height="136%" color-interpolation-filters="sRGB">
-  <feGaussianBlur stdDeviation="0.65" result="soft"></feGaussianBlur>
-  <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 8 -3.4"></feColorMatrix>
+<filter color-interpolation-filters="sRGB" height="136%" id="threshfxHover" width="136%" x="-18%" y="-18%">
+<fegaussianblur result="soft" stddeviation="0.65"></fegaussianblur>
+<fecolormatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 8 -3.4"></fecolormatrix>
 </filter>
-<filter id="footerThreshStrong" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
-  <feGaussianBlur stdDeviation="1.05" result="soft"></feGaussianBlur>
-  <feColorMatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 7 -2.6"></feColorMatrix>
+<filter color-interpolation-filters="sRGB" height="160%" id="footerThreshStrong" width="160%" x="-30%" y="-30%">
+<fegaussianblur result="soft" stddeviation="1.05"></fegaussianblur>
+<fecolormatrix in="soft" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 7 -2.6"></fecolormatrix>
 </filter>
-<filter id="pixelfx2" x="-10%" y="-10%" width="120%" height="120%">
-  <feFlood x="0" y="0" height="1" width="1"></feFlood>
-  <feComposite width="2" height="2"></feComposite>
-  <feTile result="a"></feTile>
-  <feComposite in="SourceGraphic" in2="a" operator="in"></feComposite>
-  <feMorphology operator="dilate" radius="1"></feMorphology>
+<filter height="120%" id="pixelfx2" width="120%" x="-10%" y="-10%">
+<feflood height="1" width="1" x="0" y="0"></feflood>
+<fecomposite height="2" width="2"></fecomposite>
+<fetile result="a"></fetile>
+<fecomposite in="SourceGraphic" in2="a" operator="in"></fecomposite>
+<femorphology operator="dilate" radius="1"></femorphology>
 </filter>
-<filter id="meltWave" x="-20%" y="-20%" width="140%" height="140%">
-  <feTurbulence id="meltTurb" type="fractalNoise" baseFrequency="0.004 0.028" numOctaves="2" seed="7" result="n"></feTurbulence>
-  <feDisplacementMap in="SourceGraphic" in2="n" scale="46" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+<filter height="140%" id="meltWave" width="140%" x="-20%" y="-20%">
+<feturbulence basefrequency="0.004 0.028" id="meltTurb" numoctaves="2" result="n" seed="7" type="fractalNoise"></feturbulence>
+<fedisplacementmap in="SourceGraphic" in2="n" scale="46" xchannelselector="R" ychannelselector="G"></fedisplacementmap>
 </filter></svg>
 <div id="rgbBlur"><div class="b"></div><div class="b2"></div><div class="rgb"></div></div>
 <script>
@@ -828,7 +831,6 @@
   })();
 })();
 </script>
-
 <script>
 /* ============ layout scaling (1024 design width) ============ */
 const PAGE_H = 4813;   /* footer contact cluster moved up 25px; original 3D framing */
@@ -996,18 +998,22 @@ giantLines.forEach(el => { el.innerHTML = '<span class="seltxt">' + el.innerHTML
     (function next() { if (k < gNodes.length) type(gNodes[k++], 34, next); })();   /* a touch slower */
   }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
   gObs.observe(giantEl);
-  /* FAQ head: shows "F", typewrites the rest ("AQ") on first scroll into view */
-  if (faqHead) {
-    const fFull = faqHead.textContent; faqHead.textContent = fFull.charAt(0);
-    let fDone = false;
-    const fObs = new IntersectionObserver(es => {
-      if (fDone || !es.some(e => e.isIntersecting)) return;
-      fDone = true; fObs.disconnect();
+  function typeHeadingFromFirstLetter(node, speed) {
+    if (!node) return;
+    const full = node.textContent;
+    node.textContent = full.charAt(0);
+    let done = false;
+    const obs = new IntersectionObserver(es => {
+      if (done || !es.some(e => e.isIntersecting)) return;
+      done = true; obs.disconnect();
       let i = 1;
-      (function st(){ i++; faqHead.textContent = fFull.slice(0, i) + (i < fFull.length ? '\u2588' : ''); if (i < fFull.length) setTimeout(st, 160); })();
+      (function st(){ i++; node.textContent = full.slice(0, i) + (i < full.length ? '\u2588' : ''); if (i < full.length) setTimeout(st, speed); })();
     }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
-    fObs.observe(faqHead);
+    obs.observe(node);
   }
+  /* FAQ/WHAT WE DO heads: start with first letter, typewrite the rest on first scroll into view */
+  typeHeadingFromFirstLetter(faqHead, 160);
+  typeHeadingFromFirstLetter(document.getElementById('servicesHead'), 120);
 })();
 
 
@@ -1263,7 +1269,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && gBox.classList.cont
 gBox.querySelector('.gb-x').addEventListener('click', gbClose);
 
 const carBandEl = document.getElementById('carBand');
-const faqPushIds = ['capsMatrix','snakeBand','carBand','intake','endcap','contactDivider'];
+const faqPushIds = ['servicesHead','servicesMatrix','snakeBand','bigAgency','carBand','intake','endcap','contactDivider'];
 const faqBaseTops = {};
 function readTopPx(el){ return parseFloat((el.style && el.style.top) || getComputedStyle(el).top) || 0; }
 function captureFaqBaseTops(){
@@ -1297,7 +1303,6 @@ brandHov.addEventListener('mouseleave', () => hovImg.classList.remove('on'));
 
 
 </script>
-
 <!-- ============ 3D SCENE ============ -->
 <script type="importmap">
 { "imports": {
@@ -1706,7 +1711,6 @@ function animate(){
 }
 animate();
 </script>
-
 <!-- ===================== LINE GLOBE (slideshow zone) ===================== -->
 <script type="module">
 import * as THREE from 'three';
@@ -2083,7 +2087,6 @@ function gStart(){ if (gStarted) return; gStarted = true; buildLand(); gAnimate(
 window.addEventListener('gobold:introdone', gStart, { once: true });
 setTimeout(gStart, 7500);
 </script>
-
 <!-- ===================== IMPALA '64 LOWRIDER (bottom band) ===================== -->
 <script type="module">
 import * as THREE from 'three';
@@ -2248,9 +2251,6 @@ function cAnimate(){
 }
 cAnimate();
 </script>
-
-
-
 <script>
 /* ---- GOBOLD horizontal pixel snake PRO (clean UI, 2x2 foods, art return) ---- */
 (function(){
@@ -2304,7 +2304,6 @@ cAnimate();
   reset(); draw(); requestAnimationFrame(loop);
 })();
 </script>
-
 <script>
 /* ---- footer service blocks: copied from provided Auriga file line/canvas animations ---- */
 (function(){
@@ -2397,7 +2396,6 @@ cAnimate();
   globe('footerAiGlobe','#ff0000');
 })();
 </script>
-
 <script>
 /* ---- EST.2026 stats reveal ---- */
 (function(){
@@ -2439,7 +2437,6 @@ cAnimate();
   }
 })();
 </script>
-
 <script>
 /* ===================== PORTED v35 BLOCKS: STUDIO_OS + INTAKE/SEND BRIEF ===================== */
 (function(){
@@ -2572,5 +2569,4 @@ cAnimate();
   })();
 })();
 </script>
-
 </body></html>
