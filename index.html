@@ -146,6 +146,7 @@
   #scene3d{position:absolute;left:0;top:-5px;width:1024px;height:629px;z-index:4}
   #scene3d canvas{display:block;width:100%!important;height:100%!important;cursor:grab}
   #scene3d canvas:active{cursor:grabbing}
+  #scene3d::after{content:'';position:absolute;left:0;top:0;width:100%;height:100%;z-index:5;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.5) 0 1px,transparent 1px 3px);background-size:100% 3px;animation:globeScan 1.1s linear infinite}   /* same preloader-style scanlines over the first 3D */
   #preloader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform:translateY(-100px);z-index:3}
   #preloader img{width:80px;height:80px;object-fit:contain;pointer-events:none}
 
@@ -158,7 +159,7 @@
   .giant p{position:relative}
   .giant .seltxt{padding-right:4px;margin-right:-4px}
     .giant p.shov{filter:url(#threshfxHover) blur(1.1px)}   /* scroll: same blurred look as hover */
-    .giant p.shov .seltxt{color:#000;background:linear-gradient(#818181,#818181) 0 7px/100% 97px no-repeat}   /* scroll: grey box + black text, same style as hover */
+    .giant p.shov .seltxt{color:var(--grey);background:linear-gradient(var(--red),var(--red)) 0 7px/100% 97px no-repeat}   /* scroll: red box + GOBOLD-grey text */
     .giant p.hov{filter:url(#threshfxHover) blur(1.1px)}
     .giant p.hov .seltxt{color:#000;background:linear-gradient(#818181,#818181) 0 7px/100% 97px no-repeat}   /* hover wins over scroll color -> always black */
   /* left-pointing arrow on the right of each line — follows the text color (grey, red on hover) */
@@ -205,6 +206,8 @@
   #globeZone{position:relative;width:1023px;height:562px;top:-40px;
     cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 3v18M3 12h18' stroke='white' stroke-width='2.6'/></svg>") 12 12, crosshair}
   #globeZone canvas{display:block}
+  #globeZone::after{content:'';position:absolute;left:0;top:0;width:100%;height:632px;z-index:5;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.5) 0 1px,transparent 1px 3px);background-size:100% 3px;animation:globeScan 1.1s linear infinite}   /* scanlines matching the preloader (.ldr-scan); extends down to where the video starts */
+  @keyframes globeScan{from{background-position:0 0}to{background-position:0 6px}}   /* same 6px/1.1s travel as the preloader ldrScan */
   #globeStats{position:absolute;left:10px;bottom:10px;font-size:6px;letter-spacing:1px;color:#ffffff;z-index:7;pointer-events:none;display:flex;gap:6px;align-items:center}
   #themeBtn{pointer-events:auto;background:none;border:none;color:#fff;font:inherit;font-size:6px;letter-spacing:1px;padding:0;cursor:pointer}
   #themeBtn:hover{text-decoration:underline}
@@ -1654,7 +1657,7 @@ const warpPass = new ShaderPass({
 composer.addPass(warpPass);
 warpPass.enabled = false;   /* hover fx removed */
 composer.addPass(new UnrealBloomPass(new THREE.Vector2(container.clientWidth, container.clientHeight), 0.8, 0.6, 0.2));
-composer.addPass(new FilmPass(0.55, 0.023, 700, false));
+const filmPass = new FilmPass(0.55, 0.023, 700, false); filmPass.enabled = false; composer.addPass(filmPass);   /* film pass disabled for now */
 
 /* thermal cam effect (hip-hop video style) — toggled by the [THERMAL] button */
 const thermalPass = new ShaderPass({
@@ -1726,6 +1729,7 @@ const PowershotShader = {
 window.PowershotShader = PowershotShader;
 const psPass = new ShaderPass(PowershotShader);
 psPass.uniforms.uAmount.value = 0.5;
+psPass.enabled = false;   /* powershot disabled for now */
 composer.addPass(psPass);
 
 /* RESIZE (design-space size; page scaling handles the rest) */
@@ -1823,7 +1827,7 @@ import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 const gContainer = document.getElementById('globeZone');
 const GW = 1023, GH = 562;
 
-const gRenderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'high-performance' });
+const gRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
 gRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); /* perf: cap render res */
 gRenderer.setSize(GW, GH);
 gRenderer.setClearColor(0x000000, 0);
@@ -1834,19 +1838,9 @@ const gCamera = new THREE.PerspectiveCamera(46.01, GW / GH, 0.1, 50);
 gCamera.position.set(0, 0.32, 5.1); /* ~10% bigger globe */
 gCamera.lookAt(0, 0, 0);
 
-/* powershot post pass on the globe too (shader defined in the scene script above) */
-const gComposer = new EffectComposer(gRenderer);
-gComposer.addPass(new RenderPass(gScene, gCamera));
-const gPsPass = new ShaderPass(window.PowershotShader);
-gPsPass.uniforms.uAmount.value = 0.5;
-gPsPass.uniforms.uRes.value = new THREE.Vector2(GW, GH);
-gComposer.addPass(gPsPass);
-/* MSAA on the composer targets — antialias:true is bypassed when rendering through a composer */
-gComposer.renderTarget1.samples = 2;
-gComposer.renderTarget2.samples = 2;
-/* prewarm: compile shaders + alloc render targets now, while the site loader still covers
-   the page — otherwise the first globe frame stalls the intro right after the zoom-out */
-gComposer.render();
+/* postprocessing removed for the globe — render the scene directly (no powershot shader) */
+/* prewarm: compile shaders now, while the site loader still covers the page */
+gRenderer.render(gScene, gCamera);
 
 const world = new THREE.Group();
 world.position.x = -0.27;   /* globe sits a bit left of center */
@@ -2179,8 +2173,7 @@ function gAnimate() {
     else if (scanY <= -sA) { scanY = -sA; scanDir = 1; }
   }
   placeRing(ring1, ringMat1, scanY);
-  gPsPass.uniforms.uTime.value = performance.now() * 0.001;
-  gComposer.render();
+  gRenderer.render(gScene, gCamera);
 }
 /* start heavy work only after the 3D intro is done, so the preloader/zoom stays smooth */
 let gStarted = false;
