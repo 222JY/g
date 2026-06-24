@@ -404,7 +404,7 @@
   #siteLoader .ldr-bignum{position:absolute;left:0;bottom:0;z-index:2;transform-origin:left bottom;display:inline-block;font-family:'p--l','Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:168px;line-height:.79;letter-spacing:-.054em;color:#ff0000;background:#000;padding:0 24px 4px 0;filter:url(#threshfxStrong);pointer-events:none;text-transform:uppercase}   /* % uses the SAME 1024-design scaling as the site: design-px size + transform:scale(innerWidth/1024) set in JS; brand threshold filter (its blur scales with the transform, exactly like the GOBOLD text) */
   @keyframes ldrScan{0%{background-position:0 0}100%{background-position:0 6px}}
   #siteLoader .ldr-pct{display:none}
-  #siteLoader .ldr-term{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-46%);width:min(680px,84vw);font-family:'Anonymous Pro',monospace;font-size:14px;line-height:1.75;letter-spacing:.35px;color:#9a9a9a;text-transform:uppercase;pointer-events:none;opacity:0;transition:opacity .32s ease}
+  #siteLoader .ldr-term{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-46%);width:min(680px,84vw);font-family:'Anonymous Pro',monospace;font-size:14px;line-height:1.75;letter-spacing:.35px;color:#9a9a9a;text-transform:uppercase;pointer-events:none;opacity:0;transition:opacity .32s ease}   /* terminal stays a fixed, readable size (screen-space) — not scaled with the site */
   #siteLoader .ldr-term.on{opacity:1}
   #siteLoader .ldr-term .l{white-space:pre-wrap;opacity:0}
   #siteLoader .ldr-term .l.on{opacity:1}
@@ -607,7 +607,7 @@
     if(!ctx) return;
     DPR=Math.min(window.devicePixelRatio||1,2); W=window.innerWidth; H=window.innerHeight;
     cv.width=Math.max(2,W*DPR); cv.height=Math.max(2,H*DPR); ctx.setTransform(DPR,0,0,DPR,0,0);
-    if(bigNum) bigNum.style.transform='scale('+(W/1024)+')';   /* match the site's 1024-design scaling */
+    if(bigNum) bigNum.style.transform='scale('+(W/1024)+')';   /* % matches the site's 1024-design scaling */
   }
 
   /* Preloader 09 — terminal boot log from uploaded preloaders.html */
