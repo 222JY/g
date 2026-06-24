@@ -47,6 +47,10 @@
   #fixedLayer a,#fixedLayer .clickable{pointer-events:auto}
   #fixedLayer2{position:fixed;top:0;left:0;width:1024px;transform-origin:0 0;z-index:2147482990;pointer-events:none;mix-blend-mode:normal}
   #fixedLayer2 a,#fixedLayer2 .clickable{pointer-events:auto}
+  /* keep fixed header above the 3D scene cursor so grab does not bleed through */
+  #fixedLayer,#fixedLayer2{cursor:default}
+  .brand p{pointer-events:auto}
+  .fixed-stamp-gif{pointer-events:auto;cursor:default}
   body.gb-loading #fixedLayer,body.gb-loading #miniMap{display:none!important}
   body.gb-loading #fixedLayer2{display:block!important}
   body.gb-loading #fixedLayer2 .mail,body.gb-loading #fixedLayer2 .music,body.gb-loading #fixedLayer2 #invertSite,body.gb-loading #fixedLayer2 .icons,body.gb-loading #fixedLayer2 .fixed-stamp-gif{display:none!important}
@@ -63,8 +67,9 @@
   body.fixed-up-enter #fixedLayer2 .music{animation-delay:.05s}
   body.fixed-up-enter #fixedLayer2 #invertSite{animation-delay:.08s}
   body.fixed-up-enter #fixedLayer2 .icons{animation-delay:.11s}
-  body.fixed-up-enter #fixedLayer2 .fixed-stamp-gif{animation-delay:.14s}
+  body.fixed-up-enter #fixedLayer2 .fixed-stamp-gif{animation-name:fixedTopDropCentered;animation-delay:.14s}
   @keyframes fixedTopDrop{from{opacity:0;transform:translateY(-34px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fixedTopDropCentered{from{opacity:0;transform:translateX(-50%) translateY(-34px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
   #page{position:relative;width:1024px;transform-origin:0 0}
 
   /* ---- header ---- */
@@ -125,7 +130,7 @@
   @keyframes eq2{from{height:5%}to{height:80%}}
 
   .stamp-gif{position:absolute;left:0;top:0;width:71px;height:76px;object-fit:cover;background:#000;z-index:80}
-  .fixed-stamp-gif{position:absolute;left:50%;top:0;width:71px;height:76px;object-fit:cover;background:#000;z-index:82;pointer-events:none;filter:grayscale(1) contrast(1.05) brightness(.72) saturate(.28);mix-blend-mode:normal;opacity:.92;transform:translateX(-50%)}
+  .fixed-stamp-gif{position:absolute;left:512px;top:0;width:71px;height:76px;object-fit:cover;background:#000;z-index:82;pointer-events:none;filter:grayscale(1) contrast(1.05) brightness(.72) saturate(.28);mix-blend-mode:normal;opacity:.92;transform:translateX(-50%);transform-origin:center top}
 
   /* ---- right-side minimap ---- */
   #miniMap{position:fixed;right:7px;top:50%;transform:translateY(-50%);z-index:2147482989;width:150px;background:transparent;border:0;font-family:'Anonymous Pro',monospace;text-transform:uppercase;pointer-events:auto;mix-blend-mode:normal}
@@ -139,12 +144,8 @@
 
   /* ---- 3D scene ---- */
   #scene3d{position:absolute;left:0;top:-5px;width:1024px;height:629px;z-index:4}
-  #scene3d canvas{display:block;width:100%!important;height:100%!important;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 3v18M3 12h18' stroke='white' stroke-width='2.6'/></svg>") 12 12, crosshair}
-  #scene3d canvas:active{cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 3v18M3 12h18' stroke='white' stroke-width='2.6'/></svg>") 12 12, crosshair}
-  #sceneCursorLines{position:absolute;inset:0;z-index:6;pointer-events:none;display:none}
-  #sceneCursorLines .v,#sceneCursorLines .h{position:absolute;background:#818181;opacity:.72;box-shadow:none}
-  #sceneCursorLines .v{width:.8px;top:0;bottom:0}
-  #sceneCursorLines .h{height:.8px;left:0;right:0}
+  #scene3d canvas{display:block;width:100%!important;height:100%!important;cursor:grab}
+  #scene3d canvas:active{cursor:grabbing}
   #preloader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform:translateY(-100px);z-index:3}
   #preloader img{width:80px;height:80px;object-fit:contain;pointer-events:none}
 
@@ -245,14 +246,14 @@
   #vbSeekMiniPreview.on{display:block}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:23px;top:4363px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
+  #carBand{position:absolute;left:23px;top:4513px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
     overflow:hidden}   /* original footer 3D framing */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
   #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
-  #snakeBand{position:absolute;left:7px;top:3700px;width:1010px;height:333px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
+  #snakeBand{position:absolute;left:7px;top:3850px;width:1010px;height:333px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
 
   #snakeBand::before{display:none}
   #snakeBand::after{display:none}
@@ -316,7 +317,7 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:4996px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:5146px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none;text-shadow:0 0 14px #000,0 0 26px #000}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
@@ -324,7 +325,7 @@
     letter-spacing:-6px;color:#818181;background:#000;text-decoration:none;filter:url(#footerThreshStrong);height:84px;min-height:84px;overflow:visible;padding:2px 8px 0;pointer-events:auto;white-space:nowrap;text-shadow:none;transform:translateX(-1px)}
   #endcap .ec-head span{display:inline-block;transform:translate(-6px,3px)}
   #endcap .ec-head:hover{background:var(--red);color:#000;text-shadow:none}
-  #processServices{position:absolute;left:7px;top:2230px;width:1010px;z-index:10;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;text-shadow:none;pointer-events:auto;font-family:'Anonymous Pro',monospace;text-transform:uppercase}
+  #processServices{display:none!important}
   #processServices .col{position:relative;min-height:150px;padding-top:9px;padding-bottom:9px;min-width:0;text-align:left;border-top:1px solid #262626;border-bottom:1px solid #262626}
   #processServices .col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:34px;background:#262626}
   #processServices .col:last-child{text-align:left}
@@ -367,7 +368,7 @@
   .sect .stats > div:first-child{padding-left:0;transform:translateX(5px)}
   .sect .stats > div:nth-child(4){transform:translateX(-5px)}
   .sect .stats > div:not(:first-child)::before{content:'';position:absolute;left:-10px;top:0;width:1px;height:34px;background:#262626}
-  #faq{position:absolute;left:3px;top:2430px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
+  #faq{position:absolute;left:3px;top:3370px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
   #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);transform:translate(-10px,4px)}
   .faq-item{border-top:1px solid #262626}
   .faq-item:last-child{border-bottom:1px solid #262626}
@@ -412,7 +413,7 @@
   /* ===================== PORTED v35 BLOCKS (under the 4-animation footer block) ===================== */
 
   /* PROJECT INTAKE / SEND BRIEF */
-  #intake{position:absolute;right:70px;top:4858px;width:360px;z-index:8;background:transparent;border:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:visible;padding:12px 0 0}
+  #intake{position:absolute;right:70px;top:5008px;width:360px;z-index:8;background:transparent;border:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:visible;padding:12px 0 0}
   #intake.shake{animation:intakeShake .24s steps(2,end)}
   @keyframes intakeShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
   #intake .ik-bar{display:flex;align-items:center;justify-content:flex-start;gap:10px;height:14px;padding:0;border-bottom:0;font-size:6px;line-height:6px;letter-spacing:1.4px;color:#6a6a6a;text-align:left}
@@ -445,13 +446,13 @@
   #intake .ik-back:hover{color:var(--red)}
   #intake .ik-note{margin:0;font-size:7px;letter-spacing:.8px;color:#6a6a6a;min-height:9px}
   #intake .ik-note b{color:var(--red);font-weight:400}
-  #contactDivider{position:absolute;right:70px;top:5049px;width:360px;z-index:9;display:flex;align-items:center;gap:9px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;color:#818181;text-transform:uppercase;pointer-events:none}
+  #contactDivider{position:absolute;right:70px;top:5199px;width:360px;z-index:9;display:flex;align-items:center;gap:9px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;color:#818181;text-transform:uppercase;pointer-events:none}
   #contactDivider::before,#contactDivider::after{content:'';height:1px;background:#262626;flex:1 1 auto}
   #contactDivider span{display:inline-block;color:#818181;background:transparent;padding:0}
 
   /* SERVICES heading + services matrix */
-  #servicesHead{position:absolute;left:3px;top:2910px;width:1018px;z-index:8;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);text-align:right;transform:translate(-10px,4px);pointer-events:none}
-  #servicesMatrix{position:absolute;left:7px;top:3024px;width:1010px;height:324px;z-index:8;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;pointer-events:auto;color:#818181}
+  #servicesHead{position:absolute;left:3px;top:2430px;width:1018px;z-index:8;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);text-align:right;transform:translate(-10px,4px);pointer-events:none}
+  #servicesMatrix{position:absolute;left:7px;top:2544px;width:1010px;height:324px;z-index:8;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;pointer-events:auto;color:#818181}
   #servicesMatrix .sm-col{position:relative;min-width:0;height:324px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px;overflow:hidden;background:transparent;cursor:crosshair}
   #servicesMatrix .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #servicesMatrix .sm-col::after{content:'';position:absolute;left:0;right:0;bottom:30px;height:1px;background:#262626;pointer-events:none}
@@ -480,13 +481,10 @@
   @keyframes smPulse{0%,100%{opacity:.82;transform:translateX(0)}30%{opacity:.38;transform:translateX(7px)}58%{opacity:1;transform:translateX(-3px)}72%{opacity:.55}}
 
   /* SERVICE ART EXPANSION — 12 unique signal blocks below WHAT WE DO */
-  #serviceArtGrid{position:absolute;left:7px;top:3370px;width:1010px;height:260px;z-index:8;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:260px;gap:22px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;pointer-events:auto;color:#818181}
+  #serviceArtGrid{position:absolute;left:7px;top:2890px;width:1010px;height:260px;z-index:8;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:260px;gap:22px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;pointer-events:auto;color:#818181}
   #serviceArtGrid .sa-card{position:relative;min-width:0;height:260px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 11px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair}
   #serviceArtGrid .sa-card::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #serviceArtGrid .sa-card:nth-child(4n+1)::before{display:none}
-  #serviceArtGrid .sa-card:nth-child(1){grid-column:3}
-  #serviceArtGrid .sa-card:nth-child(2){grid-column:4}
-  #serviceArtGrid .sa-card:nth-child(1)::before{display:block}
   #serviceArtGrid .sa-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
   #serviceArtGrid .sa-title{display:block;width:max-content;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:15px;line-height:15px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:9px;white-space:nowrap;cursor:crosshair}
   #serviceArtGrid .sa-copy{margin:0;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#777;max-width:218px;min-height:45px}
@@ -523,7 +521,7 @@
 
   /* SERVICE LAB — 12 unique animated service representations */
   /* GOBOLD AGENCY — full-width big text under the game block (matches .giant color + threshold) */
-  #bigAgency{position:absolute;left:0;top:4123px;width:1024px;z-index:2;display:flex;justify-content:space-between;align-items:baseline;padding:0 8px;box-sizing:border-box;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:150px;line-height:120px;letter-spacing:-2px;text-transform:uppercase;color:#242424;filter:url(#threshfxXStrong);pointer-events:none;white-space:nowrap}
+  #bigAgency{position:absolute;left:0;top:4273px;width:1024px;z-index:2;display:flex;justify-content:space-between;align-items:baseline;padding:0 8px;box-sizing:border-box;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:150px;line-height:120px;letter-spacing:-2px;text-transform:uppercase;color:#242424;filter:url(#threshfxXStrong);pointer-events:none;white-space:nowrap}
   #bigAgency span{display:block;margin:0}
 
   /* services — moving marquee line (p--l, tight letters, BIG visible threshold), non-interactive */
@@ -562,8 +560,8 @@
 <nav aria-label="GOBOLD minimap" id="miniMap">
 <a data-section="main" data-target="#page" data-y="0" href="#page">MAIN</a>
 <a data-section="about" data-target="#giantLine" data-y="560" href="#giantLine">ABOUT</a>
-<a data-section="services" data-target="#bigmovingtext" data-y="1950" href="#bigmovingtext">SERVICES</a>
-<a data-section="faq" data-target="#faq" data-y="2350" href="#faq">FAQ</a>
+<a data-section="services" data-target="#servicesHead" data-y="2430" href="#servicesHead">SERVICES</a>
+<a data-section="faq" data-target="#faq" data-y="3370" href="#faq">FAQ</a>
 <a data-bottom="true" data-section="contact" data-target="#endcap" href="#endcap">CONTACT</a>
 </nav>
 <!-- ===================== FULL-PAGE PRELOADER ===================== -->
@@ -682,7 +680,6 @@
 <div id="page">
 <div id="scene3d">
 <div id="preloader"><img alt="loading" src="images/3y0oCOkdKKRi0.webp"/></div>
-<div id="sceneCursorLines"><span class="v"></span><span class="h"></span></div>
 </div>
 <button id="thermalBtn">THERMAL EFFECT</button>
 <div id="thermalHint">(i) rotate 3d, scroll to continue</div>
@@ -706,6 +703,36 @@
 <button id="vbRelocate" type="button">VIDEO FX 01</button>
 <button id="vbMute" type="button">SOUND OFF</button>
 <div class="vb-scan"></div>
+</div>
+<p id="servicesHead">WHAT WE DO</p>
+<div aria-label="GOBOLD services matrix" id="servicesMatrix">
+<div class="sm-col">
+<span class="sm-k">01 / WEBSITE CREATION</span>
+<span class="sm-title">WEBSITE CREATION</span>
+<p class="sm-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p>
+<div class="sm-signal"><canvas id="svcMatrixOrbital"></canvas></div>
+<div class="sm-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div>
+</div>
+<div class="sm-col">
+<span class="sm-k">02 / 3D WEB3</span>
+<span class="sm-title">3D / WEB3</span>
+<p class="sm-copy">Interactive 3D, WebGL and on-chain experiences that make people stop scrolling.</p>
+<div class="sm-signal"><canvas id="svcMatrixExplodedCube"></canvas></div>
+<div class="sm-foot"><i>IMMERSIVE</i><i>INTERACTIVE</i><i class="hot">WEBGL</i><i class="hot">THREE.JS</i><i>MOTION</i><i>SCENES</i><i>HIGH-SIGNAL</i><i>DIGITAL</i><i>WORLDS</i></div>
+</div>
+<div class="sm-col">
+<span class="sm-k">03 / BRANDING</span>
+<span class="sm-title">BRANDING</span>
+<p class="sm-copy">Identity, logo systems and visual language built to stand out and scale.</p>
+<div class="sm-signal"><canvas id="svcMatrixSpiralGrowth"></canvas></div>
+<div class="sm-foot"><i>IDENTITY</i><i>VOICE</i><i>SYSTEM</i><i class="hot">LOGO</i><i>ART</i><i>DIRECTION</i><i>GUIDES</i><i>SHARP</i><i>VISUAL</i><i>LANGUAGE</i></div>
+</div>
+</div>
+
+<div aria-label="GOBOLD gamifications and social media blocks" id="serviceArtGrid">
+<div class="sa-card" data-family="keyword-service"><span class="sa-k">04 / AI INTEGRATION</span><span class="sa-title">AI INTEGRATION</span><p class="sa-copy">Chatbots, automation and AI features wired straight into your site or product.</p><div class="sa-art"><canvas id="svcMatrixLaserFunnel"></canvas></div><div class="sa-foot keyword-foot"><i>AUTOMATION</i><i>INTELLIGENCE</i><i class="hot">LLM</i><i class="hot">RAG</i><i>AGENTS</i><i>CONNECTED</i><i>REAL</i><i>PRODUCT</i><i>WORKFLOWS</i></div></div>
+<div class="sa-card" data-family="keyword-service"><span class="sa-k">05 / GAMIFICATIONS</span><span class="sa-title">GAMIFICATIONS</span><p class="sa-copy">Playable web moments, reward loops and interaction systems that make visitors stay longer.</p><div class="sa-art"><canvas id="svcArt19"></canvas></div><div class="sa-foot keyword-foot"><i>PLAYABLE</i><i>WEB</i><i>MOMENTS</i><i class="hot">REWARD</i><i class="hot">LOOPS</i><i>MICRO-GAMES</i><i>INTERACTION</i><i>RETENTION</i></div></div>
+<div class="sa-card" data-family="keyword-service"><span class="sa-k">06 / SOCIAL MEDIA</span><span class="sa-title">SOCIAL MEDIA</span><p class="sa-copy">Content systems, campaign visuals and social assets designed to move fast and build demand.</p><div class="sa-art"><canvas id="svcGraph03"></canvas></div><div class="sa-foot keyword-foot"><i>CONTENT</i><i>SYSTEMS</i><i class="hot">CAMPAIGNS</i><i>VISUALS</i><i>REELS</i><i>LAUNCHES</i><i>GROWTH</i><i>DISTRIBUTION</i></div></div>
 </div>
 <div id="faq">
 <p class="faq-head">FAQ</p>
@@ -773,56 +800,6 @@
 </div>
 <div id="carBand">
 </div>
-<div aria-label="GOBOLD process" id="processServices">
-<div class="col warm">
-<div class="label">AUDIT THE MOVE</div>
-<div class="sub">Strategy Signal</div>
-<div class="reveal">POSITIONING • COMPETITOR READ • OFFER ANGLE</div>
-<canvas class="wave" id="footerWaveLeo"></canvas>
-<div class="data-row">
-<div class="big">Input</div>
-<div class="time">BRIEF / MARKET / GOAL</div>
-</div>
-<div class="data-row second">
-<div class="big">Path Locked</div>
-<div class="time">01 PHASE</div>
-</div>
-</div>
-<div class="col cold">
-<div class="label">DESIGN THE EDGE</div>
-<div class="sub">Interface System</div>
-<div class="reveal">ART DIRECTION • UI SYSTEM • MOTION</div>
-<canvas class="cube3d" id="footerCube3d"></canvas>
-<div class="data-row">
-<div class="big">Output</div>
-<div class="time">FIGMA / MOTION / COPY</div>
-</div>
-<div class="data-row second">
-<div class="big">Visual Machine</div>
-<div class="time">02 PHASE</div>
-</div>
-</div>
-<div class="col warm">
-<div class="label">CODE THE WORLD</div>
-<div class="sub">Build Engine</div>
-<div class="reveal">FRONT-END • WEBGL • AUTOMATION</div>
-<canvas class="globe" id="footerAiGlobe"></canvas>
-<div class="data-row">
-<div class="big">Stack</div>
-<div class="time">WEB / 3D / AI</div>
-</div>
-</div>
-<div class="col warm ai-side">
-<div class="label">SHIP + ITERATE</div>
-<div class="sub">Launch Loop</div>
-<div class="reveal">QA • TRACKING • PERFORMANCE</div>
-<canvas class="wave" id="footerBrandWave"></canvas>
-<div class="data-row">
-<div class="big">Status</div>
-<div class="time">LIVE / TRACK / SCALE</div>
-</div>
-</div>
-</div>
 <!-- ===== PORTED v35 BLOCKS (under the 4-animation footer block) ===== -->
 <!-- send brief block -->
 <div id="intake">
@@ -862,42 +839,6 @@
 <p class="ik-note" id="ikNote"></p>
 </div>
 </div>
-</div>
-<p id="servicesHead">WHAT WE DO</p>
-<div aria-label="GOBOLD services matrix" id="servicesMatrix">
-<div class="sm-col">
-<span class="sm-k">01 / WEBSITE CREATION</span>
-<span class="sm-title">WEBSITE CREATION</span>
-<p class="sm-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p>
-<div class="sm-signal"><canvas id="svcMatrixOrbital"></canvas></div>
-<div class="sm-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div>
-</div>
-<div class="sm-col">
-<span class="sm-k">02 / 3D WEB3</span>
-<span class="sm-title">3D / WEB3</span>
-<p class="sm-copy">Interactive 3D, WebGL and on-chain experiences that make people stop scrolling.</p>
-<div class="sm-signal"><canvas id="svcMatrixExplodedCube"></canvas></div>
-<div class="sm-foot"><i>IMMERSIVE</i><i>INTERACTIVE</i><i class="hot">WEBGL</i><i class="hot">THREE.JS</i><i>MOTION</i><i>SCENES</i><i>HIGH-SIGNAL</i><i>DIGITAL</i><i>WORLDS</i></div>
-</div>
-<div class="sm-col">
-<span class="sm-k">03 / BRANDING</span>
-<span class="sm-title">BRANDING</span>
-<p class="sm-copy">Identity, logo systems and visual language built to stand out and scale.</p>
-<div class="sm-signal"><canvas id="svcMatrixSpiralGrowth"></canvas></div>
-<div class="sm-foot"><i>IDENTITY</i><i>VOICE</i><i>SYSTEM</i><i class="hot">LOGO</i><i>ART</i><i>DIRECTION</i><i>GUIDES</i><i>SHARP</i><i>VISUAL</i><i>LANGUAGE</i></div>
-</div>
-<div class="sm-col">
-<span class="sm-k">04 / AI INTEGRATION</span>
-<span class="sm-title">AI INTEGRATION</span>
-<p class="sm-copy">Chatbots, automation and AI features wired straight into your site or product.</p>
-<div class="sm-signal"><canvas id="svcMatrixLaserFunnel"></canvas></div>
-<div class="sm-foot"><i>AUTOMATION</i><i>INTELLIGENCE</i><i class="hot">LLM</i><i class="hot">RAG</i><i>AGENTS</i><i>CONNECTED</i><i>REAL</i><i>PRODUCT</i><i>WORKFLOWS</i></div>
-</div>
-</div>
-
-<div aria-label="GOBOLD gamifications and social media blocks" id="serviceArtGrid">
-<div class="sa-card" data-family="keyword-service"><span class="sa-k">05 / GAMIFICATIONS</span><span class="sa-title">GAMIFICATIONS</span><p class="sa-copy">Playable web moments, reward loops and interaction systems that make visitors stay longer.</p><div class="sa-art"><canvas id="svcArt19"></canvas></div><div class="sa-foot keyword-foot"><i>PLAYABLE</i><i>WEB</i><i>MOMENTS</i><i class="hot">REWARD</i><i class="hot">LOOPS</i><i>MICRO-GAMES</i><i>INTERACTION</i><i>RETENTION</i></div></div>
-<div class="sa-card" data-family="keyword-service"><span class="sa-k">06 / SOCIAL MEDIA</span><span class="sa-title">SOCIAL MEDIA</span><p class="sa-copy">Content systems, campaign visuals and social assets designed to move fast and build demand.</p><div class="sa-art"><canvas id="svcGraph03"></canvas></div><div class="sa-foot keyword-foot"><i>CONTENT</i><i>SYSTEMS</i><i class="hot">CAMPAIGNS</i><i>VISUALS</i><i>REELS</i><i>LAUNCHES</i><i>GROWTH</i><i>DISTRIBUTION</i></div></div>
 </div>
 <div id="contactDivider"><span>OR EMAIL US DIRECTLY ↓</span></div>
 <div id="endcap">
@@ -984,7 +925,7 @@
 </script>
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 5182;   /* game moved 30px lower */
+const PAGE_H = 5332;   /* game moved 30px lower */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -1013,9 +954,9 @@ addEventListener('resize', rescale);
   var ranges=[
     {key:'main', start:0, end:560},
     {key:'about', start:560, end:1950},
-    {key:'services', start:1950, end:2350},
-    {key:'faq', start:2350, end:4550},
-    {key:'contact', start:4550, end:999999}
+    {key:'services', start:1950, end:3370},
+    {key:'faq', start:3370, end:4700},
+    {key:'contact', start:4700, end:999999}
   ];
   function scale(){
     var page=document.getElementById('page');
@@ -1054,24 +995,6 @@ addEventListener('resize', rescale);
 
 
 
-/* first 3D custom cursor guide lines */
-(function(){
-  const scene = document.getElementById('scene3d');
-  const lines = document.getElementById('sceneCursorLines');
-  if (!scene || !lines) return;
-  const v = lines.querySelector('.v'), h = lines.querySelector('.h');
-  scene.addEventListener('mouseenter', () => { lines.style.display = 'block'; });
-  scene.addEventListener('mouseleave', () => { lines.style.display = 'none'; });
-  scene.addEventListener('mousemove', e => {
-    const r = scene.getBoundingClientRect();
-    const sx = scene.offsetWidth / r.width;
-    const sy = scene.offsetHeight / r.height;
-    const x = (e.clientX - r.left) * sx;
-    const y = (e.clientY - r.top) * sy;
-    v.style.left = x + 'px';
-    h.style.top = y + 'px';
-  });
-})();
 
 /* ============ music toggle ============ */
 const audio = new Audio();
@@ -1421,7 +1344,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && gBox.classList.cont
 gBox.querySelector('.gb-x').addEventListener('click', gbClose);
 
 const carBandEl = document.getElementById('carBand');
-const faqPushIds = ['servicesHead','servicesMatrix','serviceArtGrid','snakeBand','bigAgency','carBand','intake','endcap','contactDivider'];
+const faqPushIds = ['snakeBand','bigAgency','carBand','intake','endcap','contactDivider'];
 const faqBaseTops = {};
 function readTopPx(el){ return parseFloat((el.style && el.style.top) || getComputedStyle(el).top) || 0; }
 function captureFaqBaseTops(){
