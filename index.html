@@ -17,6 +17,8 @@
 <link as="image" fetchpriority="high" href="models/baseColor_1.jpg" rel="preload"/>
 <link as="video" crossorigin="" fetchpriority="high" href="videos/9765.mp4" rel="preload"/>
 <link as="video" crossorigin="" fetchpriority="high" href="videos/766.mp4" rel="preload"/>
+<!-- preload the preloader's display font so the % font is ready ASAP (fonts always fetch in CORS mode, so crossorigin is required even same-origin) -->
+<link as="font" type="font/otf" crossorigin="" fetchpriority="high" href="fonts/pl.otf" rel="preload"/>
 <link as="video" crossorigin="" href="videos/693.mp4" rel="prefetch"/>
 <link as="video" crossorigin="" href="videos/677.mp4" rel="prefetch"/>
 <style>
@@ -586,6 +588,17 @@
   var bigNum=document.getElementById('ldrBigNum');
   var ctx=cv&&cv.getContext&&cv.getContext('2d');
   if(!pct) return;
+
+  /* No-FOUT guard: keep font-dependent text (the % and the terminal) hidden until their real fonts are ready, so the browser never paints a fallback font and then "jumps" to the real one. The snake canvas uses no fonts, so it keeps animating during the (tiny) wait. */
+  var fontsReady=false;
+  function markFontsReady(){ if(fontsReady) return; fontsReady=true; if(bigNum) bigNum.style.visibility='visible'; }
+  if(bigNum) bigNum.style.visibility='hidden';
+  try{
+    if(document.fonts && document.fonts.load){
+      Promise.all([document.fonts.load('400 168px "p--l"'),document.fonts.load('400 14px "Anonymous Pro"')]).then(markFontsReady).catch(markFontsReady);
+      setTimeout(markFontsReady,2000);   /* safety net: never stay hidden forever if a font stalls */
+    } else { markFontsReady(); }
+  }catch(e){ markFontsReady(); }
   window.GB_ASSETS = Object.freeze({
     root: new URL('.', document.baseURI).href,
     models: new URL('models/', document.baseURI).href,
@@ -631,7 +644,7 @@
   buildTerm();
   function tickTerm(p){
     if(!term) return;
-    term.classList.toggle('on',p>0.34);
+    term.classList.toggle('on',p>0.34 && fontsReady);   /* don't fade the boot log in until Anonymous Pro is ready (avoids the swap jump) */
     var local=Math.max(0,Math.min(1,(p-.34)/.58));
     var num=Math.floor(local*S9lines.length);
     for(var i=0;i<built.length;i++) built[i].classList.toggle('on',i<=num);
