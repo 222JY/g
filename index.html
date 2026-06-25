@@ -567,18 +567,15 @@
   #processFlow .pf-card:hover .pf-status i{border-color:#3a0000}
   @keyframes pfScan{0%{background-position:0 0,0 0}100%{background-position:0 32px,82px 0}}
   /* PROCESS — single real-time 3D scene (Eve) under the four process blocks */
-  #processScene{position:absolute;left:7px;top:4388px;width:1010px;height:560px;z-index:8;background:#020202;border:1px solid var(--red);box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden}
-  #processScene .ps-head{position:absolute;left:0;right:0;top:0;height:30px;z-index:6;display:flex;align-items:center;gap:10px;padding:0 12px;border-bottom:1px solid #181818;background:linear-gradient(180deg,#070707,#020202)}
-  #processScene .ps-k{font-size:6px;line-height:6px;letter-spacing:1.35px;color:var(--red)}
-  #processScene .ps-title{font-family:'Kode Mono','Anonymous Pro',monospace;font-size:12px;line-height:12px;letter-spacing:-.5px;color:#e9eaec}
-  #processScene .ps-meta{margin-left:auto;font-size:6px;line-height:6px;letter-spacing:1px;color:#777}
-  #processScene .ps-stage{position:absolute;left:0;right:0;top:30px;bottom:26px;z-index:1;overflow:hidden;cursor:crosshair;background:radial-gradient(circle at 50% 42%,rgba(255,0,0,.10),transparent 46%),#030303}
+  #processScene{position:absolute;left:7px;top:4388px;width:1010px;height:560px;z-index:8;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:visible;pointer-events:none}
+  #processScene .ps-fx{position:absolute;left:0;bottom:10px;width:100%;z-index:6;display:flex;justify-content:center;gap:7px;flex-wrap:wrap;pointer-events:none}
+  #processScene .ps-fx button{pointer-events:auto;cursor:pointer;font-family:'Anonymous Pro','Kode Mono',monospace;font-size:7px;line-height:7px;letter-spacing:1.4px;text-transform:uppercase;color:#7e7e7e;background:rgba(4,4,4,.55);border:1px solid #1f1f1f;padding:6px 9px;transition:color .14s,border-color .14s,background .14s}
+  #processScene .ps-fx button:hover{color:#e9eaec;border-color:#3a0000}
+  #processScene .ps-fx button.on{color:var(--red);border-color:var(--red);background:rgba(255,0,0,.08)}
+  #processScene .ps-stage{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:crosshair;pointer-events:auto;background:transparent}
   #processScene .ps-stage canvas{display:block;width:100%!important;height:100%!important}
-  #processScene .ps-stage::after{content:'';position:absolute;inset:0;z-index:5;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.15) 0 1px,transparent 1px 2px);background-size:100% 2px;animation:globeScan 1.1s linear infinite}
-  #processScene .ps-stage::before{content:'';position:absolute;inset:0;z-index:4;pointer-events:none;background:linear-gradient(90deg,rgba(255,0,0,.16) 0 1px,transparent 1px),linear-gradient(0deg,rgba(255,0,0,.12) 0 1px,transparent 1px);background-size:30px 30px;opacity:.22}
-  #processScene .ps-foot{position:absolute;left:0;right:0;bottom:0;height:26px;z-index:6;display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:0 12px;border-top:1px solid #181818;background:#040404}
-  #processScene .ps-tag{font-size:5.4px;line-height:5.8px;letter-spacing:.68px;border:1px solid #262626;background:#050505;color:#e9eaec;padding:3px 5px}
-  #processScene .ps-tag.hot{color:var(--red);border-color:#3a0000}
+  /* window chrome removed — line / grid / scan effects now come from the toggle buttons (postprocessing) */
+  /* (status strip removed) */
 
 </style>
 </head>
@@ -876,9 +873,15 @@
 </div>
 
 <div aria-label="GOBOLD real-time 3D — Eve" id="processScene">
-<div class="ps-head"><span class="ps-k">// REAL-TIME 3D</span><span class="ps-title">EDEN ENGINE — EVE</span><span class="ps-meta" id="psMeta">WEBGL · THREE.JS · POSTFX</span></div>
 <div class="ps-stage" id="psStage"></div>
-<div class="ps-foot"><span class="ps-tag hot">BLOOM</span><span class="ps-tag">FILM GRAIN</span><span class="ps-tag">POWERSHOT</span><span class="ps-tag hot">CURSOR LENS</span><span class="ps-tag">SCANLINES</span></div>
+<div class="ps-fx" id="psFx">
+<button data-mode="0" class="on">SOLID</button>
+<button data-mode="1">SCANLINES</button>
+<button data-mode="2">V-LINES</button>
+<button data-mode="3">EDGES</button>
+<button data-mode="4">SPLATS</button>
+<button data-mode="5">GLITCH</button>
+</div>
 </div>
 
 <div id="snakeBand">
@@ -2941,9 +2944,9 @@ const stage = document.getElementById('psStage');
 if (stage) {
   const scene = new THREE.Scene();
   scene.background = null;
-  const camera = new THREE.PerspectiveCamera(34, (stage.clientWidth || 980) / (stage.clientHeight || 504), 0.1, 100);
-  camera.position.set(0, 0.05, 2.25);
-  camera.lookAt(0, 0, 0);
+  const camera = new THREE.PerspectiveCamera(34, (stage.clientWidth || 980) / (stage.clientHeight || 560), 0.1, 100);
+  camera.position.set(0, 0.06, 2.7);
+  camera.lookAt(0, 0.04, 0);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearColor(0x000000, 0);
@@ -2955,14 +2958,14 @@ if (stage) {
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
-  /* LIGHTS — same red / cyber key as the hero */
-  scene.add(new THREE.AmbientLight(0x404060, 0.6));
-  scene.add(new THREE.HemisphereLight(0x8899ff, 0x331111, 0.7));
-  const spot = new THREE.SpotLight(0xffffff, 26);
+  /* LIGHTS — dimmed ~80% (much darker, moody) */
+  scene.add(new THREE.AmbientLight(0x404060, 0.12));
+  scene.add(new THREE.HemisphereLight(0x8899ff, 0x331111, 0.14));
+  const spot = new THREE.SpotLight(0xffffff, 5.5);
   spot.position.set(0, 3, 2.4); spot.angle = Math.PI / 5; spot.penumbra = 0.35; spot.decay = 2; spot.distance = 20;
   scene.add(spot); scene.add(spot.target);
-  const rim = new THREE.DirectionalLight(0xff4d4d, 1.4); rim.position.set(-2, 2, -2); scene.add(rim);
-  const fill = new THREE.DirectionalLight(0xff1a1a, 0.9); fill.position.set(2, 1, 2); scene.add(fill);
+  const rim = new THREE.DirectionalLight(0xff4d4d, 0.3); rim.position.set(-2, 2, -2); scene.add(rim);
+  const fill = new THREE.DirectionalLight(0xff1a1a, 0.2); fill.position.set(2, 1, 2); scene.add(fill);
 
   /* FLOOR: pentagram + neon ring (hero motif) */
   const R = 1.25;
@@ -2979,13 +2982,13 @@ if (stage) {
   scene.add(rig);
 
   /* MODEL — decimated Eve GLB */
-  const MODEL_SCALE = 2.05;
+  const MODEL_SCALE = 1.7;
   new GLTFLoader().load(((window.GB_ASSETS && window.GB_ASSETS.models) || 'models/') + 'eve.glb', gltf => {
     const model = gltf.scene;
     let tris = 0;
     model.traverse(o => {
       if (o.isMesh) {
-        o.material = new THREE.MeshStandardMaterial({ color: 0xc4c4cc, metalness: 0.18, roughness: 0.6, emissive: 0x3a0606, emissiveIntensity: 0.5, envMapIntensity: 1.1 });
+        o.material = new THREE.MeshStandardMaterial({ color: 0x8f8f97, metalness: 0.2, roughness: 0.66, emissive: 0x1a0303, emissiveIntensity: 0.12, envMapIntensity: 0.35 });
         const g = o.geometry; if (g && g.index) tris += g.index.count / 3;
       }
     });
@@ -3026,12 +3029,74 @@ if (stage) {
   });
   composer.addPass(warpPass);
 
-  composer.addPass(new UnrealBloomPass(new THREE.Vector2(stage.clientWidth || 980, stage.clientHeight || 504), 0.85, 0.6, 0.2));
+  composer.addPass(new UnrealBloomPass(new THREE.Vector2(stage.clientWidth || 980, stage.clientHeight || 560), 0.32, 0.55, 0.25));
   composer.addPass(new FilmPass(0.5, 0.025, 650, false));
 
   /* POWERSHOT — reuse the hero's digicam ISP shader if available */
   let psPass = null;
-  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.42; composer.addPass(psPass); }
+  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.26; composer.addPass(psPass); }
+
+  /* LINE / SPLAT POSTPROCESSING — toggled by the buttons under the model */
+  const lineFX = new ShaderPass({
+    uniforms: { tDiffuse: { value: null }, uRes: { value: new THREE.Vector2(stage.clientWidth || 980, stage.clientHeight || 560) }, uMode: { value: 0 }, uTime: { value: 0 } },
+    vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+    fragmentShader: `
+      uniform sampler2D tDiffuse; uniform vec2 uRes; uniform float uMode; uniform float uTime; varying vec2 vUv;
+      float luma(vec3 c){ return dot(c, vec3(0.299,0.587,0.114)); }
+      void main(){
+        vec2 texel = 1.0/uRes;
+        vec3 base = texture2D(tDiffuse, vUv).rgb;
+        vec3 outc = base;
+        if(uMode>0.5 && uMode<1.5){            /* SCANLINES */
+          float s = 0.5+0.5*sin((vUv.y*uRes.y)*3.14159);
+          outc = base*mix(0.32,1.08,smoothstep(0.15,0.85,s));
+        } else if(uMode>1.5 && uMode<2.5){     /* VERTICAL LINES */
+          float v = 0.5+0.5*sin((vUv.x*uRes.x)*3.14159);
+          outc = base*mix(0.32,1.08,smoothstep(0.15,0.85,v));
+        } else if(uMode>2.5 && uMode<3.5){     /* EDGES -> line art */
+          float l00=luma(texture2D(tDiffuse,vUv+texel*vec2(-1.,-1.)).rgb);
+          float l01=luma(texture2D(tDiffuse,vUv+texel*vec2(0.,-1.)).rgb);
+          float l02=luma(texture2D(tDiffuse,vUv+texel*vec2(1.,-1.)).rgb);
+          float l10=luma(texture2D(tDiffuse,vUv+texel*vec2(-1.,0.)).rgb);
+          float l12=luma(texture2D(tDiffuse,vUv+texel*vec2(1.,0.)).rgb);
+          float l20=luma(texture2D(tDiffuse,vUv+texel*vec2(-1.,1.)).rgb);
+          float l21=luma(texture2D(tDiffuse,vUv+texel*vec2(0.,1.)).rgb);
+          float l22=luma(texture2D(tDiffuse,vUv+texel*vec2(1.,1.)).rgb);
+          float gx=-l00-2.0*l10-l20+l02+2.0*l12+l22;
+          float gy=-l00-2.0*l01-l02+l20+2.0*l21+l22;
+          float g=sqrt(gx*gx+gy*gy);
+          float e=smoothstep(0.06,0.45,g);
+          outc = mix(vec3(0.008,0.004,0.004), vec3(1.0,0.2,0.2), e);
+        } else if(uMode>3.5 && uMode<4.5){     /* SPLATS / halftone dots */
+          float cell=6.0;
+          vec2 gp=vUv*uRes/cell;
+          vec2 cc=(floor(gp)+0.5)*cell/uRes;
+          vec3 cs=texture2D(tDiffuse,cc).rgb;
+          float l=luma(cs);
+          float d=length(fract(gp)-0.5);
+          float rad=sqrt(l)*0.7;
+          float dotm=smoothstep(rad,rad-0.14,d);
+          outc = cs*dotm;
+        } else if(uMode>4.5){                  /* GLITCH: fine scan + rgb split */
+          float s=0.5+0.5*sin((vUv.y*uRes.y)*3.14159*2.0);
+          float jt=step(0.93,fract(sin(floor(vUv.y*uRes.y*0.25)+uTime*3.0)*43758.5453))*0.012;
+          float r=texture2D(tDiffuse,vUv+vec2(texel.x*2.0+jt,0.)).r;
+          float b=texture2D(tDiffuse,vUv-vec2(texel.x*2.0+jt,0.)).b;
+          outc = vec3(r,base.g,b)*mix(0.4,1.0,s);
+        }
+        gl_FragColor = vec4(outc,1.0);
+      }`
+  });
+  composer.addPass(lineFX);
+
+  /* button wiring + click-to-cycle */
+  const fxBtns = Array.prototype.slice.call(document.querySelectorAll('#psFx button'));
+  function setMode(m){
+    lineFX.uniforms.uMode.value = m;
+    fxBtns.forEach(b => b.classList.toggle('on', parseFloat(b.dataset.mode) === m));
+  }
+  fxBtns.forEach(b => b.addEventListener('click', () => setMode(parseFloat(b.dataset.mode))));
+  stage.addEventListener('click', () => setMode((lineFX.uniforms.uMode.value + 1) % 6));
 
   /* RESIZE */
   new ResizeObserver(() => {
@@ -3068,6 +3133,8 @@ if (stage) {
     warpPass.uniforms.uAmt.value += (over - warpPass.uniforms.uAmt.value) * 0.06;
     warpPass.uniforms.uAspect.value = (stage.clientWidth || 1) / (stage.clientHeight || 1);
     if (psPass) { psPass.uniforms.uTime.value = now * 0.001; psPass.uniforms.uRes.value.set(stage.clientWidth, stage.clientHeight); }
+    lineFX.uniforms.uTime.value = now * 0.001;
+    lineFX.uniforms.uRes.value.set(stage.clientWidth || 980, stage.clientHeight || 560);
     composer.render();
   }
   animate();
