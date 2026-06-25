@@ -2992,14 +2992,14 @@ if (stage) {
   camera.lookAt(0, 0, 0);
   let fitHalfW = 0, fitHalfH = 0;
   const FILL = 0.64;   /* base safe fit */
-  const ZOOM = 1.7;    /* zoom on top of the safe fit (>1 = bigger; high values can crop edges) */
+  const ZOOM = 1.4;    /* zoom on top of the safe fit; 1.4 keeps the whole model (incl. legs) in frame */
   function fitCamera() {
     if (!fitHalfH) return;
     const tanV = Math.tan(camera.fov * Math.PI / 360);
     const tanH = tanV * camera.aspect;
     const distV = (fitHalfH / FILL) / tanV;
     const distH = (fitHalfW / FILL) / tanH;
-    const camY = fitHalfH * 0.14;   /* raise camera a bit -> face sits lower in frame */
+    const camY = fitHalfH * 0.05;   /* small face-down shift; keeps legs in frame */
     camera.position.set(0, camY, Math.max(distV, distH) / ZOOM);
     camera.lookAt(0, camY, 0);
   }
@@ -3102,12 +3102,9 @@ if (stage) {
         vec2 texel = 1.0/uRes;
         vec3 base = texture2D(tDiffuse, vUv).rgb;
         vec3 outc = base;
-        if(uMode>0.5 && uMode<1.5){            /* SCANLINES + GLITCH */
+        if(uMode>0.5 && uMode<1.5){            /* SCANLINES */
           float s = 0.5+0.5*sin((vUv.y*uRes.y)*3.14159);
-          float jt = step(0.90, fract(sin(floor(vUv.y*uRes.y*0.25)+floor(uTime*12.0))*43758.5453)) * (0.010+0.006*sin(uTime*40.0));
-          float rr = texture2D(tDiffuse, vUv+vec2(texel.x*3.0+jt,0.0)).r;
-          float bb = texture2D(tDiffuse, vUv-vec2(texel.x*3.0+jt,0.0)).b;
-          outc = vec3(rr, base.g, bb)*mix(0.32,1.08,smoothstep(0.15,0.85,s));
+          outc = base*mix(0.32,1.08,smoothstep(0.15,0.85,s));
         } else if(uMode>1.5 && uMode<2.5){     /* VERTICAL LINES */
           float v = 0.5+0.5*sin((vUv.x*uRes.x)*3.14159);
           outc = base*mix(0.32,1.08,smoothstep(0.15,0.85,v));
@@ -3161,10 +3158,10 @@ if (stage) {
 
   /* DRAG-TO-ROTATE (gentle, no hover distortion) + visibility gating */
   let visible = true;
-  new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) { lastScrollY = window.scrollY || window.pageYOffset || 0; targetRotY = START_ROT_Y; rig.rotation.y = START_ROT_Y; } }, { threshold: 0 }).observe(stage);
+  new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) { lastScrollY = window.scrollY || window.pageYOffset || 0; } }, { threshold: 0 }).observe(stage);
   let dragging = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = 0;
   let lastScrollY = window.scrollY || window.pageYOffset || 0;
-  addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.0005; lastScrollY = y; }, { passive: true });   /* scroll down -> rotate right, up -> left */
+  addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.0003; lastScrollY = y; }, { passive: true });   /* scroll down -> rotate right, up -> left */
   stage.addEventListener('pointerleave', () => { dragging = false; stage.style.cursor = 'grab'; });
   stage.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; stage.style.cursor = 'grabbing'; if (stage.setPointerCapture) stage.setPointerCapture(e.pointerId); });
   window.addEventListener('pointerup', () => { dragging = false; stage.style.cursor = 'grab'; });
@@ -3172,7 +3169,7 @@ if (stage) {
     if (!dragging) return;
     const dx = e.clientX - lastX, dy = e.clientY - lastY;
     lastX = e.clientX; lastY = e.clientY;
-    targetRotY += dx * 0.004;
+    targetRotY += dx * 0.002;
     targetRotX = Math.max(-0.5, Math.min(0.5, targetRotX + dy * 0.0015));
   });
 
