@@ -2992,15 +2992,16 @@ if (stage) {
   camera.lookAt(0, 0, 0);
   let fitHalfW = 0, fitHalfH = 0;
   const FILL = 0.64;   /* base safe fit */
-  const ZOOM = 2.2;    /* zoom on top of the safe fit (>1 = bigger; high values can crop edges) */
+  const ZOOM = 1.7;    /* zoom on top of the safe fit (>1 = bigger; high values can crop edges) */
   function fitCamera() {
     if (!fitHalfH) return;
     const tanV = Math.tan(camera.fov * Math.PI / 360);
     const tanH = tanV * camera.aspect;
     const distV = (fitHalfH / FILL) / tanV;
     const distH = (fitHalfW / FILL) / tanH;
-    camera.position.set(0, 0, Math.max(distV, distH) / ZOOM);
-    camera.lookAt(0, 0, 0);
+    const camY = fitHalfH * 0.14;   /* raise camera a bit -> face sits lower in frame */
+    camera.position.set(0, camY, Math.max(distV, distH) / ZOOM);
+    camera.lookAt(0, camY, 0);
   }
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
