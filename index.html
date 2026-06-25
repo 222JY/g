@@ -569,16 +569,59 @@
   /* PROCESS — single real-time 3D scene (Eve) under the four process blocks */
   #processPin{position:absolute;left:7px;top:4388px;width:1010px;height:2320px;z-index:8;pointer-events:none}
   #processScene{position:sticky;top:0;width:470px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
-  #processPin .ps-svc{position:absolute;z-index:6;width:288px;pointer-events:none;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;border-top:1px solid #2c2c2c;padding-top:12px}
-  #processPin .ps-svc .sm-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
-  #processPin .ps-svc .sm-title{display:block;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:16px;line-height:16px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:9px;white-space:nowrap}
-  #processPin .ps-svc .sm-copy{margin:0 0 12px;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#8a8a8a;max-width:244px}
-  #processPin .ps-svc .sm-signal{position:relative;width:100%;height:112px;border-top:1px solid #181818;border-bottom:1px solid #181818;overflow:hidden;background:#030303}
-  #processPin .ps-svc .sm-signal::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.48) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(255,0,0,.075) 0 1px,transparent 1px 19px);opacity:.55;mix-blend-mode:screen}
-  #processPin .ps-svc .sm-signal canvas{display:block;width:100%;height:100%;position:relative;z-index:1}
-  #processPin .ps-svc .sm-foot{display:flex;flex-wrap:wrap;gap:3px;margin-top:10px;font-size:5.6px;line-height:6px;letter-spacing:.75px;color:#818181}
-  #processPin .ps-svc .sm-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:3px 4px;background:#050505;white-space:nowrap}
-  #processPin .ps-svc .sm-foot i.hot{color:var(--red)}
+  #processSvcGrid{position:absolute;left:478px;top:60px;width:532px;z-index:6;display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:14px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
+  #processSvcGrid > *:nth-child(even){transform:translateY(64px)}
+  #processSvcGrid .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px;overflow:hidden;background:transparent;cursor:crosshair}
+  #processSvcGrid .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
+  #processSvcGrid .sm-col::after{content:'';position:absolute;left:0;right:0;bottom:32px;height:1px;background:#262626;pointer-events:none}
+  #processSvcGrid .sm-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:14px}
+  #processSvcGrid .sm-title{display:block;width:max-content;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:16px;line-height:16px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:10px;white-space:nowrap;cursor:crosshair}
+  #processSvcGrid .sm-copy{margin:0;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#777;max-width:218px;min-height:54px;text-transform:uppercase}
+  #processSvcGrid .sm-signal{position:absolute;left:0;right:0;bottom:100px;height:156px;border-top:1px solid #181818;border-bottom:1px solid #181818;overflow:hidden;background:#030303}
+  #processSvcGrid .sm-signal::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.48) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(255,0,0,.075) 0 1px,transparent 1px 19px);opacity:.55;mix-blend-mode:screen}
+  #processSvcGrid .sm-signal::after{content:'';position:absolute;left:var(--x,8%);top:18px;width:38px;height:24px;border:1px solid var(--red);background:rgba(255,0,0,.06);box-shadow:0 0 18px rgba(255,0,0,.18);animation:smPulse 3.4s steps(2,end) infinite;z-index:3;pointer-events:none}
+  #processSvcGrid .sm-col:nth-child(2) .sm-signal::after{--x:28%;animation-delay:.35s}
+  #processSvcGrid .sm-col:nth-child(3) .sm-signal::after{--x:52%;animation-delay:.7s}
+  #processSvcGrid .sm-col:nth-child(4) .sm-signal::after{--x:68%;animation-delay:1.05s}
+  #processSvcGrid .sm-foot{position:absolute;left:0;right:0;bottom:59px;display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;gap:3px;font-size:5.6px;line-height:6px;letter-spacing:.75px;color:#818181;border-top:0;padding-top:0;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
+  #processSvcGrid .sm-foot b,#processSvcGrid .sm-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:3px 4px;background:#050505;white-space:nowrap}
+  #processSvcGrid .sm-foot span,#processSvcGrid .sm-foot i.hot{display:inline-block;color:var(--red);border:1px solid #262626;padding:3px 4px;background:#050505;white-space:nowrap}
+  #processSvcGrid .sm-col:hover{border-color:var(--red)}
+  #processSvcGrid .sm-col:first-child::after{background:var(--red)}
+  #processSvcGrid .sm-col:hover::after{background:var(--red)}
+  #processSvcGrid .sm-col:hover::before{background:#262626;opacity:1}
+  #processSvcGrid .sm-col:first-child{border-color:var(--red)}
+  #processSvcGrid .sm-col:hover .sm-title{color:var(--red);animation:cmFlick .5s steps(2) 1}
+  #processSvcGrid .sm-col:hover .sm-signal{background-color:#080000}
+  #processSvcGrid .sm-signal canvas{display:block;width:100%;height:100%;position:relative;z-index:1;cursor:crosshair}
+  #processSvcGrid .sm-col:hover .sm-foot{opacity:1;transform:none}
+  #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 11px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair}
+  #processSvcGrid .sa-card::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
+  #processSvcGrid .sa-card:nth-child(4n+1)::before{display:none}
+  #processSvcGrid .sa-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
+  #processSvcGrid .sa-title{display:block;width:max-content;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:15px;line-height:15px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:9px;white-space:nowrap;cursor:crosshair}
+  #processSvcGrid .sa-copy{margin:0;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#777;max-width:218px;min-height:50px}
+  #processSvcGrid .sa-art{position:absolute;left:0;right:0;bottom:50px;height:144px;border-top:1px solid #181818;border-bottom:1px solid #181818;background:#030303;overflow:hidden}
+  #processSvcGrid canvas{display:block;width:100%;height:100%;image-rendering:auto;mix-blend-mode:normal;cursor:crosshair}
+  #processSvcGrid .sa-art::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.48) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(255,0,0,.075) 0 1px,transparent 1px 19px);opacity:.55;mix-blend-mode:screen;animation:saScan 3.8s linear infinite}
+  #processSvcGrid .sa-art::after{content:'';position:absolute;left:var(--sx,8%);top:13px;width:38px;height:22px;border:1px solid rgba(255,0,0,.9);background:rgba(255,0,0,.06);box-shadow:0 0 18px rgba(255,0,0,.16);animation:saProbe 4s steps(2,end) infinite;z-index:3;pointer-events:none}
+  #processSvcGrid .sa-card:nth-child(2n) .sa-art::after{--sx:66%;animation-delay:.42s}
+  #processSvcGrid .sa-card:nth-child(3n) .sa-art::after{--sx:36%;animation-delay:.76s}
+  #processSvcGrid .sa-foot{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;font-size:6px;line-height:6px;letter-spacing:1px;color:#818181;border-top:1px solid #181818;padding-top:10px;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
+  #processSvcGrid .sa-foot b{font-weight:400;color:#e9eaec}
+  #processSvcGrid .sa-foot span:last-child{color:var(--red)}
+  #processSvcGrid .sa-card[data-family="keyword-service"] .sa-copy{text-transform:uppercase}
+  #processSvcGrid .sa-foot.keyword-foot{display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;justify-content:flex-start;gap:3px;border-top:0;padding-top:0;bottom:12px;font-size:5.6px;line-height:6px;letter-spacing:.75px}
+  #processSvcGrid .sa-foot.keyword-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:3px 4px;background:#050505;white-space:nowrap}
+  #processSvcGrid .sa-foot.keyword-foot i.hot{color:var(--red)}
+  #processSvcGrid .sa-card:hover{border-color:var(--red)}
+  #processSvcGrid .sa-card:hover::before{background:var(--red)}
+  #processSvcGrid .sa-card:hover .sa-title{color:var(--red);animation:cmFlick .5s steps(2) 1}
+  #processSvcGrid .sa-card:hover .sa-art{background:#080000}
+  #processSvcGrid .sa-card:hover .sa-foot{opacity:1;transform:none}
+  #processSvcGrid .sa-card:hover canvas{filter:brightness(1.25) saturate(1.25)}
+  #processSvcGrid .sa-card[data-family="globe"] .sa-k,#processSvcGrid .sa-card[data-family="graph"] .sa-k{color:var(--red)}
+  #processSvcGrid .sa-card[data-family="graph"] .sa-art::after{width:34px;height:20px;background:rgba(255,0,0,.045)}
   #processScene .ps-stage{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;pointer-events:auto;background:transparent}
   #processScene .ps-stage canvas{display:block;width:100%!important;height:100%!important}
   /* window chrome removed — line / grid / scan effects now come from the toggle buttons (postprocessing) */
@@ -883,9 +926,14 @@
 <div aria-label="GOBOLD real-time 3D — Eve" id="processScene">
 <div class="ps-stage" id="psStage"></div>
 </div>
-<div class="ps-svc" style="right:10px;top:120px"><span class="sm-k">01 / WEBSITE CREATION</span><span class="sm-title">WEBSITE CREATION</span><p class="sm-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sm-signal"><canvas id="psSvcOrbital"></canvas></div><div class="sm-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
-<div class="ps-svc" style="right:10px;top:880px"><span class="sm-k">02 / 3D WEB3</span><span class="sm-title">3D / WEB3</span><p class="sm-copy">Interactive 3D, WebGL and on-chain experiences that make people stop scrolling.</p><div class="sm-signal"><canvas id="psSvcCube"></canvas></div><div class="sm-foot"><i>IMMERSIVE</i><i>INTERACTIVE</i><i class="hot">WEBGL</i><i class="hot">THREE.JS</i><i>MOTION</i><i>SCENES</i><i>HIGH-SIGNAL</i><i>DIGITAL</i><i>WORLDS</i></div></div>
-<div class="ps-svc" style="right:10px;top:1640px"><span class="sm-k">03 / BRANDING</span><span class="sm-title">BRANDING</span><p class="sm-copy">Identity, logo systems and visual language built to stand out and scale.</p><div class="sm-signal"><canvas id="psSvcSpiral"></canvas></div><div class="sm-foot"><i>IDENTITY</i><i>VOICE</i><i>SYSTEM</i><i class="hot">LOGO</i><i>ART</i><i>DIRECTION</i><i>GUIDES</i><i>SHARP</i><i>VISUAL</i><i>LANGUAGE</i></div></div>
+<div aria-label="GOBOLD services" id="processSvcGrid">
+<div class="sm-col"><span class="sm-k">01 / WEBSITE CREATION</span><span class="sm-title">WEBSITE CREATION</span><p class="sm-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sm-signal"><canvas id="psWeb"></canvas></div><div class="sm-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
+<div class="sm-col"><span class="sm-k">02 / 3D WEB3</span><span class="sm-title">3D / WEB3</span><p class="sm-copy">Interactive 3D, WebGL and on-chain experiences that make people stop scrolling.</p><div class="sm-signal"><canvas id="ps3d"></canvas></div><div class="sm-foot"><i>IMMERSIVE</i><i>INTERACTIVE</i><i class="hot">WEBGL</i><i class="hot">THREE.JS</i><i>MOTION</i><i>SCENES</i><i>HIGH-SIGNAL</i><i>DIGITAL</i><i>WORLDS</i></div></div>
+<div class="sm-col"><span class="sm-k">03 / BRANDING</span><span class="sm-title">BRANDING</span><p class="sm-copy">Identity, logo systems and visual language built to stand out and scale.</p><div class="sm-signal"><canvas id="psBrand"></canvas></div><div class="sm-foot"><i>IDENTITY</i><i>VOICE</i><i>SYSTEM</i><i class="hot">LOGO</i><i>ART</i><i>DIRECTION</i><i>GUIDES</i><i>SHARP</i><i>VISUAL</i><i>LANGUAGE</i></div></div>
+<div class="sa-card" data-family="keyword-service"><span class="sa-k">04 / AI INTEGRATION</span><span class="sa-title">AI INTEGRATION</span><p class="sa-copy">Chatbots, automation and AI features wired straight into your site or product.</p><div class="sa-art"><canvas id="psAi"></canvas></div><div class="sa-foot keyword-foot"><i>AUTOMATION</i><i>INTELLIGENCE</i><i class="hot">LLM</i><i class="hot">RAG</i><i>AGENTS</i><i>CONNECTED</i><i>REAL</i><i>PRODUCT</i><i>WORKFLOWS</i></div></div>
+<div class="sa-card" data-family="keyword-service"><span class="sa-k">05 / GAMIFICATIONS</span><span class="sa-title">GAMIFICATIONS</span><p class="sa-copy">Playable web moments, reward loops and interaction systems that make visitors stay longer.</p><div class="sa-art"><canvas id="psGame"></canvas></div><div class="sa-foot keyword-foot"><i>PLAYABLE</i><i>WEB</i><i>MOMENTS</i><i class="hot">REWARD</i><i class="hot">LOOPS</i><i>MICRO-GAMES</i><i>INTERACTION</i><i>RETENTION</i></div></div>
+<div class="sa-card" data-family="keyword-service"><span class="sa-k">06 / SOCIAL MEDIA</span><span class="sa-title">SOCIAL MEDIA</span><p class="sa-copy">Content systems, campaign visuals and social assets designed to move fast and build demand.</p><div class="sa-art"><canvas id="psSocial"></canvas></div><div class="sa-foot keyword-foot"><i>CONTENT</i><i>SYSTEMS</i><i class="hot">CAMPAIGNS</i><i>VISUALS</i><i>REELS</i><i>LAUNCHES</i><i>GROWTH</i><i>DISTRIBUTION</i></div></div>
+</div>
 </div>
 
 <div id="snakeBand">
@@ -2706,6 +2754,7 @@ cAnimate();
     else {for(let i=0;i<48;i++){let x=w*((i*37+seed*19)%100)/100,y=h*((i*61+seed*7)%100)/100;let a=t*(.5+(i%6)*.06)+i;L(ctx,[x,y],[x+Math.cos(a)*18*d,y+Math.sin(a)*12*d],i%8?RED:WHITE,.2+(i%8)*.06);}ctx.strokeStyle=RED;ctx.globalAlpha=.5;ctx.strokeRect(w*.18,h*.22,w*.64,h*.56);ctx.globalAlpha=1;}
   }
   for(let n=13;n<=60;n++){ const id='svcArt'+String(n).padStart(2,'0'), o=setup(id); if(!o) continue; const mode=(n-13)%16, seed=n*17; (function(o,mode,seed){function frame(t){drawMode(o.ctx,o.c.width,o.c.height,(t||0)*0.001,mode,seed);requestAnimationFrame(frame);}requestAnimationFrame(frame);})(o,mode,seed); }
+  (function(){var o=setup('psGame');if(o){(function f(t){drawMode(o.ctx,o.c.width,o.c.height,(t||0)*0.001,6,323);requestAnimationFrame(f);})();}})();
 })();
 </script>
 <script>
@@ -2745,6 +2794,7 @@ cAnimate();
     else {let cx=w*.5,cy=h*.62;for(let i=0;i<42;i++){let k=i/41,a=k*TAU*2.6+t*.8,r=k*Math.min(w,h)*.42,x=cx+Math.cos(a)*r*1.8,y=cy-Math.pow(k,1.2)*h*.56+Math.sin(a)*r*.22;D(ctx,x,y,3*d,i%6?RED:WHITE,.35+k*.65);if(i%6===0)L(ctx,[cx,cy],[x,y],RED,.13);}D(ctx,w*.75,h*.16,11*d,WHITE,.9);}
   }
   for(let i=1;i<=24;i++){const o=setup('svcGraph'+String(i).padStart(2,'0')); if(!o) continue; (function(o,i){function frame(ms){draw(o.ctx,o.c.width,o.c.height,(ms||0)*0.001,i-1,i*31);requestAnimationFrame(frame);}requestAnimationFrame(frame);})(o,i);}
+  (function(){var o=setup('psSocial');if(o){(function f(ms){draw(o.ctx,o.c.width,o.c.height,(ms||0)*0.001,2,93);requestAnimationFrame(f);})();}})();
 })();
 </script>
 
@@ -2772,9 +2822,10 @@ cAnimate();
   loop('svcMatrixSpiralGrowth',spiralGrowth);
   loop('svcMatrixLaserFunnel',exactLaserFunnelSvcArt38);
   /* clones inside the pinned process 3D scene */
-  loop('psSvcOrbital',orbitalEngine);
-  loop('psSvcCube',explodedCube);
-  loop('psSvcSpiral',spiralGrowth);
+  loop('psWeb',orbitalEngine);
+  loop('ps3d',explodedCube);
+  loop('psBrand',spiralGrowth);
+  loop('psAi',exactLaserFunnelSvcArt38);
 })();
 </script>
 <script>
