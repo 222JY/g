@@ -567,11 +567,7 @@
   #processFlow .pf-card:hover .pf-status i{border-color:#3a0000}
   @keyframes pfScan{0%{background-position:0 0,0 0}100%{background-position:0 32px,82px 0}}
   /* PROCESS — single real-time 3D scene (Eve) under the four process blocks */
-  #processScene{position:absolute;left:7px;top:4388px;width:1010px;height:820px;z-index:8;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none;will-change:transform;contain:paint;backface-visibility:hidden}
-  #processScene .ps-fx{position:absolute;left:0;bottom:10px;width:100%;z-index:6;display:flex;justify-content:center;gap:7px;flex-wrap:wrap;pointer-events:none}
-  #processScene .ps-fx button{pointer-events:auto;cursor:pointer;font-family:'Anonymous Pro','Kode Mono',monospace;font-size:7px;line-height:7px;letter-spacing:1.4px;text-transform:uppercase;color:#7e7e7e;background:rgba(4,4,4,.55);border:1px solid #1f1f1f;padding:6px 9px;transition:color .14s,border-color .14s,background .14s}
-  #processScene .ps-fx button:hover{color:#e9eaec;border-color:#3a0000}
-  #processScene .ps-fx button.on{color:var(--red);border-color:var(--red);background:rgba(255,0,0,.08)}
+  #processScene{position:absolute;left:7px;top:4388px;width:1010px;height:820px;z-index:8;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none;will-change:transform;transform:translateZ(0);contain:paint;backface-visibility:hidden}
   #processScene .ps-anno{position:absolute;z-index:5;opacity:0;pointer-events:none;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#8f8f8f;font-size:9px;line-height:14px;letter-spacing:1.4px;max-width:215px}
   #processScene .ps-anno b{color:var(--red);font-weight:400}
   #processScene .ps-anno .big{display:block;font-size:15px;line-height:16px;letter-spacing:2px;color:#e9eaec;margin-bottom:4px}
@@ -878,18 +874,10 @@
 <div aria-label="GOBOLD real-time 3D — Eve" id="processScene">
 <div class="ps-stage" id="psStage"></div>
 <div class="ps-anno" style="left:355px;top:24px;width:300px;text-align:center"><span class="big">GOBOLD // PROCESS</span>How we turn a brief into a build.</div>
-<div class="ps-anno" style="left:30px;top:150px"><span class="big">01 — DISCOVERY</span>We map the brief, the market, and the metal.</div>
-<div class="ps-anno" style="right:34px;top:250px;text-align:right"><span class="big">02 — DESIGN</span>Systems, not screens. Every pixel earns its place.</div>
-<div class="ps-anno" style="left:34px;top:500px"><span class="big">03 — BUILD</span>Hand-built, fast, framework-light.</div>
-<div class="ps-anno" style="right:38px;top:580px;text-align:right"><span class="big">04 — SHIP</span>Deploy, measure, iterate. <b>Relentlessly.</b></div>
-<div class="ps-fx" id="psFx">
-<button data-mode="0" class="on">SOLID</button>
-<button data-mode="1">SCANLINES</button>
-<button data-mode="2">V-LINES</button>
-<button data-mode="3">EDGES</button>
-<button data-mode="4">SPLATS</button>
-<button data-mode="5">GLITCH</button>
-</div>
+<div class="ps-anno" style="left:30px;top:150px"><span class="big">01 — WE CALL</span>We lock the real target: what you sell, who must care, budget and deadline.</div>
+<div class="ps-anno" style="right:34px;top:250px;text-align:right"><span class="big">02 — WE MAP</span>The route before build: sections, features, motion, stack, price and launch plan.</div>
+<div class="ps-anno" style="left:34px;top:500px"><span class="big">03 — WE BUILD</span>Design, 3D, frontend, AI and brand become one working preview you watch form.</div>
+<div class="ps-anno" style="right:38px;top:580px;text-align:right"><span class="big">04 — WE LAUNCH</span>Final polish, deploy, speed checks, handover and <b>support</b>.</div>
 </div>
 
 <div id="snakeBand">
@@ -3043,6 +3031,7 @@ if (stage) {
     holder.add(model);
     holder.scale.setScalar(MODEL_SCALE / size);
     rig.add(holder);
+    try { renderer.compile(scene, camera); composer.render(); } catch(e){}   /* precompile shaders at load so entering the pin is not choppy */
     const meta = document.getElementById('psMeta');
     if (meta && tris) meta.textContent = 'WEBGL · THREE.JS · ' + Math.round(tris / 1000) + 'K TRIS · POSTFX';
   });
@@ -3074,7 +3063,7 @@ if (stage) {
 
   /* POWERSHOT — reuse the hero's digicam ISP shader if available */
   let psPass = null;
-  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.26; composer.addPass(psPass); }
+  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.20; composer.addPass(psPass); }
 
   /* LINE / SPLAT POSTPROCESSING — toggled by the buttons under the model */
   const lineFX = new ShaderPass({
@@ -3129,10 +3118,8 @@ if (stage) {
   });
   composer.addPass(lineFX);
 
-  /* effect buttons */
-  const fxBtns = Array.prototype.slice.call(document.querySelectorAll('#psFx button'));
-  function setMode(m){ lineFX.uniforms.uMode.value = m; fxBtns.forEach(b => b.classList.toggle('on', parseFloat(b.dataset.mode) === m)); }
-  fxBtns.forEach(b => b.addEventListener('click', () => setMode(parseFloat(b.dataset.mode))));
+  /* effect locked to SCANLINES (buttons removed) */
+  lineFX.uniforms.uMode.value = 1;
 
   /* RESIZE */
   new ResizeObserver(() => {
