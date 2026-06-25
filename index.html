@@ -2991,14 +2991,15 @@ if (stage) {
   camera.position.set(0, 0, 2.7);
   camera.lookAt(0, 0, 0);
   let fitHalfW = 0, fitHalfH = 0;
-  const FILL = 0.64;   /* model fills ~64% of the frame -> generous safe area, never cropped */
+  const FILL = 0.64;   /* base safe fit */
+  const ZOOM = 2.2;    /* zoom on top of the safe fit (>1 = bigger; high values can crop edges) */
   function fitCamera() {
     if (!fitHalfH) return;
     const tanV = Math.tan(camera.fov * Math.PI / 360);
     const tanH = tanV * camera.aspect;
     const distV = (fitHalfH / FILL) / tanV;
     const distH = (fitHalfW / FILL) / tanH;
-    camera.position.set(0, 0, Math.max(distV, distH));
+    camera.position.set(0, 0, Math.max(distV, distH) / ZOOM);
     camera.lookAt(0, 0, 0);
   }
 
