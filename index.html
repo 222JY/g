@@ -2990,6 +2990,17 @@ if (stage) {
   const camera = new THREE.PerspectiveCamera(34, (stage.clientWidth || 980) / (stage.clientHeight || 820), 0.1, 100);
   camera.position.set(0, 0, 2.7);
   camera.lookAt(0, 0, 0);
+  let fitHalfW = 0, fitHalfH = 0;
+  const FILL = 0.64;   /* model fills ~64% of the frame -> generous safe area, never cropped */
+  function fitCamera() {
+    if (!fitHalfH) return;
+    const tanV = Math.tan(camera.fov * Math.PI / 360);
+    const tanH = tanV * camera.aspect;
+    const distV = (fitHalfH / FILL) / tanV;
+    const distH = (fitHalfW / FILL) / tanH;
+    camera.position.set(0, 0, Math.max(distV, distH));
+    camera.lookAt(0, 0, 0);
+  }
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearColor(0x000000, 0);
@@ -3013,8 +3024,8 @@ if (stage) {
   /* (floor removed — model only) */
   const rig = new THREE.Group();
   scene.add(rig);
-  rig.position.y = -0.2;   /* vertical framing for the larger model */
-  const START_ROT_Y = -130 * Math.PI / 180;   /* model starts turned ~130 degrees to the left */
+  rig.position.y = 0;   /* centred; camera auto-fits with safe area */
+  const START_ROT_Y = -70 * Math.PI / 180;   /* model starts turned ~70 degrees to the left */
   rig.rotation.y = START_ROT_Y;
 
   /* MODEL — decimated Eve GLB */
@@ -3039,6 +3050,11 @@ if (stage) {
     holder.add(model);
     holder.scale.setScalar(MODEL_SCALE / size);
     rig.add(holder);
+    const _ry = rig.rotation.y; rig.rotation.y = 0; rig.updateMatrixWorld(true);
+    { const bb = new THREE.Box3().setFromObject(holder); const bs = bb.getSize(new THREE.Vector3());
+      fitHalfH = bs.y / 2; fitHalfW = Math.sqrt(bs.x * bs.x + bs.z * bs.z) / 2; }
+    rig.rotation.y = _ry; rig.updateMatrixWorld(true);
+    fitCamera();
     try { renderer.compile(scene, camera); composer.render(); } catch(e){}   /* precompile shaders at load so entering the pin is not choppy */
     const meta = document.getElementById('psMeta');
     if (meta && tris) meta.textContent = 'WEBGL · THREE.JS · ' + Math.round(tris / 1000) + 'K TRIS · POSTFX';
@@ -3138,6 +3154,7 @@ if (stage) {
     if (!w || !h) return;
     camera.aspect = w / h; camera.updateProjectionMatrix();
     renderer.setSize(w, h); composer.setSize(w, h);
+    fitCamera();
   }).observe(stage);
 
   /* DRAG-TO-ROTATE (gentle, no hover distortion) + visibility gating */
