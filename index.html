@@ -253,7 +253,7 @@
   #vbSeekMiniPreview.on{display:block}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:23px;top:5518px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
+  #carBand{position:absolute;left:23px;top:7018px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
     overflow:hidden}   /* original footer 3D framing */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
   #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
@@ -325,7 +325,7 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:6151px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:7651px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none;text-shadow:0 0 14px #000,0 0 26px #000}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
@@ -422,7 +422,7 @@
   /* ===================== PORTED v35 BLOCKS (under the 4-animation footer block) ===================== */
 
   /* PROJECT INTAKE / SEND BRIEF */
-  #intake{position:absolute;right:70px;top:6013px;width:360px;z-index:8;background:transparent;border:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:visible;padding:12px 0 0}
+  #intake{position:absolute;right:70px;top:7513px;width:360px;z-index:8;background:transparent;border:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:visible;padding:12px 0 0}
   #intake.shake{animation:intakeShake .24s steps(2,end)}
   @keyframes intakeShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
   #intake .ik-bar{display:flex;align-items:center;justify-content:flex-start;gap:10px;height:14px;padding:0;border-bottom:0;font-size:6px;line-height:6px;letter-spacing:1.4px;color:#6a6a6a;text-align:left}
@@ -455,7 +455,7 @@
   #intake .ik-back:hover{color:var(--red)}
   #intake .ik-note{margin:0;font-size:7px;letter-spacing:.8px;color:#6a6a6a;min-height:9px}
   #intake .ik-note b{color:var(--red);font-weight:400}
-  #contactDivider{position:absolute;right:70px;top:6204px;width:360px;z-index:9;display:flex;align-items:center;gap:9px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;color:#818181;text-transform:uppercase;pointer-events:none}
+  #contactDivider{position:absolute;right:70px;top:7704px;width:360px;z-index:9;display:flex;align-items:center;gap:9px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;color:#818181;text-transform:uppercase;pointer-events:none}
   #contactDivider::before,#contactDivider::after{content:'';height:1px;background:#262626;flex:1 1 auto}
   #contactDivider span{display:inline-block;color:#818181;background:transparent;padding:0}
 
@@ -530,7 +530,7 @@
 
   /* SERVICE LAB — 12 unique animated service representations */
   /* GOBOLD AGENCY — full-width big text under the game block (matches .giant color + threshold) */
-  #bigAgency{position:absolute;left:0;top:5278px;width:1024px;z-index:2;display:flex;justify-content:space-between;align-items:baseline;padding:0 8px;box-sizing:border-box;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:150px;line-height:120px;letter-spacing:-2px;text-transform:uppercase;color:#242424;filter:url(#threshfxXStrong);pointer-events:none;white-space:nowrap}
+  #bigAgency{position:absolute;left:0;top:6778px;width:1024px;z-index:2;display:flex;justify-content:space-between;align-items:baseline;padding:0 8px;box-sizing:border-box;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:150px;line-height:120px;letter-spacing:-2px;text-transform:uppercase;color:#242424;filter:url(#threshfxXStrong);pointer-events:none;white-space:nowrap}
   #bigAgency span{display:block;margin:0}
 
   /* services — moving marquee line (p--l, tight letters, BIG visible threshold), non-interactive */
@@ -1038,7 +1038,7 @@
 </script>
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 6337;   /* process blocks moved down; animations removed */
+const PAGE_H = 7837;   /* process blocks moved down; animations removed */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -1060,6 +1060,31 @@ rescale();
 document.body.classList.add('gb-scaled');
 
 addEventListener('resize', rescale);
+
+/* ===== PROCESS 3D SCROLL-PIN: holds the model centered for 1500 design-px, then the blocks below appear ===== */
+(function(){
+  const el = document.getElementById('processScene');
+  if (!el) return;
+  const SCENE_TOP0 = 4388, SCENE_H = 820, SCENE_HALF = SCENE_H / 2, PIN = 1500;
+  function scale(){ const p = document.getElementById('page'); const w = p && p.getBoundingClientRect().width; return w ? w / 1024 : (window.innerWidth / 1024); }
+  function update(){
+    const s = scale() || 1;
+    const naturalTop = SCENE_TOP0 + (window.__faqExtra || 0);
+    const scrollDesign = window.scrollY / s;
+    const viewCenterDesign = (window.innerHeight / 2) / s;
+    const start = naturalTop + SCENE_HALF - viewCenterDesign;
+    let top;
+    if (scrollDesign <= start) top = naturalTop;                 /* scrolling in */
+    else if (scrollDesign >= start + PIN) top = naturalTop + PIN; /* released, scrolls away */
+    else top = scrollDesign + viewCenterDesign - SCENE_HALF;      /* pinned at viewport center */
+    el.style.top = top + 'px';
+  }
+  let ticking = false;
+  addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(function(){ update(); ticking = false; }); } }, { passive:true });
+  addEventListener('resize', update);
+  window.__processPinUpdate = update;
+  update();
+})();
 
 (function(){
   var map=document.getElementById('miniMap'); if(!map)return;
@@ -1530,7 +1555,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && gBox.classList.cont
 gBox.querySelector('.gb-x').addEventListener('click', gbClose);
 
 const carBandEl = document.getElementById('carBand');
-const faqPushIds = ['processFlow','processScene','bigAgency','carBand','intake','endcap','contactDivider'];
+const faqPushIds = ['processFlow','bigAgency','carBand','intake','endcap','contactDivider'];
 const faqBaseTops = {};
 function readTopPx(el){ return parseFloat((el.style && el.style.top) || getComputedStyle(el).top) || 0; }
 function captureFaqBaseTops(){
@@ -1549,6 +1574,7 @@ function faqPush() {
     if(el && faqBaseTops[id] != null) el.style.top = (faqBaseTops[id] + extra) + 'px';
   });
   rescale();
+  if (window.__processPinUpdate) window.__processPinUpdate();
 }
 captureFaqBaseTops();
 document.querySelectorAll('.faq-item .faq-q').forEach(btn => btn.addEventListener('click', () => {
@@ -3006,7 +3032,7 @@ if (stage) {
         gl_FragColor = texture2D(tDiffuse, uv);
       }`
   });
-  composer.addPass(warpPass);
+  /* (hover lens distortion removed) */
 
   composer.addPass(new UnrealBloomPass(new THREE.Vector2(stage.clientWidth || 980, stage.clientHeight || 820), 0.32, 0.55, 0.25));
   composer.addPass(new FilmPass(0.5, 0.025, 650, false));
@@ -3076,23 +3102,19 @@ if (stage) {
     renderer.setSize(w, h); composer.setSize(w, h);
   }).observe(stage);
 
-  /* DRAG-TO-ROTATE (like the hero 3D) + cursor lens + visibility gating */
+  /* DRAG-TO-ROTATE (gentle, no hover distortion) + visibility gating */
   let visible = true;
   new IntersectionObserver(e => { visible = e[0].isIntersecting; }, { threshold: 0 }).observe(stage);
-  let over = 0, dragging = false, lastX = 0, lastY = 0, velY = 0, targetRotX = 0;
-  const setMouse = e => { const r = stage.getBoundingClientRect(); warpPass.uniforms.uMouse.value.set((e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height); };
-  stage.addEventListener('pointerenter', () => { over = 1; });
-  stage.addEventListener('pointerleave', () => { over = 0; dragging = false; stage.style.cursor = 'grab'; });
+  let dragging = false, lastX = 0, lastY = 0, velY = 0, targetRotX = 0;
+  stage.addEventListener('pointerleave', () => { dragging = false; stage.style.cursor = 'grab'; });
   stage.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; velY = 0; stage.style.cursor = 'grabbing'; if (stage.setPointerCapture) stage.setPointerCapture(e.pointerId); });
   window.addEventListener('pointerup', () => { dragging = false; stage.style.cursor = 'grab'; });
   stage.addEventListener('pointermove', e => {
-    over = 1; setMouse(e);
-    if (dragging) {
-      const dx = e.clientX - lastX, dy = e.clientY - lastY;
-      lastX = e.clientX; lastY = e.clientY;
-      rig.rotation.y += dx * 0.009; velY = dx * 0.009;
-      targetRotX = Math.max(-0.6, Math.min(0.6, targetRotX + dy * 0.006));
-    }
+    if (!dragging) return;
+    const dx = e.clientX - lastX, dy = e.clientY - lastY;
+    lastX = e.clientX; lastY = e.clientY;
+    rig.rotation.y += dx * 0.004; velY = dx * 0.004;
+    targetRotX = Math.max(-0.5, Math.min(0.5, targetRotX + dy * 0.003));
   });
 
   let prev = performance.now();
@@ -3101,10 +3123,8 @@ if (stage) {
     if (!visible || document.hidden) return;
     const now = performance.now();
     const dt = Math.min((now - prev) / 1000, 0.05); prev = now;
-    if (!dragging) { rig.rotation.y += 0.16 * dt + velY; velY *= 0.94; }   /* idle spin + drag inertia */
+    if (!dragging) { rig.rotation.y += 0.14 * dt + velY; velY *= 0.92; }   /* idle spin + gentle drag inertia */
     rig.rotation.x += (targetRotX - rig.rotation.x) * 0.08;
-    warpPass.uniforms.uAmt.value += (over - warpPass.uniforms.uAmt.value) * 0.06;
-    warpPass.uniforms.uAspect.value = (stage.clientWidth || 1) / (stage.clientHeight || 1);
     if (psPass) { psPass.uniforms.uTime.value = now * 0.001; psPass.uniforms.uRes.value.set(stage.clientWidth, stage.clientHeight); }
     composer.render();
   }
