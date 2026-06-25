@@ -569,7 +569,7 @@
   /* PROCESS — single real-time 3D scene (Eve) under the four process blocks */
   #processPin{position:absolute;left:7px;top:4388px;width:1010px;height:2320px;z-index:8;pointer-events:none}
   #processScene{position:sticky;top:0;margin-left:80px;width:470px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
-  #processSvcGrid{position:absolute;left:600px;top:60px;width:400px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
+  #processSvcGrid{position:absolute;left:600px;top:210px;width:400px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
   #processSvcGrid .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px;overflow:hidden;background:transparent;cursor:crosshair}
   #processSvcGrid .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #processSvcGrid .sm-col::after{content:'';position:absolute;left:0;right:0;bottom:32px;height:1px;background:#262626;pointer-events:none}
@@ -810,36 +810,6 @@
 <button id="vbRelocate" type="button">VIDEO FX 01</button>
 <button id="vbMute" type="button">SOUND OFF</button>
 <div class="vb-scan"></div>
-</div>
-<p id="servicesHead">WHAT WE DO</p>
-<div aria-label="GOBOLD services matrix" id="servicesMatrix">
-<div class="sm-col">
-<span class="sm-k">01 / WEBSITE CREATION</span>
-<span class="sm-title">WEBSITE CREATION</span>
-<p class="sm-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p>
-<div class="sm-signal"><canvas id="svcMatrixOrbital"></canvas></div>
-<div class="sm-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div>
-</div>
-<div class="sm-col">
-<span class="sm-k">02 / 3D WEB3</span>
-<span class="sm-title">3D / WEB3</span>
-<p class="sm-copy">Interactive 3D, WebGL and on-chain experiences that make people stop scrolling.</p>
-<div class="sm-signal"><canvas id="svcMatrixExplodedCube"></canvas></div>
-<div class="sm-foot"><i>IMMERSIVE</i><i>INTERACTIVE</i><i class="hot">WEBGL</i><i class="hot">THREE.JS</i><i>MOTION</i><i>SCENES</i><i>HIGH-SIGNAL</i><i>DIGITAL</i><i>WORLDS</i></div>
-</div>
-<div class="sm-col">
-<span class="sm-k">03 / BRANDING</span>
-<span class="sm-title">BRANDING</span>
-<p class="sm-copy">Identity, logo systems and visual language built to stand out and scale.</p>
-<div class="sm-signal"><canvas id="svcMatrixSpiralGrowth"></canvas></div>
-<div class="sm-foot"><i>IDENTITY</i><i>VOICE</i><i>SYSTEM</i><i class="hot">LOGO</i><i>ART</i><i>DIRECTION</i><i>GUIDES</i><i>SHARP</i><i>VISUAL</i><i>LANGUAGE</i></div>
-</div>
-</div>
-
-<div aria-label="GOBOLD gamifications and social media blocks" id="serviceArtGrid">
-<div class="sa-card" data-family="keyword-service"><span class="sa-k">04 / AI INTEGRATION</span><span class="sa-title">AI INTEGRATION</span><p class="sa-copy">Chatbots, automation and AI features wired straight into your site or product.</p><div class="sa-art"><canvas id="svcMatrixLaserFunnel"></canvas></div><div class="sa-foot keyword-foot"><i>AUTOMATION</i><i>INTELLIGENCE</i><i class="hot">LLM</i><i class="hot">RAG</i><i>AGENTS</i><i>CONNECTED</i><i>REAL</i><i>PRODUCT</i><i>WORKFLOWS</i></div></div>
-<div class="sa-card" data-family="keyword-service"><span class="sa-k">05 / GAMIFICATIONS</span><span class="sa-title">GAMIFICATIONS</span><p class="sa-copy">Playable web moments, reward loops and interaction systems that make visitors stay longer.</p><div class="sa-art"><canvas id="svcArt19"></canvas></div><div class="sa-foot keyword-foot"><i>PLAYABLE</i><i>WEB</i><i>MOMENTS</i><i class="hot">REWARD</i><i class="hot">LOOPS</i><i>MICRO-GAMES</i><i>INTERACTION</i><i>RETENTION</i></div></div>
-<div class="sa-card" data-family="keyword-service"><span class="sa-k">06 / SOCIAL MEDIA</span><span class="sa-title">SOCIAL MEDIA</span><p class="sa-copy">Content systems, campaign visuals and social assets designed to move fast and build demand.</p><div class="sa-art"><canvas id="svcGraph03"></canvas></div><div class="sa-foot keyword-foot"><i>CONTENT</i><i>SYSTEMS</i><i class="hot">CAMPAIGNS</i><i>VISUALS</i><i>REELS</i><i>LAUNCHES</i><i>GROWTH</i><i>DISTRIBUTION</i></div></div>
 </div>
 <div id="faq">
 <p class="faq-head">FAQ</p>
@@ -3098,7 +3068,7 @@ if (stage) {
 
   /* POWERSHOT — reuse the hero's digicam ISP shader if available */
   let psPass = null;
-  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.20; composer.addPass(psPass); }
+  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.45; composer.addPass(psPass); }
 
   /* LINE / SPLAT POSTPROCESSING — toggled by the buttons under the model */
   const lineFX = new ShaderPass({
@@ -3111,9 +3081,12 @@ if (stage) {
         vec2 texel = 1.0/uRes;
         vec3 base = texture2D(tDiffuse, vUv).rgb;
         vec3 outc = base;
-        if(uMode>0.5 && uMode<1.5){            /* SCANLINES */
+        if(uMode>0.5 && uMode<1.5){            /* SCANLINES + GLITCH */
           float s = 0.5+0.5*sin((vUv.y*uRes.y)*3.14159);
-          outc = base*mix(0.32,1.08,smoothstep(0.15,0.85,s));
+          float jt = step(0.90, fract(sin(floor(vUv.y*uRes.y*0.25)+floor(uTime*12.0))*43758.5453)) * (0.010+0.006*sin(uTime*40.0));
+          float rr = texture2D(tDiffuse, vUv+vec2(texel.x*3.0+jt,0.0)).r;
+          float bb = texture2D(tDiffuse, vUv-vec2(texel.x*3.0+jt,0.0)).b;
+          outc = vec3(rr, base.g, bb)*mix(0.32,1.08,smoothstep(0.15,0.85,s));
         } else if(uMode>1.5 && uMode<2.5){     /* VERTICAL LINES */
           float v = 0.5+0.5*sin((vUv.x*uRes.x)*3.14159);
           outc = base*mix(0.32,1.08,smoothstep(0.15,0.85,v));
@@ -3166,10 +3139,10 @@ if (stage) {
 
   /* DRAG-TO-ROTATE (gentle, no hover distortion) + visibility gating */
   let visible = true;
-  new IntersectionObserver(e => { visible = e[0].isIntersecting; }, { threshold: 0 }).observe(stage);
+  new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) { lastScrollY = window.scrollY || window.pageYOffset || 0; } }, { threshold: 0 }).observe(stage);
   let dragging = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = 0;
   let lastScrollY = window.scrollY || window.pageYOffset || 0;
-  addEventListener('scroll', () => { const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.004; lastScrollY = y; }, { passive: true });   /* scroll down -> rotate right, up -> left */
+  addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.001; lastScrollY = y; }, { passive: true });   /* scroll down -> rotate right, up -> left */
   stage.addEventListener('pointerleave', () => { dragging = false; stage.style.cursor = 'grab'; });
   stage.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; stage.style.cursor = 'grabbing'; if (stage.setPointerCapture) stage.setPointerCapture(e.pointerId); });
   window.addEventListener('pointerup', () => { dragging = false; stage.style.cursor = 'grab'; });
