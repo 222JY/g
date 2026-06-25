@@ -568,17 +568,17 @@
   @keyframes pfScan{0%{background-position:0 0,0 0}100%{background-position:0 32px,82px 0}}
   /* PROCESS — single real-time 3D scene (Eve) under the four process blocks */
   #processPin{position:absolute;left:7px;top:4388px;width:1010px;height:2320px;z-index:8;pointer-events:none}
-  #processScene{position:sticky;top:0;width:1010px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
-  #processScene .ps-svc{position:absolute;z-index:6;width:288px;pointer-events:none;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;border-top:1px solid #2c2c2c;padding-top:12px}
-  #processScene .ps-svc .sm-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
-  #processScene .ps-svc .sm-title{display:block;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:16px;line-height:16px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:9px;white-space:nowrap}
-  #processScene .ps-svc .sm-copy{margin:0 0 12px;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#8a8a8a;max-width:244px}
-  #processScene .ps-svc .sm-signal{position:relative;width:100%;height:112px;border-top:1px solid #181818;border-bottom:1px solid #181818;overflow:hidden;background:#030303}
-  #processScene .ps-svc .sm-signal::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.48) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(255,0,0,.075) 0 1px,transparent 1px 19px);opacity:.55;mix-blend-mode:screen}
-  #processScene .ps-svc .sm-signal canvas{display:block;width:100%;height:100%;position:relative;z-index:1}
-  #processScene .ps-svc .sm-foot{display:flex;flex-wrap:wrap;gap:3px;margin-top:10px;font-size:5.6px;line-height:6px;letter-spacing:.75px;color:#818181}
-  #processScene .ps-svc .sm-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:3px 4px;background:#050505;white-space:nowrap}
-  #processScene .ps-svc .sm-foot i.hot{color:var(--red)}
+  #processScene{position:sticky;top:0;width:470px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
+  #processPin .ps-svc{position:absolute;z-index:6;width:288px;pointer-events:none;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;border-top:1px solid #2c2c2c;padding-top:12px}
+  #processPin .ps-svc .sm-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
+  #processPin .ps-svc .sm-title{display:block;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:16px;line-height:16px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:9px;white-space:nowrap}
+  #processPin .ps-svc .sm-copy{margin:0 0 12px;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#8a8a8a;max-width:244px}
+  #processPin .ps-svc .sm-signal{position:relative;width:100%;height:112px;border-top:1px solid #181818;border-bottom:1px solid #181818;overflow:hidden;background:#030303}
+  #processPin .ps-svc .sm-signal::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.48) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(255,0,0,.075) 0 1px,transparent 1px 19px);opacity:.55;mix-blend-mode:screen}
+  #processPin .ps-svc .sm-signal canvas{display:block;width:100%;height:100%;position:relative;z-index:1}
+  #processPin .ps-svc .sm-foot{display:flex;flex-wrap:wrap;gap:3px;margin-top:10px;font-size:5.6px;line-height:6px;letter-spacing:.75px;color:#818181}
+  #processPin .ps-svc .sm-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:3px 4px;background:#050505;white-space:nowrap}
+  #processPin .ps-svc .sm-foot i.hot{color:var(--red)}
   #processScene .ps-stage{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;pointer-events:auto;background:transparent}
   #processScene .ps-stage canvas{display:block;width:100%!important;height:100%!important}
   /* window chrome removed — line / grid / scan effects now come from the toggle buttons (postprocessing) */
@@ -882,10 +882,10 @@
 <div id="processPin">
 <div aria-label="GOBOLD real-time 3D — Eve" id="processScene">
 <div class="ps-stage" id="psStage"></div>
-<div class="ps-svc" style="left:18px;top:46px"><span class="sm-k">01 / WEBSITE CREATION</span><span class="sm-title">WEBSITE CREATION</span><p class="sm-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sm-signal"><canvas id="psSvcOrbital"></canvas></div><div class="sm-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
-<div class="ps-svc" style="right:18px;top:298px"><span class="sm-k">02 / 3D WEB3</span><span class="sm-title">3D / WEB3</span><p class="sm-copy">Interactive 3D, WebGL and on-chain experiences that make people stop scrolling.</p><div class="sm-signal"><canvas id="psSvcCube"></canvas></div><div class="sm-foot"><i>IMMERSIVE</i><i>INTERACTIVE</i><i class="hot">WEBGL</i><i class="hot">THREE.JS</i><i>MOTION</i><i>SCENES</i><i>HIGH-SIGNAL</i><i>DIGITAL</i><i>WORLDS</i></div></div>
-<div class="ps-svc" style="left:18px;top:556px"><span class="sm-k">03 / BRANDING</span><span class="sm-title">BRANDING</span><p class="sm-copy">Identity, logo systems and visual language built to stand out and scale.</p><div class="sm-signal"><canvas id="psSvcSpiral"></canvas></div><div class="sm-foot"><i>IDENTITY</i><i>VOICE</i><i>SYSTEM</i><i class="hot">LOGO</i><i>ART</i><i>DIRECTION</i><i>GUIDES</i><i>SHARP</i><i>VISUAL</i><i>LANGUAGE</i></div></div>
 </div>
+<div class="ps-svc" style="right:10px;top:120px"><span class="sm-k">01 / WEBSITE CREATION</span><span class="sm-title">WEBSITE CREATION</span><p class="sm-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sm-signal"><canvas id="psSvcOrbital"></canvas></div><div class="sm-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
+<div class="ps-svc" style="right:10px;top:880px"><span class="sm-k">02 / 3D WEB3</span><span class="sm-title">3D / WEB3</span><p class="sm-copy">Interactive 3D, WebGL and on-chain experiences that make people stop scrolling.</p><div class="sm-signal"><canvas id="psSvcCube"></canvas></div><div class="sm-foot"><i>IMMERSIVE</i><i>INTERACTIVE</i><i class="hot">WEBGL</i><i class="hot">THREE.JS</i><i>MOTION</i><i>SCENES</i><i>HIGH-SIGNAL</i><i>DIGITAL</i><i>WORLDS</i></div></div>
+<div class="ps-svc" style="right:10px;top:1640px"><span class="sm-k">03 / BRANDING</span><span class="sm-title">BRANDING</span><p class="sm-copy">Identity, logo systems and visual language built to stand out and scale.</p><div class="sm-signal"><canvas id="psSvcSpiral"></canvas></div><div class="sm-foot"><i>IDENTITY</i><i>VOICE</i><i>SYSTEM</i><i class="hot">LOGO</i><i>ART</i><i>DIRECTION</i><i>GUIDES</i><i>SHARP</i><i>VISUAL</i><i>LANGUAGE</i></div></div>
 </div>
 
 <div id="snakeBand">
