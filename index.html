@@ -3013,10 +3013,12 @@ if (stage) {
   /* (floor removed — model only) */
   const rig = new THREE.Group();
   scene.add(rig);
-  rig.position.y = 0.12;   /* sit the model a bit higher in frame */
+  rig.position.y = -0.2;   /* vertical framing for the larger model */
+  const START_ROT_Y = -130 * Math.PI / 180;   /* model starts turned ~130 degrees to the left */
+  rig.rotation.y = START_ROT_Y;
 
   /* MODEL — decimated Eve GLB */
-  const MODEL_SCALE = 1.32;
+  const MODEL_SCALE = 1.95;
   new GLTFLoader().load(((window.GB_ASSETS && window.GB_ASSETS.models) || 'models/') + 'eve.glb', gltf => {
     const model = gltf.scene;
     let tris = 0;
@@ -3140,7 +3142,7 @@ if (stage) {
 
   /* DRAG-TO-ROTATE (gentle, no hover distortion) + visibility gating */
   let visible = true;
-  new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) { lastScrollY = window.scrollY || window.pageYOffset || 0; targetRotY = 0; rig.rotation.y = 0; } }, { threshold: 0 }).observe(stage);
+  new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) { lastScrollY = window.scrollY || window.pageYOffset || 0; targetRotY = START_ROT_Y; rig.rotation.y = START_ROT_Y; } }, { threshold: 0 }).observe(stage);
   let dragging = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = 0;
   let lastScrollY = window.scrollY || window.pageYOffset || 0;
   addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.0005; lastScrollY = y; }, { passive: true });   /* scroll down -> rotate right, up -> left */
