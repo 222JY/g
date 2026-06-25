@@ -567,7 +567,7 @@
   #processFlow .pf-card:hover .pf-status i{border-color:#3a0000}
   @keyframes pfScan{0%{background-position:0 0,0 0}100%{background-position:0 32px,82px 0}}
   /* PROCESS — single real-time 3D scene (Eve) under the four process blocks */
-  #processScene{position:absolute;left:7px;top:4388px;width:1010px;height:820px;z-index:8;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
+  #processScene{position:absolute;left:7px;top:4388px;width:1010px;height:820px;z-index:8;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none;will-change:transform;contain:paint;backface-visibility:hidden}
   #processScene .ps-fx{position:absolute;left:0;bottom:10px;width:100%;z-index:6;display:flex;justify-content:center;gap:7px;flex-wrap:wrap;pointer-events:none}
   #processScene .ps-fx button{pointer-events:auto;cursor:pointer;font-family:'Anonymous Pro','Kode Mono',monospace;font-size:7px;line-height:7px;letter-spacing:1.4px;text-transform:uppercase;color:#7e7e7e;background:rgba(4,4,4,.55);border:1px solid #1f1f1f;padding:6px 9px;transition:color .14s,border-color .14s,background .14s}
   #processScene .ps-fx button:hover{color:#e9eaec;border-color:#3a0000}
@@ -1087,20 +1087,37 @@ addEventListener('resize', rescale);
   const el = document.getElementById('processScene');
   if (!el || !window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
-  const PIN = 1500, SCENE_TOP0 = 4388, SCENE_HALF = 410;
+  const PIN = 1500, SCENE_TOP0 = 4388, SCENE_H = 820, SCENE_HALF = SCENE_H / 2, LEFT = 7;
   const zoom = () => (window.innerWidth / 1024) || 1;
+  const startPx = () => ((SCENE_TOP0 + (window.__faqExtra || 0) + SCENE_HALF) * zoom() - window.innerHeight / 2);
+
+  /* annotations — arrive staggered from alternating sides (scrub is fine for reveals) */
   const annos = gsap.utils.toArray('#processScene .ps-anno');
-  gsap.set(annos, { autoAlpha: 0, y: 24 });
+  annos.forEach(function(a, i){ gsap.set(a, { autoAlpha: 0, x: (i % 2 ? 28 : -28), y: 18 }); });
   const tl = gsap.timeline({
-    scrollTrigger: {
-      start: () => ((SCENE_TOP0 + (window.__faqExtra || 0) + SCENE_HALF) * zoom() - window.innerHeight / 2),
-      end: () => '+=' + (PIN * zoom()),
-      scrub: 0.4,
-      invalidateOnRefresh: true
-    }
+    scrollTrigger: { start: startPx, end: () => '+=' + (PIN * zoom()), scrub: 0.5, invalidateOnRefresh: true }
   });
-  tl.to('#processScene', { y: PIN, ease: 'none', duration: 1 }, 0);
-  annos.forEach(function(a, i){ tl.to(a, { autoAlpha: 1, y: 0, ease: 'power2.out', duration: 0.18 }, 0.12 + i * 0.15); });
+  annos.forEach(function(a, i){ tl.to(a, { autoAlpha: 1, x: 0, y: 0, ease: 'power3.out', duration: 0.5 }, 0.3 + i * 0.6); });
+
+  /* TRUE PIN — while in range the scene is position:fixed, so the model is GENUINELY static
+     (no scrub lerp, no transform-follow). Handoff is pixel-seamless at both ends (zoom-aware math). */
+  function place(self){
+    const z = zoom();
+    if (self.isActive){
+      el.style.position = 'fixed';
+      el.style.left = LEFT + 'px';
+      el.style.top  = (window.innerHeight / (2 * z) - SCENE_HALF) + 'px';
+    } else {
+      el.style.position = 'absolute';
+      el.style.left = LEFT + 'px';
+      el.style.top  = (self.scroll() >= self.end ? (SCENE_TOP0 + PIN) : SCENE_TOP0) + 'px';
+    }
+  }
+  const pinST = ScrollTrigger.create({
+    start: startPx, end: () => '+=' + (PIN * zoom()),
+    onToggle: place, onRefresh: place, invalidateOnRefresh: true
+  });
+  place(pinST);
   window.__processPinUpdate = function(){ ScrollTrigger.refresh(); };
 })();
 
@@ -2983,7 +3000,7 @@ if (stage) {
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearColor(0x000000, 0);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.setPixelRatio(1);   /* perf: DPR 1 to keep scroll smooth */
   renderer.setSize(stage.clientWidth, stage.clientHeight);
   stage.appendChild(renderer.domElement);
 
@@ -3035,7 +3052,7 @@ if (stage) {
   composer.renderTarget1.texture.generateMipmaps = false;
   composer.renderTarget2.texture.generateMipmaps = false;
   composer.addPass(new RenderPass(scene, camera));
-  composer.addPass(new BokehPass(scene, camera, { focus: 2.7, aperture: 0.0009, maxblur: 0.01 }));
+  /* BokehPass (depth-of-field) removed — it was the heaviest pass; big scroll-perf win */
 
   /* lens distortion around the cursor — the hero's "cursoring" */
   const warpPass = new ShaderPass({
@@ -3052,7 +3069,7 @@ if (stage) {
   });
   /* (hover lens distortion removed) */
 
-  composer.addPass(new UnrealBloomPass(new THREE.Vector2(stage.clientWidth || 980, stage.clientHeight || 820), 0.32, 0.55, 0.25));
+  composer.addPass(new UnrealBloomPass(new THREE.Vector2((stage.clientWidth || 980)/2, (stage.clientHeight || 820)/2), 0.32, 0.55, 0.25));
   composer.addPass(new FilmPass(0.5, 0.025, 650, false));
 
   /* POWERSHOT — reuse the hero's digicam ISP shader if available */
@@ -3140,14 +3157,16 @@ if (stage) {
     targetRotX = Math.max(-0.5, Math.min(0.5, targetRotX + dy * 0.0015));
   });
 
-  let prev = performance.now();
-  function animate() {
+  let prev = performance.now(), lastRender = 0;
+  function animate(now) {
     requestAnimationFrame(animate);
     if (!visible || document.hidden) return;
-    const now = performance.now();
+    now = now || performance.now();
     const dt = Math.min((now - prev) / 1000, 0.05); prev = now;
     if (!dragging) { rig.rotation.y += 0.14 * dt + velY; velY *= 0.92; }   /* idle spin + gentle drag inertia */
     rig.rotation.x += (targetRotX - rig.rotation.x) * 0.08;
+    if (now - lastRender < 33) return;   /* perf: cap composer to ~30fps so scrolling stays smooth */
+    lastRender = now;
     if (psPass) { psPass.uniforms.uTime.value = now * 0.001; psPass.uniforms.uRes.value.set(stage.clientWidth, stage.clientHeight); }
     lineFX.uniforms.uTime.value = now * 0.001;
     lineFX.uniforms.uRes.value.set(stage.clientWidth || 980, stage.clientHeight || 820);
