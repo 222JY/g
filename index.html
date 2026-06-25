@@ -568,9 +568,8 @@
   @keyframes pfScan{0%{background-position:0 0,0 0}100%{background-position:0 32px,82px 0}}
   /* PROCESS — single real-time 3D scene (Eve) under the four process blocks */
   #processPin{position:absolute;left:7px;top:4388px;width:1010px;height:2320px;z-index:8;pointer-events:none}
-  #processScene{position:sticky;top:0;width:470px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
-  #processSvcGrid{position:absolute;left:478px;top:60px;width:532px;z-index:6;display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:14px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
-  #processSvcGrid > *:nth-child(even){transform:translateY(64px)}
+  #processScene{position:sticky;top:0;margin-left:80px;width:470px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
+  #processSvcGrid{position:absolute;left:600px;top:60px;width:400px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
   #processSvcGrid .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px;overflow:hidden;background:transparent;cursor:crosshair}
   #processSvcGrid .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #processSvcGrid .sm-col::after{content:'';position:absolute;left:0;right:0;bottom:32px;height:1px;background:#262626;pointer-events:none}
@@ -3168,15 +3167,17 @@ if (stage) {
   /* DRAG-TO-ROTATE (gentle, no hover distortion) + visibility gating */
   let visible = true;
   new IntersectionObserver(e => { visible = e[0].isIntersecting; }, { threshold: 0 }).observe(stage);
-  let dragging = false, lastX = 0, lastY = 0, velY = 0, targetRotX = 0;
+  let dragging = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = 0;
+  let lastScrollY = window.scrollY || window.pageYOffset || 0;
+  addEventListener('scroll', () => { const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.004; lastScrollY = y; }, { passive: true });   /* scroll down -> rotate right, up -> left */
   stage.addEventListener('pointerleave', () => { dragging = false; stage.style.cursor = 'grab'; });
-  stage.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; velY = 0; stage.style.cursor = 'grabbing'; if (stage.setPointerCapture) stage.setPointerCapture(e.pointerId); });
+  stage.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; stage.style.cursor = 'grabbing'; if (stage.setPointerCapture) stage.setPointerCapture(e.pointerId); });
   window.addEventListener('pointerup', () => { dragging = false; stage.style.cursor = 'grab'; });
   stage.addEventListener('pointermove', e => {
     if (!dragging) return;
     const dx = e.clientX - lastX, dy = e.clientY - lastY;
     lastX = e.clientX; lastY = e.clientY;
-    rig.rotation.y += dx * 0.002; velY = dx * 0.002;
+    targetRotY += dx * 0.004;
     targetRotX = Math.max(-0.5, Math.min(0.5, targetRotX + dy * 0.0015));
   });
 
@@ -3186,7 +3187,7 @@ if (stage) {
     if (!visible || document.hidden) return;
     now = now || performance.now();
     const dt = Math.min((now - prev) / 1000, 0.05); prev = now;
-    if (!dragging) { rig.rotation.y += 0.14 * dt + velY; velY *= 0.92; }   /* idle spin + gentle drag inertia */
+    rig.rotation.y += (targetRotY - rig.rotation.y) * 0.1;   /* rotation driven by scroll + drag */
     rig.rotation.x += (targetRotX - rig.rotation.x) * 0.08;
     if (now - lastRender < 33) return;   /* perf: cap composer to ~30fps so scrolling stays smooth */
     lastRender = now;
