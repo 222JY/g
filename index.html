@@ -2988,7 +2988,7 @@ if (stage) {
   const scene = new THREE.Scene();
   scene.background = null;
   const camera = new THREE.PerspectiveCamera(34, (stage.clientWidth || 980) / (stage.clientHeight || 820), 0.1, 100);
-  camera.position.set(0, 0, 1.3);
+  camera.position.set(0, 0, 2.7);
   camera.lookAt(0, 0, 0);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -3013,10 +3013,10 @@ if (stage) {
   /* (floor removed — model only) */
   const rig = new THREE.Group();
   scene.add(rig);
-  rig.position.y = -0.3;   /* sit the model a bit lower in frame */
+  rig.position.y = 0.12;   /* sit the model a bit higher in frame */
 
   /* MODEL — decimated Eve GLB */
-  const MODEL_SCALE = 1.15;
+  const MODEL_SCALE = 1.32;
   new GLTFLoader().load(((window.GB_ASSETS && window.GB_ASSETS.models) || 'models/') + 'eve.glb', gltf => {
     const model = gltf.scene;
     let tris = 0;
@@ -3140,10 +3140,10 @@ if (stage) {
 
   /* DRAG-TO-ROTATE (gentle, no hover distortion) + visibility gating */
   let visible = true;
-  new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) { lastScrollY = window.scrollY || window.pageYOffset || 0; } }, { threshold: 0 }).observe(stage);
+  new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) { lastScrollY = window.scrollY || window.pageYOffset || 0; targetRotY = 0; rig.rotation.y = 0; } }, { threshold: 0 }).observe(stage);
   let dragging = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = 0;
   let lastScrollY = window.scrollY || window.pageYOffset || 0;
-  addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.001; lastScrollY = y; }, { passive: true });   /* scroll down -> rotate right, up -> left */
+  addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.0005; lastScrollY = y; }, { passive: true });   /* scroll down -> rotate right, up -> left */
   stage.addEventListener('pointerleave', () => { dragging = false; stage.style.cursor = 'grab'; });
   stage.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; stage.style.cursor = 'grabbing'; if (stage.setPointerCapture) stage.setPointerCapture(e.pointerId); });
   window.addEventListener('pointerup', () => { dragging = false; stage.style.cursor = 'grab'; });
@@ -3155,8 +3155,6 @@ if (stage) {
     targetRotX = Math.max(-0.5, Math.min(0.5, targetRotX + dy * 0.0015));
   });
 
-  const pinEl = document.getElementById('processPin');
-  const ZOOM_NEAR = 1.25, ZOOM_FAR = 3.2;
   let prev = performance.now(), lastRender = 0;
   function animate(now) {
     requestAnimationFrame(animate);
@@ -3165,13 +3163,6 @@ if (stage) {
     const dt = Math.min((now - prev) / 1000, 0.05); prev = now;
     rig.rotation.y += (targetRotY - rig.rotation.y) * 0.1;   /* rotation driven by scroll + drag */
     rig.rotation.x += (targetRotX - rig.rotation.x) * 0.08;
-    if (pinEl) {                                  /* scroll-driven zoom: start on the face, zoom out */
-      const r = pinEl.getBoundingClientRect();
-      let prog = (-r.top) / Math.max(1, r.height - window.innerHeight);
-      prog = Math.max(0, Math.min(1, prog));
-      const zTarget = ZOOM_NEAR + prog * (ZOOM_FAR - ZOOM_NEAR);
-      camera.position.z += (zTarget - camera.position.z) * 0.18;
-    }
     if (now - lastRender < 33) return;   /* perf: cap composer to ~30fps so scrolling stays smooth */
     lastRender = now;
     if (psPass) { psPass.uniforms.uTime.value = now * 0.001; psPass.uniforms.uRes.value.set(stage.clientWidth, stage.clientHeight); }
