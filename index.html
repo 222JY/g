@@ -285,9 +285,9 @@
   #snakeBand .sb-overlay .art-slide.is-on{visibility:visible;z-index:1;animation:none}
   #snakeBand .sb-overlay .art-slide.is-on.is-in{animation:none}
   #snakeBand #sbTrail{position:absolute;left:0;top:0;width:100%;height:100%;mix-blend-mode:difference;pointer-events:none;z-index:6}
-  #snakeBand .game-title{position:absolute;left:0;right:0;top:22px;z-index:5;font-family:'font2159','p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:126px;line-height:94px;letter-spacing:-4px;text-transform:uppercase;color:#818181;filter:url(#threshfxStrong);text-align:center;white-space:nowrap;pointer-events:none;text-shadow:0 2px 0 #000}
+  #snakeBand .game-title{display:none;position:absolute;left:0;right:0;top:22px;z-index:5;font-family:'font2159','p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:126px;line-height:94px;letter-spacing:-4px;text-transform:uppercase;color:#818181;filter:url(#threshfxStrong);text-align:center;white-space:nowrap;pointer-events:none;text-shadow:0 2px 0 #000}
   #snakeBand .sb-overlay button{font:inherit}
-  #snakeBand .sb-signal-art{position:absolute;left:50%;top:31px;transform:translateX(-50%);z-index:3;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:44px;line-height:34px;letter-spacing:-2.2px;color:#a2a2a2;text-transform:uppercase;text-shadow:2px 0 #000,-2px 0 rgba(255,0,0,.48),0 0 18px rgba(162,162,162,.28);filter:blur(.18px) url(#threshfx);pointer-events:none;white-space:nowrap;animation:sbSignalGlitch 1.35s steps(2,end) infinite}
+  #snakeBand .sb-signal-art{display:none;position:absolute;left:50%;top:31px;transform:translateX(-50%);z-index:3;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:44px;line-height:34px;letter-spacing:-2.2px;color:#a2a2a2;text-transform:uppercase;text-shadow:2px 0 #000,-2px 0 rgba(255,0,0,.48),0 0 18px rgba(162,162,162,.28);filter:blur(.18px) url(#threshfx);pointer-events:none;white-space:nowrap;animation:sbSignalGlitch 1.35s steps(2,end) infinite}
   #snakeBand .sb-signal-art::before{content:'>>> ';font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:13px;letter-spacing:2px;color:#fff;vertical-align:7px;animation:diamondBlink .75s steps(1,end) infinite}
   #snakeBand .sb-signal-art::after{content:' <<<';font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:13px;letter-spacing:2px;color:#fff;vertical-align:7px;animation:diamondBlink .95s steps(1,end) infinite}
   #snakeBand .sb-hint{margin:0;font-size:8.5px;letter-spacing:1.5px;color:#7a7a7a;text-transform:uppercase}
@@ -2056,10 +2056,13 @@ gCamera.lookAt(0, 0, 0);
 /* prewarm: compile shaders now, while the site loader still covers the page */
 gRenderer.render(gScene, gCamera);
 
+const gTilt = new THREE.Group();
+gTilt.rotation.z = 0.07; gTilt.rotation.x = 0.025;   /* small STATIC tilt (never spun/dragged) so the planet sits at a slight angle with no jigger */
+gScene.add(gTilt);
 const world = new THREE.Group();
 world.position.x = -0.27;   /* globe sits a bit left of center */
 world.scale.setScalar(1.44);
-gScene.add(world);
+gTilt.add(world);
 
 const globe = new THREE.Group();
 world.add(globe);
@@ -2216,7 +2219,7 @@ const placeRing = (r, m, sy) => {
 };
 
 const gMouse = new THREE.Vector2(9, 9);
-let dragging = false, px = 0, py = 0, vx = 0, vy = 0;
+let dragging = false, px = 0, py = 0, vx = 0, vy = 0, spinY = 0;
 const el = gRenderer.domElement;
 el.addEventListener('pointerdown', e => { dragging = true; px = e.clientX; py = e.clientY; });
 window.addEventListener('pointerup', () => { dragging = false; });
@@ -2366,8 +2369,8 @@ function gAnimate() {
   requestAnimationFrame(gAnimate);
   if (!gVisible || document.hidden) return;
   const t = gClock.getElapsedTime();
-  globe.rotation.y = t * 0.12;
-  world.rotation.y += vy;
+  spinY += 0.002 + vy;   /* base spin + drag momentum on ONE per-frame axis -> no time/frame mismatch jigger at the slow crossover */
+  globe.rotation.y = spinY;
   world.rotation.x = THREE.MathUtils.clamp(world.rotation.x + vx, -0.6, 0.6);
   vy *= 0.985; vx *= 0.94;
   U.uTime.value = t;
@@ -3043,7 +3046,7 @@ if (stage) {
   const rig = new THREE.Group();
   scene.add(rig);
   rig.position.y = 0;   /* centred; camera auto-fits with safe area */
-  const START_ROT_Y = -110 * Math.PI / 180;   /* model starts turned ~110 degrees to the left */
+  const START_ROT_Y = -70 * Math.PI / 180;   /* model rests turned ~70 degrees to the left so the turn is actually visible */
   rig.rotation.y = START_ROT_Y;
 
   /* MODEL — decimated Eve GLB */
@@ -3175,7 +3178,7 @@ if (stage) {
   /* DRAG-TO-ROTATE (gentle, no hover distortion) + visibility gating */
   let visible = true;
   new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) { lastScrollY = window.scrollY || window.pageYOffset || 0; } }, { threshold: 0 }).observe(stage);
-  let dragging = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = 0;
+  let dragging = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = START_ROT_Y;
   let lastScrollY = window.scrollY || window.pageYOffset || 0;
   const pinEl = document.getElementById('processPin');
   addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.0003; lastScrollY = y;
