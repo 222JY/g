@@ -207,7 +207,7 @@
   }
 
   /* ---- globe zone (replaces image-trail / slideshow) ---- */
-  #globeWrap{position:absolute;left:0px;top:663px;width:1023px;height:882px;z-index:6}
+  #globeWrap{position:absolute;left:-35px;top:663px;width:1023px;height:882px;z-index:6}
   #globeZone{position:relative;width:1023px;height:562px;top:-40px;
     cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 3v18M3 12h18' stroke='white' stroke-width='2.6'/></svg>") 12 12, crosshair}
   #globeZone canvas{display:block}
@@ -258,7 +258,7 @@
   #vbSeekMiniPreview.on{display:block}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:0px;top:6900px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
+  #carBand{position:absolute;left:0px;top:6300px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
     overflow:hidden}   /* original footer 3D framing */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
   #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
@@ -330,7 +330,7 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:7533px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:6933px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none;text-shadow:0 0 14px #000,0 0 26px #000}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
@@ -427,7 +427,7 @@
   /* ===================== PORTED v35 BLOCKS (under the 4-animation footer block) ===================== */
 
   /* PROJECT INTAKE / SEND BRIEF */
-  #intake{position:absolute;right:70px;top:7395px;width:360px;z-index:8;background:transparent;border:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:visible;padding:12px 0 0}
+  #intake{position:absolute;right:70px;top:6795px;width:360px;z-index:8;background:transparent;border:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:visible;padding:12px 0 0}
   #intake.shake{animation:intakeShake .24s steps(2,end)}
   @keyframes intakeShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
   #intake .ik-bar{display:flex;align-items:center;justify-content:flex-start;gap:10px;height:14px;padding:0;border-bottom:0;font-size:6px;line-height:6px;letter-spacing:1.4px;color:#6a6a6a;text-align:left}
@@ -460,7 +460,7 @@
   #intake .ik-back:hover{color:var(--red)}
   #intake .ik-note{margin:0;font-size:7px;letter-spacing:.8px;color:#6a6a6a;min-height:9px}
   #intake .ik-note b{color:var(--red);font-weight:400}
-  #contactDivider{position:absolute;right:70px;top:7586px;width:360px;z-index:9;display:flex;align-items:center;gap:9px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;color:#818181;text-transform:uppercase;pointer-events:none}
+  #contactDivider{position:absolute;right:70px;top:6986px;width:360px;z-index:9;display:flex;align-items:center;gap:9px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;color:#818181;text-transform:uppercase;pointer-events:none}
   #contactDivider::before,#contactDivider::after{content:'';height:1px;background:#262626;flex:1 1 auto}
   #contactDivider span{display:inline-block;color:#818181;background:transparent;padding:0}
 
@@ -535,13 +535,13 @@
 
   /* SERVICE LAB — 12 unique animated service representations */
   /* GOBOLD AGENCY — full-width big text under the game block (matches .giant color + threshold) */
-  #bigAgency{position:absolute;left:0;top:6660px;width:1024px;z-index:2;display:flex;justify-content:space-between;align-items:baseline;padding:0 8px;box-sizing:border-box;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:150px;line-height:120px;letter-spacing:-2px;text-transform:uppercase;color:#242424;filter:url(#threshfxXStrong);pointer-events:none;white-space:nowrap}
+  #bigAgency{position:absolute;left:0;top:6060px;width:1024px;z-index:2;display:flex;justify-content:space-between;align-items:baseline;padding:0 8px;box-sizing:border-box;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:150px;line-height:120px;letter-spacing:-2px;text-transform:uppercase;color:#242424;filter:url(#threshfxXStrong);pointer-events:none;white-space:nowrap}
   #bigAgency span{display:block;margin:0}
   #weHelp{position:absolute;right:6px;top:6020px;width:1004px;z-index:7;text-align:right;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;text-transform:uppercase;pointer-events:none}
   #weHelp #weHelpText{margin:0;color:#242424;filter:url(#threshfxStrong)}
 
   /* services — moving marquee line (p--l, tight letters, BIG visible threshold), non-interactive */
-  #bigmovingtext{position:absolute;left:0;top:1854px;width:1024px;height:316px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
+  #bigmovingtext{position:absolute;left:0;top:1834px;width:1024px;height:316px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
   #bigmovingtext .bigmovingtextTrack{position:relative;top:13px;z-index:1;display:flex;flex-shrink:0;align-items:center;white-space:nowrap;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:300px;line-height:1;letter-spacing:-16px;text-transform:uppercase;color:#242424;animation:bigmovingtextMarquee 158.4s linear infinite}
   #bigmovingtext .bigmovingtextItem{padding-right:150px}
   #bigmovingtextTrail{position:absolute;left:0;top:0;width:100%;height:100%;mix-blend-mode:normal;pointer-events:none;z-index:3}
@@ -583,13 +583,13 @@
   #processSvcGrid .sm-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:14px}
   #processSvcGrid .sm-title{display:block;width:max-content;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:16px;line-height:16px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:10px;white-space:nowrap;cursor:crosshair}
   #processSvcGrid .sm-copy{margin:0;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#777;max-width:218px;min-height:54px;text-transform:uppercase}
-  #processSvcGrid .sm-signal{position:absolute;left:0;right:0;bottom:100px;height:156px;border-top:1px solid #181818;border-bottom:1px solid #181818;overflow:hidden;background:#030303}
+  #processSvcGrid .sm-signal{position:absolute;left:0;right:0;bottom:85px;height:171px;border-top:1px solid #181818;border-bottom:1px solid #181818;overflow:hidden;background:#030303}
   #processSvcGrid .sm-signal::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.48) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(255,0,0,.075) 0 1px,transparent 1px 19px);opacity:.55;mix-blend-mode:screen}
   #processSvcGrid .sm-signal::after{content:'';position:absolute;left:var(--x,8%);top:18px;width:38px;height:24px;border:1px solid var(--red);background:rgba(255,0,0,.06);box-shadow:0 0 18px rgba(255,0,0,.18);animation:smPulse 3.4s steps(2,end) infinite;z-index:3;pointer-events:none}
   #processSvcGrid .sm-col:nth-child(2) .sm-signal::after{--x:28%;animation-delay:.35s}
   #processSvcGrid .sm-col:nth-child(3) .sm-signal::after{--x:52%;animation-delay:.7s}
   #processSvcGrid .sm-col:nth-child(4) .sm-signal::after{--x:68%;animation-delay:1.05s}
-  #processSvcGrid .sm-foot{position:absolute;left:0;right:0;bottom:59px;display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;gap:2px;font-size:5.6px;line-height:6px;letter-spacing:.75px;color:#818181;border-top:0;padding-top:0;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
+  #processSvcGrid .sm-foot{position:absolute;left:0;right:0;bottom:52px;display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;gap:2px;font-size:5.6px;line-height:6px;letter-spacing:.75px;color:#818181;border-top:0;padding-top:0;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
   #processSvcGrid .sm-foot b,#processSvcGrid .sm-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:2px 3px;background:#050505;white-space:nowrap}
   #processSvcGrid .sm-foot span,#processSvcGrid .sm-foot i.hot{display:inline-block;color:var(--red);border:1px solid #262626;padding:2px 3px;background:#050505;white-space:nowrap}
   #processSvcGrid .sm-col:hover{border-color:var(--red)}
@@ -617,7 +617,7 @@
   #processSvcGrid .sa-foot b{font-weight:400;color:#e9eaec}
   #processSvcGrid .sa-foot span:last-child{color:var(--red)}
   #processSvcGrid .sa-card[data-family="keyword-service"] .sa-copy{text-transform:uppercase}
-  #processSvcGrid .sa-foot.keyword-foot{display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;justify-content:flex-start;gap:2px;border-top:0;padding-top:0;bottom:12px;font-size:5.6px;line-height:6px;letter-spacing:.75px}
+  #processSvcGrid .sa-foot.keyword-foot{display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;justify-content:flex-start;gap:2px;border-top:0;padding-top:0;bottom:5px;font-size:5.6px;line-height:6px;letter-spacing:.75px}
   #processSvcGrid .sa-foot.keyword-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:2px 3px;background:#050505;white-space:nowrap}
   #processSvcGrid .sa-foot.keyword-foot i.hot{color:var(--red)}
   #processSvcGrid .sa-card:hover{border-color:var(--red)}
@@ -801,7 +801,7 @@
 <div class="giant">
 <p class="static">GOBOLD Digital Agency specializing in</p>
 <p>AI INTEGRATIONS</p>
-<p>3D</p>
+<p>3D INTO WEB</p>
 <p>BRANDING</p>
 <p>WEBSITE DESIGN</p>
 <p>WEBSITE DEVELOPMENT</p>
@@ -913,7 +913,7 @@
 </div>
 </div>
 
-<div id="weHelp"><p id="weHelpText">WE HELP AMBITIOUS BRANDS BUILD WEBSITES BOLD ENOUGH TO STAND OUT IN AN ERA WHERE YOU DIFFERENTIATE OR FADE</p></div>
+
 <div id="snakeBand">
 <div class="sb-bar">
 <span class="sb-slashes">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span>
@@ -1077,7 +1077,7 @@
 </script>
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 7719;   /* process blocks moved down; animations removed */
+const PAGE_H = 7119;   /* process blocks moved down; animations removed */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -1255,7 +1255,7 @@ setTimeout(function(){ if (window.__startBrandTypewriter) window.__startBrandTyp
   /* FAQ/WHAT WE DO heads: start with first letter, typewrite the rest on first scroll into view */
   typeHeadingFromFirstLetter(faqHead, 160);
   typeHeadingFromFirstLetter(document.getElementById('servicesHead'), 120);
-  var _wh=document.getElementById('weHelpText'); if(_wh) typeHeadingFromFirstLetter(_wh, 24);
+
 })();
 
 
@@ -1542,7 +1542,7 @@ const gBox = document.getElementById('gBox');
 const gbT = gBox.querySelector('.gb-t'), gbD = gBox.querySelector('.gb-d');
 const GBOX_TXT = {
   'AI INTEGRATIONS': 'LLM agents, chatbots and automation pipelines wired straight into your product.',
-  '3D': 'Immersive WebGL scenes, three.js worlds and on-chain experiences.',
+  '3D INTO WEB': 'Immersive WebGL scenes, three.js worlds and on-chain experiences.',
   'BRANDING': 'Identity systems, logo, voice. Bold or nothing.',
   'WEBSITE DESIGN': 'Brutalist, motion-first layouts engineered to convert.',
   'WEBSITE DEVELOPMENT': 'Fast, hand-coded builds. Zero template bloat.',
@@ -1584,7 +1584,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && gBox.classList.cont
 gBox.querySelector('.gb-x').addEventListener('click', gbClose);
 
 const carBandEl = document.getElementById('carBand');
-const faqPushIds = ['processFlow','processPin','weHelp','bigAgency','carBand','intake','endcap','contactDivider'];
+const faqPushIds = ['processFlow','processPin','bigAgency','carBand','intake','endcap','contactDivider'];
 const faqBaseTops = {};
 function readTopPx(el){ return parseFloat((el.style && el.style.top) || getComputedStyle(el).top) || 0; }
 function captureFaqBaseTops(){
@@ -3042,7 +3042,7 @@ if (stage) {
   const rig = new THREE.Group();
   scene.add(rig);
   rig.position.y = 0;   /* centred; camera auto-fits with safe area */
-  const START_ROT_Y = -40 * Math.PI / 180;   /* model starts turned ~40 degrees to the left */
+  const START_ROT_Y = -80 * Math.PI / 180;   /* model starts turned ~80 degrees to the left */
   rig.rotation.y = START_ROT_Y;
 
   /* MODEL — decimated Eve GLB */
@@ -3180,7 +3180,7 @@ if (stage) {
   addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.0003; lastScrollY = y;
     if (pinEl) { const pr = pinEl.getBoundingClientRect(); const prog = Math.min(1, Math.max(0, -pr.top / Math.max(1, pr.height - window.innerHeight)));
       const appear = Math.min(1, Math.max(0, prog * 1.5));   /* lights ramp in (appear) as you scroll through the section */
-      redLight.intensity = 18 * appear; whiteLight.intensity = 1.5 * appear;
+      redLight.intensity = 8 * appear; whiteLight.intensity = 10 * appear;
       redLight.position.x = -2.7 + 1.0 * appear; whiteLight.position.x = 2.7 - 1.0 * appear; }
   }, { passive: true });   /* scroll -> faster rotate + light sweeps across the model */
   stage.addEventListener('pointerleave', () => { dragging = false; stage.style.cursor = 'grab'; });
