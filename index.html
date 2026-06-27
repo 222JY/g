@@ -230,7 +230,7 @@
   #thermalBtn.hot::before{filter:brightness(0) saturate(100%)}
 
   /* ---- FAQ ---- */
-  #vidband{position:absolute;left:3px;top:1255px;width:1018px;height:573px;overflow:hidden;z-index:5;background:#000;border-top:0;border-bottom:0;transform-origin:50% 50%;will-change:transform,opacity;transition:transform .2s ease-out,opacity .2s ease-out}
+  #vidband{position:absolute;left:3px;top:1255px;width:1018px;height:573px;overflow:hidden;z-index:5;background:#000;border-top:0;border-bottom:0;transform-origin:50% 50%;will-change:transform,opacity;transition:transform .3s ease-out,opacity .3s ease-out}
   #vidband .vb-showreel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9;font-family:'Anonymous Pro','Kode Mono',monospace;font-size:7px;letter-spacing:2.5px;text-transform:uppercase;color:#fff;background:#000;padding:7px 12px;opacity:0;transition:opacity .2s ease;pointer-events:none;white-space:nowrap}
   #vidband:hover .vb-showreel{opacity:1}
   #vidband .video-replace{position:absolute;left:0;top:-35%;width:100%;height:170%;object-fit:cover;will-change:transform;filter:contrast(1.08) brightness(.86) saturate(.92)}
@@ -739,8 +739,8 @@
   buildTerm();
   function tickTerm(p){
     if(!term) return;
-    term.classList.toggle('on',p>0.34 && fontsReady);   /* don't fade the boot log in until Anonymous Pro is ready (avoids the swap jump) */
-    var local=Math.max(0,Math.min(1,(p-.34)/.58));
+    term.classList.toggle('on',p>0 && fontsReady);   /* boot log starts instantly (still waits only on font-ready to avoid a swap jump) */
+    var local=Math.max(0,Math.min(1,p/.85));
     var num=Math.floor(local*S9lines.length);
     for(var i=0;i<built.length;i++) built[i].classList.toggle('on',i<=num);
     var line=built[Math.min(num,built.length-1)];
@@ -924,8 +924,8 @@
 <canvas height="300" id="sbCanvas" width="1000"></canvas>
 <div class="sb-overlay" id="sbOverlay">
 <img alt="GOBOLD game artwork 15" class="art-slide is-on" decoding="sync" loading="eager" fetchpriority="high" src="images/game-art-15.png"/>
-<img alt="GOBOLD game artwork 16" class="art-slide" decoding="sync" loading="eager" src="images/game-art-16.png"/>
-<img alt="GOBOLD game artwork 17" class="art-slide" decoding="sync" loading="eager" src="images/game-art-17.png"/>
+<img alt="GOBOLD game artwork 16" class="art-slide" decoding="sync" loading="eager" fetchpriority="high" src="images/game-art-16.png"/>
+<img alt="GOBOLD game artwork 17" class="art-slide" decoding="sync" loading="eager" fetchpriority="high" src="images/game-art-17.png"/>
 <div class="game-title">BRAND THE SNAKE</div>
 <button class="sb-play-btn" id="sbStart" type="button">PLAY GAME →</button>
 </div>
@@ -2056,13 +2056,10 @@ gCamera.lookAt(0, 0, 0);
 /* prewarm: compile shaders now, while the site loader still covers the page */
 gRenderer.render(gScene, gCamera);
 
-const gTilt = new THREE.Group();
-gTilt.rotation.z = 0.14; gTilt.rotation.x = 0.05;   /* static tilt wrapper: never spun or dragged, so the planet sits at an angle with no wobble/jitter */
-gScene.add(gTilt);
 const world = new THREE.Group();
 world.position.x = -0.27;   /* globe sits a bit left of center */
 world.scale.setScalar(1.44);
-gTilt.add(world);
+gScene.add(world);
 
 const globe = new THREE.Group();
 world.add(globe);
@@ -2335,7 +2332,7 @@ function updateMissiles(dt) {
     m.boom.scale.setScalar(0.001 + m.age * 0.16);          // ping ring grows from the click moment
     m.boom.material.opacity = Math.max(1 - m.age * 0.9, 0);
     if (m.t < 1) {
-      m.t = Math.min(m.t + dt * 0.55, 1);
+      m.t = Math.min(m.t + dt * 1.65, 1);
       const n = Math.max(Math.floor(m.t * N_ARC), 2);
       const pos = m.line.geometry.attributes.position;
       for (let k = 0; k < n; k++) {
@@ -3046,7 +3043,7 @@ if (stage) {
   const rig = new THREE.Group();
   scene.add(rig);
   rig.position.y = 0;   /* centred; camera auto-fits with safe area */
-  const START_ROT_Y = -70 * Math.PI / 180;   /* model starts turned ~70 degrees to the left */
+  const START_ROT_Y = -110 * Math.PI / 180;   /* model starts turned ~110 degrees to the left */
   rig.rotation.y = START_ROT_Y;
 
   /* MODEL — decimated Eve GLB */
