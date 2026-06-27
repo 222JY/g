@@ -2369,7 +2369,7 @@ function gAnimate() {
   requestAnimationFrame(gAnimate);
   if (!gVisible || document.hidden) return;
   const t = gClock.getElapsedTime();
-  spinY += 0.0045 + vy;   /* base spin (faster) + drag momentum on ONE per-frame axis -> no time/frame mismatch jigger at the slow crossover */
+  spinY += 0.0135 + vy;   /* base spin (3x faster) + drag momentum on ONE per-frame axis -> no time/frame mismatch jigger at the slow crossover */
   globe.rotation.y = spinY;
   world.rotation.x = THREE.MathUtils.clamp(world.rotation.x + vx, -0.6, 0.6);
   vy *= 0.985; vx *= 0.94;
@@ -3046,7 +3046,7 @@ if (stage) {
   const rig = new THREE.Group();
   scene.add(rig);
   rig.position.y = 0;   /* centred; camera auto-fits with safe area */
-  const START_ROT_Y = -70 * Math.PI / 180;   /* model rests turned ~70 degrees to the left so the turn is actually visible */
+  const START_ROT_Y = -50 * Math.PI / 180;   /* model rests turned ~50 degrees to the left so the turn is actually visible */
   rig.rotation.y = START_ROT_Y;
 
   /* MODEL — decimated Eve GLB */
