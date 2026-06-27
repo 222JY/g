@@ -630,8 +630,12 @@
   #processSvcGrid .sa-card[data-family="graph"] .sa-art::after{width:34px;height:20px;background:rgba(255,0,0,.045)}
   #processScene .ps-stage{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;pointer-events:auto;background:transparent}
   #processScene .ps-stage canvas{display:block;width:100%!important;height:100%!important}
-  /* window chrome removed — line / grid / scan effects now come from the toggle buttons (postprocessing) */
-  /* (status strip removed) */
+  #processScene .ps-fxbar{position:absolute;left:0;right:0;top:14px;z-index:6;display:flex;flex-wrap:wrap;gap:4px;align-items:flex-start;justify-content:center;padding:0 12px;pointer-events:auto}
+  #processScene .ps-fxbar button{height:16px;border:1px solid #262626;background:#000;color:#818181;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:5.5px;line-height:5.5px;letter-spacing:.85px;text-transform:uppercase;padding:0 5px;cursor:crosshair;white-space:nowrap;transition:none}
+  #processScene .ps-fxbar button:hover,#processScene .ps-fxbar button.on{border-color:var(--red);color:var(--red);background:#100000;box-shadow:0 0 14px rgba(255,0,0,.22)}
+  #processScene .ps-hover-light{position:absolute;left:var(--mx,-100px);top:var(--my,-100px);width:150px;height:150px;z-index:5;transform:translate(-50%,-50%);pointer-events:none;opacity:0;border-radius:50%;background:radial-gradient(circle,rgba(255,0,0,.32) 0,rgba(255,30,30,.14) 24%,rgba(255,0,0,.045) 46%,transparent 70%);mix-blend-mode:screen;filter:blur(10px);transition:opacity .12s linear}
+  #processScene.is-hovering .ps-hover-light{opacity:1}
+  /* top buttons switch 10 unique postprocessing looks; cursor adds real extra light + screen glow */
 
 </style>
 </head>
@@ -901,7 +905,7 @@
 
 <div id="processPin">
 <div aria-label="GOBOLD real-time 3D — Eve" id="processScene">
-<div class="ps-stage" id="psStage"></div>
+<div class="ps-fxbar" id="psFxBar" aria-label="3D postprocessing modes"></div><div class="ps-hover-light" aria-hidden="true"></div><div class="ps-stage" id="psStage"></div>
 </div>
 <div aria-label="GOBOLD services" id="processSvcGrid">
 <div class="sa-card" data-family="keyword-service"><span class="sa-k">01 / WEBSITE CREATION</span><span class="sa-title">WEBSITE CREATION</span><p class="sa-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sa-art"><canvas id="psWeb"></canvas></div><div class="sa-foot keyword-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
@@ -3005,6 +3009,9 @@ if (stage) {
   const whiteLight = new THREE.SpotLight(0xffffff, 0, 14, Math.PI / 8, 0.3, 1.4);
   whiteLight.position.set(2.7, -0.7, 2.2); whiteLight.target.position.set(0, 0, 0);
   scene.add(whiteLight); scene.add(whiteLight.target);
+  const cursorLight = new THREE.PointLight(0xff2020, 0, 4.8, 1.65);
+  cursorLight.position.set(0, 0, 1.45);
+  scene.add(cursorLight);
   scene.background = null;
   const camera = new THREE.PerspectiveCamera(34, (stage.clientWidth || 980) / (stage.clientHeight || 820), 0.1, 100);
   camera.position.set(0, 0, 2.7);
@@ -3110,61 +3117,64 @@ if (stage) {
   let psPass = null;
   if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.30; composer.addPass(psPass); }
 
-  /* LINE / SPLAT POSTPROCESSING — toggled by the buttons under the model */
+  /* 10 UNIQUE POSTPROCESSING MODES — buttons on top of the third 3D */
   const lineFX = new ShaderPass({
-    uniforms: { tDiffuse: { value: null }, uRes: { value: new THREE.Vector2(stage.clientWidth || 980, stage.clientHeight || 560) }, uMode: { value: 0 }, uTime: { value: 0 } },
+    uniforms: { tDiffuse: { value: null }, uRes: { value: new THREE.Vector2(stage.clientWidth || 980, stage.clientHeight || 560) }, uMode: { value: 1 }, uTime: { value: 0 }, uMouse: { value: new THREE.Vector2(-10, -10) }, uHover: { value: 0 } },
     vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
     fragmentShader: `
-      uniform sampler2D tDiffuse; uniform vec2 uRes; uniform float uMode; uniform float uTime; varying vec2 vUv;
+      uniform sampler2D tDiffuse; uniform vec2 uRes; uniform float uMode; uniform float uTime; uniform vec2 uMouse; uniform float uHover; varying vec2 vUv;
       float luma(vec3 c){ return dot(c, vec3(0.299,0.587,0.114)); }
+      float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123); }
+      vec3 edge(vec2 uv, vec2 texel){
+        float l00=luma(texture2D(tDiffuse,uv+texel*vec2(-1.,-1.)).rgb), l01=luma(texture2D(tDiffuse,uv+texel*vec2(0.,-1.)).rgb), l02=luma(texture2D(tDiffuse,uv+texel*vec2(1.,-1.)).rgb);
+        float l10=luma(texture2D(tDiffuse,uv+texel*vec2(-1.,0.)).rgb), l12=luma(texture2D(tDiffuse,uv+texel*vec2(1.,0.)).rgb);
+        float l20=luma(texture2D(tDiffuse,uv+texel*vec2(-1.,1.)).rgb), l21=luma(texture2D(tDiffuse,uv+texel*vec2(0.,1.)).rgb), l22=luma(texture2D(tDiffuse,uv+texel*vec2(1.,1.)).rgb);
+        float gx=-l00-2.0*l10-l20+l02+2.0*l12+l22, gy=-l00-2.0*l01-l02+l20+2.0*l21+l22;
+        float e=smoothstep(0.055,0.42,sqrt(gx*gx+gy*gy)); return vec3(e);
+      }
       void main(){
         vec2 texel = 1.0/uRes;
-        vec3 base = texture2D(tDiffuse, vUv).rgb;
+        vec2 uv = vUv;
+        vec3 base = texture2D(tDiffuse, uv).rgb;
         vec3 outc = base;
-        if(uMode>0.5 && uMode<1.5){            /* SCANLINES */
-          float s = 0.5+0.5*sin((vUv.y*uRes.y)*3.14159);
-          outc = base*mix(0.32,1.08,smoothstep(0.15,0.85,s));
-        } else if(uMode>1.5 && uMode<2.5){     /* VERTICAL LINES */
-          float v = 0.5+0.5*sin((vUv.x*uRes.x)*3.14159);
-          outc = base*mix(0.32,1.08,smoothstep(0.15,0.85,v));
-        } else if(uMode>2.5 && uMode<3.5){     /* EDGES -> line art */
-          float l00=luma(texture2D(tDiffuse,vUv+texel*vec2(-1.,-1.)).rgb);
-          float l01=luma(texture2D(tDiffuse,vUv+texel*vec2(0.,-1.)).rgb);
-          float l02=luma(texture2D(tDiffuse,vUv+texel*vec2(1.,-1.)).rgb);
-          float l10=luma(texture2D(tDiffuse,vUv+texel*vec2(-1.,0.)).rgb);
-          float l12=luma(texture2D(tDiffuse,vUv+texel*vec2(1.,0.)).rgb);
-          float l20=luma(texture2D(tDiffuse,vUv+texel*vec2(-1.,1.)).rgb);
-          float l21=luma(texture2D(tDiffuse,vUv+texel*vec2(0.,1.)).rgb);
-          float l22=luma(texture2D(tDiffuse,vUv+texel*vec2(1.,1.)).rgb);
-          float gx=-l00-2.0*l10-l20+l02+2.0*l12+l22;
-          float gy=-l00-2.0*l01-l02+l20+2.0*l21+l22;
-          float g=sqrt(gx*gx+gy*gy);
-          float e=smoothstep(0.06,0.45,g);
-          outc = mix(vec3(0.008,0.004,0.004), vec3(1.0,0.2,0.2), e);
-        } else if(uMode>3.5 && uMode<4.5){     /* SPLATS / halftone dots */
-          float cell=6.0;
-          vec2 gp=vUv*uRes/cell;
-          vec2 cc=(floor(gp)+0.5)*cell/uRes;
-          vec3 cs=texture2D(tDiffuse,cc).rgb;
-          float l=luma(cs);
-          float d=length(fract(gp)-0.5);
-          float rad=sqrt(l)*0.7;
-          float dotm=smoothstep(rad,rad-0.14,d);
-          outc = cs*dotm;
-        } else if(uMode>4.5){                  /* GLITCH: fine scan + rgb split */
-          float s=0.5+0.5*sin((vUv.y*uRes.y)*3.14159*2.0);
-          float jt=step(0.93,fract(sin(floor(vUv.y*uRes.y*0.25)+uTime*3.0)*43758.5453))*0.012;
-          float r=texture2D(tDiffuse,vUv+vec2(texel.x*2.0+jt,0.)).r;
-          float b=texture2D(tDiffuse,vUv-vec2(texel.x*2.0+jt,0.)).b;
-          outc = vec3(r,base.g,b)*mix(0.4,1.0,s);
+        float m=floor(uMode+0.5);
+        if(m==1.0){ /* SCANLINES */
+          float s=0.5+0.5*sin(vUv.y*uRes.y*3.14159); outc=base*mix(0.28,1.12,smoothstep(.12,.88,s));
+        } else if(m==2.0){ /* CRT RGB */
+          float grille=step(.38,fract(vUv.x*uRes.x/3.0)); float scan=0.72+0.28*sin(vUv.y*uRes.y*3.14159); outc=vec3(base.r*(1.15-grille*.2),base.g*(.92+grille*.16),base.b*.78)*scan;
+        } else if(m==3.0){ /* RED LINE ART */
+          float e=edge(uv,texel).r; outc=mix(vec3(.005,.002,.002),vec3(1.,.04,.02),e)+base*.12;
+        } else if(m==4.0){ /* GLITCH SLICES */
+          float row=floor(vUv.y*uRes.y/11.0); float jt=(hash(vec2(row,floor(uTime*12.0)))-.5)*step(.62,hash(vec2(row,uTime)))*.035;
+          outc=vec3(texture2D(tDiffuse,uv+vec2(jt+texel.x*3.,0)).r, texture2D(tDiffuse,uv+vec2(jt*.35,0)).g, texture2D(tDiffuse,uv-vec2(jt+texel.x*3.,0)).b);
+        } else if(m==5.0){ /* ASCII BLOCKS */
+          vec2 cell=vec2(7.,9.); vec2 cuv=(floor(vUv*uRes/cell)+.5)*cell/uRes; vec3 c=texture2D(tDiffuse,cuv).rgb; float l=luma(c); vec2 f=fract(vUv*uRes/cell); float glyph=step(.11,abs(f.x-.5))*step(.18,abs(f.y-.5)); glyph*=step(hash(floor(vUv*uRes/cell)),l+.18); outc=c*glyph*1.55;
+        } else if(m==6.0){ /* HALFTONE */
+          float cell=6.0; vec2 gp=vUv*uRes/cell; vec2 cc=(floor(gp)+.5)*cell/uRes; vec3 cs=texture2D(tDiffuse,cc).rgb; float rad=sqrt(luma(cs))*.72; float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5)); outc=cs*dotm*1.25;
+        } else if(m==7.0){ /* THERMAL */
+          float l=luma(base); outc=mix(mix(vec3(0.,0.,.12),vec3(.8,0.,0.),smoothstep(.12,.55,l)),vec3(1.,.95,.25),smoothstep(.55,1.,l));
+        } else if(m==8.0){ /* CHROMA TRAIL */
+          float w=sin(uTime*2.2)*.003+.006; outc=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*1.05;
+        } else if(m==9.0){ /* DATAMOSH GRID */
+          vec2 q=floor(vUv*uRes/12.0); float n=hash(q+floor(uTime*8.0)); uv += (n-.5)*texel*10.0*step(.72,n); outc=texture2D(tDiffuse,uv).rgb; outc*=.72+.28*step(.06,fract(vUv.x*uRes.x/12.0))*step(.06,fract(vUv.y*uRes.y/12.0));
+        } else if(m==10.0){ /* INVERTED EDGES */
+          float e=edge(uv,texel).r; outc=mix(1.0-base,vec3(1.,.06,.04),e)*(.72+e*.75);
         }
+        float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
+        outc += vec3(1.0,.05,.02)*smoothstep(.28,0.0,d)*uHover*.45;
         gl_FragColor = vec4(outc,1.0);
       }`
   });
   composer.addPass(lineFX);
 
-  /* effect locked to SCANLINES (buttons removed) */
-  lineFX.uniforms.uMode.value = 1;
+  const fxNames = ['SCAN','CRT','LINES','GLITCH','ASCII','DOTS','THERMAL','CHROMA','MOSH','INVERT'];
+  const fxBar = document.getElementById('psFxBar');
+  if (fxBar) fxNames.forEach((name, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = String(i + 1).padStart(2,'0') + ' ' + name;
+    if (i === 0) b.className = 'on';
+    b.addEventListener('click', () => { lineFX.uniforms.uMode.value = i + 1; fxBar.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); });
+    fxBar.appendChild(b);
+  });
 
   /* RESIZE */
   new ResizeObserver(() => {
@@ -3178,7 +3188,7 @@ if (stage) {
   /* DRAG-TO-ROTATE (gentle, no hover distortion) + visibility gating */
   let visible = true;
   new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) { lastScrollY = window.scrollY || window.pageYOffset || 0; } }, { threshold: 0 }).observe(stage);
-  let dragging = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = START_ROT_Y;
+  let dragging = false, hovering = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = START_ROT_Y;
   let lastScrollY = window.scrollY || window.pageYOffset || 0;
   const pinEl = document.getElementById('processPin');
   addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.0003; lastScrollY = y;
@@ -3187,10 +3197,19 @@ if (stage) {
       redLight.intensity = 8 * appear; whiteLight.intensity = 10 * appear;
       redLight.position.x = -2.7 + 1.0 * appear; whiteLight.position.x = 2.7 - 1.0 * appear; }
   }, { passive: true });   /* scroll -> faster rotate + light sweeps across the model */
-  stage.addEventListener('pointerleave', () => { dragging = false; stage.style.cursor = 'grab'; });
+  const sceneEl = document.getElementById('processScene');
+  stage.addEventListener('pointerenter', () => { hovering = true; if (sceneEl) sceneEl.classList.add('is-hovering'); });
+  stage.addEventListener('pointerleave', () => { dragging = false; hovering = false; cursorLight.intensity = 0; lineFX.uniforms.uHover.value = 0; if (sceneEl) sceneEl.classList.remove('is-hovering'); stage.style.cursor = 'grab'; });
   stage.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; stage.style.cursor = 'grabbing'; if (stage.setPointerCapture) stage.setPointerCapture(e.pointerId); });
   window.addEventListener('pointerup', () => { dragging = false; stage.style.cursor = 'grab'; });
   stage.addEventListener('pointermove', e => {
+    const r = stage.getBoundingClientRect();
+    const nx = (e.clientX - r.left) / Math.max(1, r.width), ny = (e.clientY - r.top) / Math.max(1, r.height);
+    cursorLight.position.set((nx - 0.5) * 1.45, (0.5 - ny) * 1.8, 1.35);
+    cursorLight.intensity = 4.8;
+    lineFX.uniforms.uMouse.value.set(nx, 1.0 - ny);
+    lineFX.uniforms.uHover.value = 1.0;
+    if (sceneEl) { sceneEl.style.setProperty('--mx', (e.clientX - sceneEl.getBoundingClientRect().left) + 'px'); sceneEl.style.setProperty('--my', (e.clientY - sceneEl.getBoundingClientRect().top) + 'px'); }
     if (!dragging) return;
     const dx = e.clientX - lastX, dy = e.clientY - lastY;
     lastX = e.clientX; lastY = e.clientY;
