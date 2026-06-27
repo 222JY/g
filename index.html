@@ -207,7 +207,7 @@
   }
 
   /* ---- globe zone (replaces image-trail / slideshow) ---- */
-  #globeWrap{position:absolute;left:-35px;top:663px;width:1023px;height:882px;z-index:6}
+  #globeWrap{position:absolute;left:-10px;top:663px;width:1023px;height:882px;z-index:6}
   #globeZone{position:relative;width:1023px;height:562px;top:-40px;
     cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 3v18M3 12h18' stroke='white' stroke-width='2.6'/></svg>") 12 12, crosshair}
   #globeZone canvas{display:block}
@@ -607,7 +607,7 @@
   #processSvcGrid .sa-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
   #processSvcGrid .sa-title{display:block;width:max-content;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:15px;line-height:15px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:9px;white-space:nowrap;cursor:crosshair}
   #processSvcGrid .sa-copy{margin:0;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#777;max-width:218px;min-height:50px}
-  #processSvcGrid .sa-art{position:absolute;left:0;right:0;bottom:50px;height:144px;border-top:1px solid #181818;border-bottom:1px solid #181818;background:#030303;overflow:hidden}
+  #processSvcGrid .sa-art{position:absolute;left:0;right:0;bottom:43px;height:151px;border-top:1px solid #181818;border-bottom:1px solid #181818;background:#030303;overflow:hidden}
   #processSvcGrid canvas{display:block;width:100%;height:100%;image-rendering:auto;mix-blend-mode:normal;cursor:crosshair}
   #processSvcGrid .sa-art::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.48) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(255,0,0,.075) 0 1px,transparent 1px 19px);opacity:.55;mix-blend-mode:screen;animation:saScan 3.8s linear infinite}
   #processSvcGrid .sa-art::after{content:'';position:absolute;left:var(--sx,8%);top:13px;width:38px;height:22px;border:1px solid rgba(255,0,0,.9);background:rgba(255,0,0,.06);box-shadow:0 0 18px rgba(255,0,0,.16);animation:saProbe 4s steps(2,end) infinite;z-index:3;pointer-events:none}
@@ -617,7 +617,7 @@
   #processSvcGrid .sa-foot b{font-weight:400;color:#e9eaec}
   #processSvcGrid .sa-foot span:last-child{color:var(--red)}
   #processSvcGrid .sa-card[data-family="keyword-service"] .sa-copy{text-transform:uppercase}
-  #processSvcGrid .sa-foot.keyword-foot{display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;justify-content:flex-start;gap:2px;border-top:0;padding-top:0;bottom:5px;font-size:5.6px;line-height:6px;letter-spacing:.75px}
+  #processSvcGrid .sa-foot.keyword-foot{display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;justify-content:flex-start;gap:2px;border-top:0;padding-top:0;bottom:8px;font-size:5.6px;line-height:6px;letter-spacing:.75px}
   #processSvcGrid .sa-foot.keyword-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:2px 3px;background:#050505;white-space:nowrap}
   #processSvcGrid .sa-foot.keyword-foot i.hot{color:var(--red)}
   #processSvcGrid .sa-card:hover{border-color:var(--red)}
@@ -904,9 +904,9 @@
 <div class="ps-stage" id="psStage"></div>
 </div>
 <div aria-label="GOBOLD services" id="processSvcGrid">
-<div class="sm-col"><span class="sm-k">01 / WEBSITE CREATION</span><span class="sm-title">WEBSITE CREATION</span><p class="sm-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sm-signal"><canvas id="psWeb"></canvas></div><div class="sm-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
-<div class="sm-col"><span class="sm-k">02 / 3D WEB3</span><span class="sm-title">3D / WEB3</span><p class="sm-copy">Interactive 3D, WebGL and on-chain experiences that make people stop scrolling.</p><div class="sm-signal"><canvas id="ps3d"></canvas></div><div class="sm-foot"><i>IMMERSIVE</i><i>INTERACTIVE</i><i class="hot">WEBGL</i><i class="hot">THREE.JS</i><i>MOTION</i><i>SCENES</i><i>HIGH-SIGNAL</i><i>DIGITAL</i><i>WORLDS</i></div></div>
-<div class="sm-col"><span class="sm-k">03 / BRANDING</span><span class="sm-title">BRANDING</span><p class="sm-copy">Identity, logo systems and visual language built to stand out and scale.</p><div class="sm-signal"><canvas id="psBrand"></canvas></div><div class="sm-foot"><i>IDENTITY</i><i>VOICE</i><i>SYSTEM</i><i class="hot">LOGO</i><i>ART</i><i>DIRECTION</i><i>GUIDES</i><i>SHARP</i><i>VISUAL</i><i>LANGUAGE</i></div></div>
+<div class="sa-card" data-family="keyword-service"><span class="sa-k">01 / WEBSITE CREATION</span><span class="sa-title">WEBSITE CREATION</span><p class="sa-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sa-art"><canvas id="psWeb"></canvas></div><div class="sa-foot keyword-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
+<div class="sa-card" data-family="keyword-service"><span class="sa-k">02 / 3D WEB3</span><span class="sa-title">3D / WEB3</span><p class="sa-copy">Interactive 3D, WebGL and on-chain experiences that make people stop scrolling.</p><div class="sa-art"><canvas id="ps3d"></canvas></div><div class="sa-foot keyword-foot"><i>IMMERSIVE</i><i>INTERACTIVE</i><i class="hot">WEBGL</i><i class="hot">THREE.JS</i><i>MOTION</i><i>SCENES</i><i>HIGH-SIGNAL</i><i>DIGITAL</i><i>WORLDS</i></div></div>
+<div class="sa-card" data-family="keyword-service"><span class="sa-k">03 / BRANDING</span><span class="sa-title">BRANDING</span><p class="sa-copy">Identity, logo systems and visual language built to stand out and scale.</p><div class="sa-art"><canvas id="psBrand"></canvas></div><div class="sa-foot keyword-foot"><i>IDENTITY</i><i>VOICE</i><i>SYSTEM</i><i class="hot">LOGO</i><i>ART</i><i>DIRECTION</i><i>GUIDES</i><i>SHARP</i><i>VISUAL</i><i>LANGUAGE</i></div></div>
 <div class="sa-card" data-family="keyword-service"><span class="sa-k">04 / AI INTEGRATION</span><span class="sa-title">AI INTEGRATION</span><p class="sa-copy">Chatbots, automation and AI features wired straight into your site or product.</p><div class="sa-art"><canvas id="psAi"></canvas></div><div class="sa-foot keyword-foot"><i>AUTOMATION</i><i>INTELLIGENCE</i><i class="hot">LLM</i><i class="hot">RAG</i><i>AGENTS</i><i>CONNECTED</i><i>REAL</i><i>PRODUCT</i><i>WORKFLOWS</i></div></div>
 <div class="sa-card" data-family="keyword-service"><span class="sa-k">05 / GAMIFICATIONS</span><span class="sa-title">GAMIFICATIONS</span><p class="sa-copy">Playable web moments, reward loops and interaction systems that make visitors stay longer.</p><div class="sa-art"><canvas id="psGame"></canvas></div><div class="sa-foot keyword-foot"><i>PLAYABLE</i><i>WEB</i><i>MOMENTS</i><i class="hot">REWARD</i><i class="hot">LOOPS</i><i>MICRO-GAMES</i><i>INTERACTION</i><i>RETENTION</i></div></div>
 <div class="sa-card" data-family="keyword-service"><span class="sa-k">06 / SOCIAL MEDIA</span><span class="sa-title">SOCIAL MEDIA</span><p class="sa-copy">Content systems, campaign visuals and social assets designed to move fast and build demand.</p><div class="sa-art"><canvas id="psSocial"></canvas></div><div class="sa-foot keyword-foot"><i>CONTENT</i><i>SYSTEMS</i><i class="hot">CAMPAIGNS</i><i>VISUALS</i><i>REELS</i><i>LAUNCHES</i><i>GROWTH</i><i>DISTRIBUTION</i></div></div>
@@ -2048,7 +2048,7 @@ gContainer.appendChild(gRenderer.domElement);
 
 const gScene = new THREE.Scene();
 const gCamera = new THREE.PerspectiveCamera(46.01, GW / GH, 0.1, 50);
-gCamera.position.set(0, 0.32, 4.25); /* ~1.2x bigger globe */
+gCamera.position.set(0, 0.32, 4.675); /* 1.1x smaller globe */
 gCamera.lookAt(0, 0, 0);
 
 /* postprocessing removed for the globe — render the scene directly (no powershot shader) */
@@ -2058,6 +2058,7 @@ gRenderer.render(gScene, gCamera);
 const world = new THREE.Group();
 world.position.x = -0.27;   /* globe sits a bit left of center */
 world.scale.setScalar(1.44);
+world.rotation.z = 0.42; world.rotation.x = 0.16;   /* axial tilt so the planet sits at an angle */
 gScene.add(world);
 
 const globe = new THREE.Group();
