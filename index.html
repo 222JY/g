@@ -258,14 +258,14 @@
   #vbSeekMiniPreview.on{display:block}
   #vidband .vb-scan{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
-  #carBand{position:absolute;left:23px;top:6740px;bottom:-28px;display:none;width:1018px;min-height:824px;z-index:6;background:#000;
+  #carBand{position:absolute;left:0px;top:6900px;bottom:-28px;width:1018px;min-height:824px;z-index:6;background:#000;
     overflow:hidden}   /* original footer 3D framing */
   #carBand canvas{display:block;cursor:grab;position:relative;z-index:1}
   #carBand::after{content:'';position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.20);pointer-events:none}
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
-  #snakeBand{position:absolute;left:7px;top:2203px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
+  #snakeBand{position:absolute;left:7px;top:2183px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
 
   #snakeBand::before{display:none}
   #snakeBand::after{display:none}
@@ -330,7 +330,7 @@
   @keyframes triNudge{50%{transform:translateX(9px);color:#fff}}
   @keyframes sbShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-3px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,2px)}}
   /* ---- closing studio block, sits over the left of the planet band ---- */
-  #endcap{position:absolute;right:14px;top:7373px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
+  #endcap{position:absolute;right:14px;top:7533px;width:600px;z-index:9;font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;
     text-transform:uppercase;text-align:right;pointer-events:none;text-shadow:0 0 14px #000,0 0 26px #000}
   #endcap .ec-l,#endcap a{pointer-events:auto}
   @keyframes ecBlink{0%,100%{opacity:1}50%{opacity:.2}}
@@ -381,7 +381,7 @@
   .sect .stats > div:first-child{padding-left:0;transform:translateX(5px)}
   .sect .stats > div:nth-child(4){transform:translateX(-5px)}
   .sect .stats > div:not(:first-child)::before{content:'';position:absolute;left:-10px;top:0;width:1px;height:34px;background:#262626}
-  #faq{position:absolute;left:3px;top:2626px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
+  #faq{position:absolute;left:3px;top:2606px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
   #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);transform:translate(-10px,4px)}
   .faq-item{border-top:1px solid #262626}
   .faq-item:last-child{border-bottom:1px solid #262626}
@@ -427,7 +427,7 @@
   /* ===================== PORTED v35 BLOCKS (under the 4-animation footer block) ===================== */
 
   /* PROJECT INTAKE / SEND BRIEF */
-  #intake{position:absolute;right:70px;top:7235px;width:360px;z-index:8;background:transparent;border:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:visible;padding:12px 0 0}
+  #intake{position:absolute;right:70px;top:7395px;width:360px;z-index:8;background:transparent;border:0;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;overflow:visible;padding:12px 0 0}
   #intake.shake{animation:intakeShake .24s steps(2,end)}
   @keyframes intakeShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
   #intake .ik-bar{display:flex;align-items:center;justify-content:flex-start;gap:10px;height:14px;padding:0;border-bottom:0;font-size:6px;line-height:6px;letter-spacing:1.4px;color:#6a6a6a;text-align:left}
@@ -460,7 +460,7 @@
   #intake .ik-back:hover{color:var(--red)}
   #intake .ik-note{margin:0;font-size:7px;letter-spacing:.8px;color:#6a6a6a;min-height:9px}
   #intake .ik-note b{color:var(--red);font-weight:400}
-  #contactDivider{position:absolute;right:70px;top:7426px;width:360px;z-index:9;display:flex;align-items:center;gap:9px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;color:#818181;text-transform:uppercase;pointer-events:none}
+  #contactDivider{position:absolute;right:70px;top:7586px;width:360px;z-index:9;display:flex;align-items:center;gap:9px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:7px;line-height:7px;letter-spacing:1px;color:#818181;text-transform:uppercase;pointer-events:none}
   #contactDivider::before,#contactDivider::after{content:'';height:1px;background:#262626;flex:1 1 auto}
   #contactDivider span{display:inline-block;color:#818181;background:transparent;padding:0}
 
@@ -535,13 +535,13 @@
 
   /* SERVICE LAB — 12 unique animated service representations */
   /* GOBOLD AGENCY — full-width big text under the game block (matches .giant color + threshold) */
-  #bigAgency{position:absolute;left:0;top:6500px;width:1024px;z-index:2;display:flex;justify-content:space-between;align-items:baseline;padding:0 8px;box-sizing:border-box;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:150px;line-height:120px;letter-spacing:-2px;text-transform:uppercase;color:#242424;filter:url(#threshfxXStrong);pointer-events:none;white-space:nowrap}
+  #bigAgency{position:absolute;left:0;top:6660px;width:1024px;z-index:2;display:flex;justify-content:space-between;align-items:baseline;padding:0 8px;box-sizing:border-box;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:150px;line-height:120px;letter-spacing:-2px;text-transform:uppercase;color:#242424;filter:url(#threshfxXStrong);pointer-events:none;white-space:nowrap}
   #bigAgency span{display:block;margin:0}
-  #weHelp{position:absolute;right:6px;top:5860px;width:1004px;z-index:7;text-align:right;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;text-transform:uppercase;pointer-events:none}
-  #weHelp #weHelpText{margin:0;display:inline;color:#fff;background:#000;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:2px 10px;filter:url(#threshfxStrong)}
+  #weHelp{position:absolute;right:6px;top:6020px;width:1004px;z-index:7;text-align:right;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;text-transform:uppercase;pointer-events:none}
+  #weHelp #weHelpText{margin:0;color:#242424;filter:url(#threshfxStrong)}
 
   /* services — moving marquee line (p--l, tight letters, BIG visible threshold), non-interactive */
-  #bigmovingtext{position:absolute;left:0;top:1874px;width:1024px;height:316px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
+  #bigmovingtext{position:absolute;left:0;top:1854px;width:1024px;height:316px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
   #bigmovingtext .bigmovingtextTrack{position:relative;top:13px;z-index:1;display:flex;flex-shrink:0;align-items:center;white-space:nowrap;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:300px;line-height:1;letter-spacing:-16px;text-transform:uppercase;color:#242424;animation:bigmovingtextMarquee 158.4s linear infinite}
   #bigmovingtext .bigmovingtextItem{padding-right:150px}
   #bigmovingtextTrail{position:absolute;left:0;top:0;width:100%;height:100%;mix-blend-mode:normal;pointer-events:none;z-index:3}
@@ -549,7 +549,7 @@
 
 
   /* PROCESS — 4 compact rotatable real-3D blocks under FAQ */
-  #processFlow{position:absolute;left:7px;top:3066px;width:1010px;height:418px;z-index:8;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;pointer-events:auto}
+  #processFlow{position:absolute;left:7px;top:3166px;width:1010px;height:418px;z-index:8;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;pointer-events:auto}
   #processFlow .pf-card{position:relative;height:418px;min-width:0;border-top:1px solid #262626;border-bottom:1px solid #262626;overflow:hidden;background:transparent;cursor:grab}
   #processFlow .pf-card:active{cursor:grabbing}
   #processFlow .pf-card:not(:first-child)::before{content:'';position:absolute;left:-9px;top:0;width:1px;height:100%;background:#262626;opacity:1}
@@ -574,10 +574,10 @@
   #processFlow .pf-card:hover .pf-status i{border-color:#3a0000}
   @keyframes pfScan{0%{background-position:0 0,0 0}100%{background-position:0 32px,82px 0}}
   /* PROCESS — single real-time 3D scene (Eve) under the four process blocks */
-  #processPin{position:absolute;left:7px;top:3508px;width:1010px;height:2320px;z-index:8;pointer-events:none}
+  #processPin{position:absolute;left:7px;top:3608px;width:1010px;height:2320px;z-index:8;pointer-events:none}
   #processScene{position:sticky;top:0;margin-left:-60px;width:640px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
   #processSvcGrid{position:absolute;left:600px;top:210px;width:400px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
-  #processSvcGrid .sm-col{position:relative;min-width:0;height:338px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 6px;overflow:hidden;background:transparent;cursor:crosshair}
+  #processSvcGrid .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px;overflow:hidden;background:transparent;cursor:crosshair}
   #processSvcGrid .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #processSvcGrid .sm-col::after{content:'';position:absolute;left:0;right:0;bottom:32px;height:1px;background:#262626;pointer-events:none}
   #processSvcGrid .sm-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:14px}
@@ -589,9 +589,9 @@
   #processSvcGrid .sm-col:nth-child(2) .sm-signal::after{--x:28%;animation-delay:.35s}
   #processSvcGrid .sm-col:nth-child(3) .sm-signal::after{--x:52%;animation-delay:.7s}
   #processSvcGrid .sm-col:nth-child(4) .sm-signal::after{--x:68%;animation-delay:1.05s}
-  #processSvcGrid .sm-foot{position:absolute;left:0;right:0;bottom:59px;display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;gap:3px;font-size:5.6px;line-height:6px;letter-spacing:.75px;color:#818181;border-top:0;padding-top:0;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
-  #processSvcGrid .sm-foot b,#processSvcGrid .sm-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:3px 4px;background:#050505;white-space:nowrap}
-  #processSvcGrid .sm-foot span,#processSvcGrid .sm-foot i.hot{display:inline-block;color:var(--red);border:1px solid #262626;padding:3px 4px;background:#050505;white-space:nowrap}
+  #processSvcGrid .sm-foot{position:absolute;left:0;right:0;bottom:59px;display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;gap:2px;font-size:5.6px;line-height:6px;letter-spacing:.75px;color:#818181;border-top:0;padding-top:0;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}
+  #processSvcGrid .sm-foot b,#processSvcGrid .sm-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:2px 3px;background:#050505;white-space:nowrap}
+  #processSvcGrid .sm-foot span,#processSvcGrid .sm-foot i.hot{display:inline-block;color:var(--red);border:1px solid #262626;padding:2px 3px;background:#050505;white-space:nowrap}
   #processSvcGrid .sm-col:hover{border-color:var(--red)}
   #processSvcGrid .sm-col:first-child::after{background:var(--red)}
   #processSvcGrid .sm-col:hover::after{background:var(--red)}
@@ -601,7 +601,7 @@
   #processSvcGrid .sm-col:hover .sm-signal{background-color:#080000}
   #processSvcGrid .sm-signal canvas{display:block;width:100%;height:100%;position:relative;z-index:1;cursor:crosshair}
   #processSvcGrid .sm-col:hover .sm-foot{opacity:1;transform:none}
-  #processSvcGrid .sa-card{position:relative;min-width:0;height:283px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 6px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair}
+  #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 11px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair}
   #processSvcGrid .sa-card::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #processSvcGrid .sa-card:nth-child(4n+1)::before{display:none}
   #processSvcGrid .sa-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
@@ -617,8 +617,8 @@
   #processSvcGrid .sa-foot b{font-weight:400;color:#e9eaec}
   #processSvcGrid .sa-foot span:last-child{color:var(--red)}
   #processSvcGrid .sa-card[data-family="keyword-service"] .sa-copy{text-transform:uppercase}
-  #processSvcGrid .sa-foot.keyword-foot{display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;justify-content:flex-start;gap:3px;border-top:0;padding-top:0;bottom:12px;font-size:5.6px;line-height:6px;letter-spacing:.75px}
-  #processSvcGrid .sa-foot.keyword-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:3px 4px;background:#050505;white-space:nowrap}
+  #processSvcGrid .sa-foot.keyword-foot{display:flex;flex-wrap:wrap;align-content:flex-end;align-items:flex-end;justify-content:flex-start;gap:2px;border-top:0;padding-top:0;bottom:12px;font-size:5.6px;line-height:6px;letter-spacing:.75px}
+  #processSvcGrid .sa-foot.keyword-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:2px 3px;background:#050505;white-space:nowrap}
   #processSvcGrid .sa-foot.keyword-foot i.hot{color:var(--red)}
   #processSvcGrid .sa-card:hover{border-color:var(--red)}
   #processSvcGrid .sa-card:hover::before{background:var(--red)}
@@ -1077,7 +1077,7 @@
 </script>
 <script>
 /* ============ layout scaling (1024 design width) ============ */
-const PAGE_H = 7559;   /* process blocks moved down; animations removed */
+const PAGE_H = 7719;   /* process blocks moved down; animations removed */
 const COARSE = matchMedia('(pointer: coarse)').matches;
 function rescale(){
   const s = window.innerWidth / 1024;
@@ -2995,7 +2995,7 @@ const stage = document.getElementById('psStage');
 if (stage) {
   const scene = new THREE.Scene();
   /* two angled lights that APPEAR on scroll (red + white), not a brightness pulse */
-  const redLight = new THREE.SpotLight(0xff2424, 0, 14, Math.PI / 8, 0.3, 1.4);
+  const redLight = new THREE.SpotLight(0xff0000, 0, 16, Math.PI / 8, 0.28, 1.4);
   redLight.position.set(-2.7, 1.9, 2.0); redLight.target.position.set(0, 0, 0);
   scene.add(redLight); scene.add(redLight.target);
   const whiteLight = new THREE.SpotLight(0xffffff, 0, 14, Math.PI / 8, 0.3, 1.4);
@@ -3042,7 +3042,7 @@ if (stage) {
   const rig = new THREE.Group();
   scene.add(rig);
   rig.position.y = 0;   /* centred; camera auto-fits with safe area */
-  const START_ROT_Y = -70 * Math.PI / 180;   /* model starts turned ~70 degrees to the left */
+  const START_ROT_Y = -40 * Math.PI / 180;   /* model starts turned ~40 degrees to the left */
   rig.rotation.y = START_ROT_Y;
 
   /* MODEL — decimated Eve GLB */
@@ -3177,10 +3177,10 @@ if (stage) {
   let dragging = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = 0;
   let lastScrollY = window.scrollY || window.pageYOffset || 0;
   const pinEl = document.getElementById('processPin');
-  addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.0006; lastScrollY = y;
+  addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.0003; lastScrollY = y;
     if (pinEl) { const pr = pinEl.getBoundingClientRect(); const prog = Math.min(1, Math.max(0, -pr.top / Math.max(1, pr.height - window.innerHeight)));
       const appear = Math.min(1, Math.max(0, prog * 1.5));   /* lights ramp in (appear) as you scroll through the section */
-      redLight.intensity = 9 * appear; whiteLight.intensity = 5 * appear;
+      redLight.intensity = 18 * appear; whiteLight.intensity = 1.5 * appear;
       redLight.position.x = -2.7 + 1.0 * appear; whiteLight.position.x = 2.7 - 1.0 * appear; }
   }, { passive: true });   /* scroll -> faster rotate + light sweeps across the model */
   stage.addEventListener('pointerleave', () => { dragging = false; stage.style.cursor = 'grab'; });
@@ -3221,7 +3221,7 @@ if (stage) {
   function grow(){
     var r=band.getBoundingClientRect(); var vh=window.innerHeight||1;
     var p=(vh - r.top)/(vh*0.92); p=Math.max(0,Math.min(1,p));
-    var sc=0.4+0.6*p;
+    var sc=0.2+0.8*p;
     band.style.transform='scale('+sc.toFixed(3)+')';
     band.style.opacity=(0.2+0.8*p).toFixed(3);
   }
