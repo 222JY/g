@@ -2369,7 +2369,7 @@ function gAnimate() {
   requestAnimationFrame(gAnimate);
   if (!gVisible || document.hidden) return;
   const t = gClock.getElapsedTime();
-  spinY += 0.002 + vy;   /* base spin + drag momentum on ONE per-frame axis -> no time/frame mismatch jigger at the slow crossover */
+  spinY += 0.0045 + vy;   /* base spin (faster) + drag momentum on ONE per-frame axis -> no time/frame mismatch jigger at the slow crossover */
   globe.rotation.y = spinY;
   world.rotation.x = THREE.MathUtils.clamp(world.rotation.x + vx, -0.6, 0.6);
   vy *= 0.985; vx *= 0.94;
