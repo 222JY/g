@@ -800,8 +800,8 @@
 <div id="giantLine"></div>
 <div class="giant">
 <p class="static">GOBOLD Digital Agency specializing in</p>
-<p>AI INTEGRATIONS</p>
-<p>3D INTO WEB</p>
+<p>INTEGRATIONS AI</p>
+<p>INTEGRATIONS 3D</p>
 <p>BRANDING</p>
 <p>WEBSITE DESIGN</p>
 <p>WEBSITE DEVELOPMENT</p>
@@ -1541,8 +1541,8 @@ addEventListener('pointermove', e => {
 const gBox = document.getElementById('gBox');
 const gbT = gBox.querySelector('.gb-t'), gbD = gBox.querySelector('.gb-d');
 const GBOX_TXT = {
-  'AI INTEGRATIONS': 'LLM agents, chatbots and automation pipelines wired straight into your product.',
-  '3D INTO WEB': 'Immersive WebGL scenes, three.js worlds and on-chain experiences.',
+  'INTEGRATIONS AI': 'LLM agents, chatbots and automation pipelines wired straight into your product.',
+  'INTEGRATIONS 3D': 'Immersive WebGL scenes, three.js worlds and on-chain experiences.',
   'BRANDING': 'Identity systems, logo, voice. Bold or nothing.',
   'WEBSITE DESIGN': 'Brutalist, motion-first layouts engineered to convert.',
   'WEBSITE DEVELOPMENT': 'Fast, hand-coded builds. Zero template bloat.',
@@ -2058,7 +2058,7 @@ gRenderer.render(gScene, gCamera);
 const world = new THREE.Group();
 world.position.x = -0.27;   /* globe sits a bit left of center */
 world.scale.setScalar(1.44);
-world.rotation.z = 0.42; world.rotation.x = 0.16;   /* axial tilt so the planet sits at an angle */
+world.rotation.z = 0.14; world.rotation.x = 0.05;   /* gentle axial tilt so the planet sits at a slight angle */
 gScene.add(world);
 
 const globe = new THREE.Group();
@@ -3043,7 +3043,7 @@ if (stage) {
   const rig = new THREE.Group();
   scene.add(rig);
   rig.position.y = 0;   /* centred; camera auto-fits with safe area */
-  const START_ROT_Y = -80 * Math.PI / 180;   /* model starts turned ~80 degrees to the left */
+  const START_ROT_Y = -110 * Math.PI / 180;   /* model starts turned ~110 degrees to the left */
   rig.rotation.y = START_ROT_Y;
 
   /* MODEL — decimated Eve GLB */
