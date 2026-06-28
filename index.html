@@ -3001,15 +3001,15 @@ const stage = document.getElementById('psStage');
 if (stage) {
   const scene = new THREE.Scene();
   /* NATURAL MODEL LIGHTING: soft readable light, not tiny laser spots */
-  const scrollSoftLight = new THREE.SpotLight(0xff1a1a, 0, 6.2, Math.PI / 11.5, 0.58, 1.85);
+  const scrollSoftLight = new THREE.SpotLight(0xfff0e8, 0, 6.8, Math.PI / 10.5, 0.62, 1.75);
   scrollSoftLight.position.set(-1.15, 1.75, 2.05);
   scrollSoftLight.target.position.set(0.0, 0.18, 0.0);
   scene.add(scrollSoftLight); scene.add(scrollSoftLight.target);
-  const hoverKeyLight = new THREE.SpotLight(0xff2020, 0, 4.3, Math.PI / 12.5, 0.58, 2.15);
+  const hoverKeyLight = new THREE.SpotLight(0xffffff, 0, 2.55, Math.PI / 20.0, 0.42, 2.7);
   hoverKeyLight.position.set(0, 0, 2.0);
   hoverKeyLight.target.position.set(0, 0, 0);
   scene.add(hoverKeyLight); scene.add(hoverKeyLight.target);
-  const hoverLiftLight = new THREE.PointLight(0xffb0a0, 0, 2.2, 2.4);
+  const hoverLiftLight = new THREE.PointLight(0xffffff, 0, 1.05, 3.1);
   hoverLiftLight.position.set(0, 0, 1.45);
   scene.add(hoverLiftLight);
   scene.background = null;
@@ -3216,10 +3216,10 @@ if (stage) {
     if (pinEl) { const pr = pinEl.getBoundingClientRect(); const prog = Math.min(1, Math.max(0, -pr.top / Math.max(1, pr.height - window.innerHeight)));
       const appear = Math.min(1, Math.max(0, prog * 1.35));
       /* soft scroll key light: bigger, visible as actual lighting but still model-only */
-      scrollSoftLight.intensity = 2.45 * appear;
-      scrollSoftLight.position.x = -1.02 + 0.38 * Math.sin(prog * Math.PI * 1.35);
-      scrollSoftLight.position.y = 1.55 - 0.38 * prog;
-      scrollSoftLight.target.position.set(0.0 + 0.14 * Math.sin(prog * Math.PI), 0.16 - 0.14 * prog, 0.0);
+      scrollSoftLight.intensity = 3.15 * appear;
+      scrollSoftLight.position.x = -0.95 + 0.34 * Math.sin(prog * Math.PI * 1.35);
+      scrollSoftLight.position.y = 1.58 - 0.34 * prog;
+      scrollSoftLight.target.position.set(0.0 + 0.12 * Math.sin(prog * Math.PI), 0.14 - 0.12 * prog, 0.0);
     }
   }, { passive: true });   /* scroll rotates model + drives tiny local light only */
   const sceneEl = document.getElementById('processScene');
@@ -3230,12 +3230,12 @@ if (stage) {
   stage.addEventListener('pointermove', e => {
     const r = stage.getBoundingClientRect();
     const nx = (e.clientX - r.left) / Math.max(1, r.width), ny = (e.clientY - r.top) / Math.max(1, r.height);
-    const lx = (nx - 0.5) * 0.82, ly = (0.5 - ny) * 0.98;
-    hoverKeyLight.position.set(lx, ly, 1.82);
-    hoverKeyLight.target.position.set(lx * 0.18, ly * 0.18, 0.0);
-    hoverLiftLight.position.set(lx * 0.42, ly * 0.42, 1.22);
-    hoverKeyLight.intensity = 3.65;
-    hoverLiftLight.intensity = 0.28;
+    const lx = (nx - 0.5) * 0.58, ly = (0.5 - ny) * 0.70;
+    hoverKeyLight.position.set(lx, ly, 1.58);
+    hoverKeyLight.target.position.set(lx * 0.10, ly * 0.10, 0.0);
+    hoverLiftLight.position.set(lx * 0.22, ly * 0.22, 1.12);
+    hoverKeyLight.intensity = 4.15;
+    hoverLiftLight.intensity = 0.18;
     lineFX.uniforms.uMouse.value.set(nx, 1.0 - ny);
     lineFX.uniforms.uHover.value = 1.0;
     if (sceneEl) { sceneEl.style.setProperty('--mx', (e.clientX - sceneEl.getBoundingClientRect().left) + 'px'); sceneEl.style.setProperty('--my', (e.clientY - sceneEl.getBoundingClientRect().top) + 'px'); }
