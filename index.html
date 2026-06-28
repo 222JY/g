@@ -3169,11 +3169,17 @@ if (stage) {
           vec2 q=floor(vUv*uRes/12.0); float n=hash(q+floor(uTime*8.0)); uv += (n-.5)*texel*10.0*step(.72,n); outc=texture2D(tDiffuse,uv).rgb; outc*=.72+.28*step(.06,fract(vUv.x*uRes.x/12.0))*step(.06,fract(vUv.y*uRes.y/12.0));
         } else if(m==10.0){ /* INVERTED EDGES */
           float e=edge(uv,texel).r; outc=mix(1.0-base,vec3(1.,.06,.04),e)*(.72+e*.75);
-        } else if(m==11.0){ /* SECOND EFFECT: dark grey model only, background stays black */
-          float lum=luma(base);
-          float modelMask=smoothstep(0.035,0.18,lum);
-          /* dark grey applies only where the model is rendered — no grey background wash */
-          outc=vec3(0.0) + vec3(0.035,0.035,0.038)*modelMask + vec3(0.090)*smoothstep(0.12,0.68,lum)*modelMask;
+        } else if(m==11.0){ /* STANDARD: stronger chroma + 10% tiny dots */
+          float w=(sin(uTime*2.2)*.0015+.0025)*1.3;
+          vec3 chroma=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*0.86;
+          float cell=3.0;
+          vec2 gp=vUv*uRes/cell;
+          vec2 cc=(floor(gp)+.5)*cell/uRes;
+          vec3 cs=texture2D(tDiffuse,cc).rgb;
+          float rad=sqrt(luma(cs))*.72;
+          float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5));
+          vec3 dots=cs*dotm*0.86;
+          outc=mix(chroma,dots,0.10);
         } else if(m==40.0){ /* CANNY FIRST: much darker, thin charcoal */
           float lum=luma(base);
           float e=edge(uv,texel).r;
@@ -3190,7 +3196,7 @@ if (stage) {
   });
   composer.addPass(lineFX);
 
-  /* Dark CANNY first; double-click toggles dark CANNY <-> dark grey model. No buttons. */
+  /* Dark CANNY first; double-click toggles dark CANNY <-> darker NORMAL. No buttons. */
   let cannyOn = true;
   function setCanny(on){ cannyOn = !!on; lineFX.uniforms.uMode.value = cannyOn ? 40 : 11; }
   setCanny(true);
