@@ -3180,13 +3180,13 @@ if (stage) {
           float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5));
           vec3 dots=cs*dotm*0.86;
           outc=mix(chroma,dots,0.10);
-        } else if(m==40.0){ /* CANNY FIRST: based on 20-version, almost black, no red */
+        } else if(m==40.0){ /* CANNY FIRST: same as 20-version red look, but red replaced with grey */
           float lum=luma(base);
           float e=edge(uv,texel).r;
           vec3 body=base*0.75;
           float can=smoothstep(.10,.22,e)*step(.16,lum)*step(lum,.88);
-          /* same 20-version canny selection, but monochrome/dark instead of red */
-          outc=body*0.42 + vec3(0.020)*can*1.45;
+          /* exact 20-version composition: body*.75 + color*can*1.45, with grey instead of red */
+          outc=body*.75 + vec3(0.42)*can*1.45;
         }
         float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
         /* hover FX removed: standard model only */
