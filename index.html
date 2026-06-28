@@ -3171,22 +3171,22 @@ if (stage) {
           float e=edge(uv,texel).r; outc=mix(1.0-base,vec3(1.,.06,.04),e)*(.72+e*.75);
         } else if(m==11.0){ /* STANDARD: stronger chroma + 10% tiny dots */
           float w=(sin(uTime*2.2)*.0015+.0025)*1.3;
-          vec3 chroma=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*1.05;
+          vec3 chroma=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*0.72;
           float cell=3.0;
           vec2 gp=vUv*uRes/cell;
           vec2 cc=(floor(gp)+.5)*cell/uRes;
           vec3 cs=texture2D(tDiffuse,cc).rgb;
           float rad=sqrt(luma(cs))*.72;
           float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5));
-          vec3 dots=cs*dotm*1.25;
+          vec3 dots=cs*dotm*0.72;
           outc=mix(chroma,dots,0.10);
-        } else if(m==40.0){ /* CANNY FIRST: subtle, much less red */
+        } else if(m==40.0){ /* CANNY FIRST: dark only, no red */
           float lum=luma(base);
           float e=edge(uv,texel).r;
-          vec3 body=base*0.92 + vec3(lum)*0.035;
+          vec3 body=base*0.58 + vec3(lum)*0.018;
           float can=smoothstep(.115,.245,e)*step(.13,lum)*step(lum,.92);
-          /* much less red: thin low-opacity edge tint over readable model */
-          outc=body + vec3(1.0,0.0,0.0)*can*0.32;
+          /* no red: dark charcoal/grey linework only */
+          outc=body + vec3(0.055)*can*0.55;
         }
         float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
         /* hover FX removed: standard model only */
@@ -3195,7 +3195,7 @@ if (stage) {
   });
   composer.addPass(lineFX);
 
-  /* CANNY first; double-click toggles CANNY <-> NORMAL. No buttons. */
+  /* Dark CANNY first; double-click toggles dark CANNY <-> darker NORMAL. No buttons. */
   let cannyOn = true;
   function setCanny(on){ cannyOn = !!on; lineFX.uniforms.uMode.value = cannyOn ? 40 : 11; }
   setCanny(true);
