@@ -3183,53 +3183,62 @@ if (stage) {
           float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5));
           vec3 dots=cs*dotm*1.25;
           outc=mix(chroma,dots,0.10);
-        } else if(m>=30.0){ /* 10 THIN RED LINE OVERLAYS: visible model + different 1px red systems */
+        } else if(m>=30.0){ /* 10 DISTINCT RED LINE EFFECTS: each button is clearly different */
           float mode=m-30.0;
           float lum=luma(base);
           float e=edge(uv,texel).r;
           vec3 red=vec3(1.0,0.0,0.0);
-          vec3 body=base*0.92; /* keep original model visible */
+          vec3 body=base*0.86; /* model always visible */
           float line=0.0;
-          float edgeLine=smoothstep(.055,.145,e); /* thin contour base */
-          if(mode<0.5){ /* 01 ultra-thin contour */
+          float edgeLine=smoothstep(.045,.14,e);
+          vec2 px=vUv*uRes;
+          if(mode<0.5){ /* 01 CONTOUR: only model edges */
             line=edgeLine;
-          } else if(mode<1.5){ /* 02 sparse horizontal red scanlines */
-            float h=1.0-smoothstep(.018,.032,abs(fract(vUv.y*uRes.y/9.0)-.5));
-            line=max(edgeLine*.55,h*smoothstep(.22,.78,lum)*.55);
-          } else if(mode<2.5){ /* 03 sparse vertical red rain */
-            float v=1.0-smoothstep(.014,.028,abs(fract(vUv.x*uRes.x/10.0)-.5));
-            float gate=step(.46,hash(vec2(floor(vUv.x*uRes.x/10.0),floor(uTime*3.0))));
-            line=max(edgeLine*.5,v*gate*smoothstep(.24,.82,lum)*.62);
-          } else if(mode<3.5){ /* 04 thin diagonal / */
-            float d1=1.0-smoothstep(.012,.026,abs(fract((vUv.x*uRes.x+vUv.y*uRes.y)/14.0)-.5));
-            line=max(edgeLine*.45,d1*smoothstep(.26,.82,lum)*.58);
-          } else if(mode<4.5){ /* 05 thin cross-hatch */
-            float d1=1.0-smoothstep(.012,.024,abs(fract((vUv.x*uRes.x+vUv.y*uRes.y)/16.0)-.5));
-            float d2=1.0-smoothstep(.012,.024,abs(fract((vUv.x*uRes.x-vUv.y*uRes.y)/16.0)-.5));
-            line=max(edgeLine*.42,max(d1,d2)*smoothstep(.30,.86,lum)*.46);
-          } else if(mode<5.5){ /* 06 topo/luma contour lines */
-            float bands=1.0-smoothstep(.018,.04,abs(fract(lum*13.0+uTime*.05)-.5));
-            line=max(edgeLine*.45,bands*smoothstep(.18,.86,lum)*.68);
-          } else if(mode<6.5){ /* 07 broken glitch hairlines */
-            float row=floor(vUv.y*uRes.y/7.0); float n=hash(vec2(row,floor(uTime*10.0)));
-            float h=1.0-smoothstep(.012,.026,abs(fract(vUv.y*uRes.y/7.0)-.5));
-            float blocks=step(.55,n)*step(hash(floor(vUv*uRes/22.0)),.42);
-            line=max(edgeLine*.38,h*blocks*smoothstep(.24,.78,lum)*.72);
-          } else if(mode<7.5){ /* 08 ascii-like micro strokes */
-            vec2 cell=vec2(7.,9.); vec2 id=floor(vUv*uRes/cell); vec2 f=fract(vUv*uRes/cell); float rnd=hash(id);
-            float glyph=max(1.0-smoothstep(.018,.04,abs(f.x-.18)),1.0-smoothstep(.018,.04,abs(f.y-.72)))*step(.34,rnd);
-            line=max(edgeLine*.35,glyph*smoothstep(.25,.80,lum)*.62);
-          } else if(mode<8.5){ /* 09 radial target thin lines */
-            vec2 c=vUv-.5; c.x*=uRes.x/uRes.y; float a=atan(c.y,c.x); float r=length(c);
-            float rays=1.0-smoothstep(.010,.022,abs(fract((a+3.14159)/.28)-.5));
-            float rings=1.0-smoothstep(.012,.028,abs(fract(r*22.0)-.5));
-            line=max(edgeLine*.38,max(rays*.22,rings*.42)*smoothstep(.28,.82,lum));
-          } else { /* 10 blueprint mesh, very thin */
-            float gx=1.0-smoothstep(.010,.022,abs(fract(vUv.x*uRes.x/24.0)-.5));
-            float gy=1.0-smoothstep(.010,.022,abs(fract(vUv.y*uRes.y/24.0)-.5));
-            line=max(edgeLine*.35,max(gx,gy)*smoothstep(.32,.88,lum)*.34);
+          } else if(mode<1.5){ /* 02 H-SCAN: many horizontal hairlines */
+            float h=1.0-smoothstep(.0,.75,abs(mod(px.y,8.0)-4.0));
+            line=max(edgeLine*.25,h*smoothstep(.15,.75,lum));
+          } else if(mode<2.5){ /* 03 V-RAIN: vertical falling hairlines */
+            float col=floor(px.x/9.0);
+            float v=1.0-smoothstep(.0,.65,abs(mod(px.x+hash(vec2(col))*4.0,9.0)-4.5));
+            float dash=step(.35,hash(vec2(col,floor((px.y+uTime*90.0)/28.0))));
+            line=max(edgeLine*.22,v*dash*smoothstep(.18,.78,lum));
+          } else if(mode<3.5){ /* 04 DIAGONAL: single slash direction */
+            float diag=1.0-smoothstep(.0,.7,abs(mod(px.x+px.y,13.0)-6.5));
+            line=max(edgeLine*.2,diag*smoothstep(.20,.8,lum));
+          } else if(mode<4.5){ /* 05 CROSS: two slash directions */
+            float d1=1.0-smoothstep(.0,.62,abs(mod(px.x+px.y,16.0)-8.0));
+            float d2=1.0-smoothstep(.0,.62,abs(mod(px.x-px.y,16.0)-8.0));
+            line=max(edgeLine*.18,max(d1,d2)*smoothstep(.26,.84,lum)*.72);
+          } else if(mode<5.5){ /* 06 TOPO: luma contour bands on the model */
+            float bands=1.0-smoothstep(.0,.055,abs(fract(lum*16.0+uTime*.04)-.5));
+            line=max(edgeLine*.25,bands*smoothstep(.12,.88,lum));
+          } else if(mode<6.5){ /* 07 GLITCH: broken horizontal slices */
+            float row=floor(px.y/6.0);
+            float h=1.0-smoothstep(.0,.65,abs(mod(px.y,6.0)-3.0));
+            float broken=step(.58,hash(vec2(row,floor(uTime*12.0))))*step(hash(floor(px/24.0)),.48);
+            line=max(edgeLine*.18,h*broken*smoothstep(.16,.82,lum));
+          } else if(mode<7.5){ /* 08 ASCII: tiny red terminal strokes */
+            vec2 cell=vec2(7.0,9.0);
+            vec2 id=floor(px/cell), f=fract(px/cell);
+            float rnd=hash(id);
+            float glyph=0.0;
+            glyph=max(glyph,(1.0-smoothstep(.0,.055,abs(f.x-.20)))*step(.25,rnd));
+            glyph=max(glyph,(1.0-smoothstep(.0,.055,abs(f.y-.72)))*step(rnd,.72));
+            glyph*=step(.18,hash(id+3.0));
+            line=max(edgeLine*.18,glyph*smoothstep(.20,.82,lum));
+          } else if(mode<8.5){ /* 09 RADIAL: target rings + rays */
+            vec2 c=vUv-.5; c.x*=uRes.x/uRes.y;
+            float a=atan(c.y,c.x), r=length(c);
+            float rays=1.0-smoothstep(.0,.035,abs(fract((a+3.14159)/.22)-.5));
+            float rings=1.0-smoothstep(.0,.035,abs(fract(r*24.0)-.5));
+            line=max(edgeLine*.15,max(rays*.28,rings*.62)*smoothstep(.22,.82,lum));
+          } else { /* 10 MESH: blueprint grid clipped through model */
+            float gx=1.0-smoothstep(.0,.55,abs(mod(px.x,24.0)-12.0));
+            float gy=1.0-smoothstep(.0,.55,abs(mod(px.y,24.0)-12.0));
+            float sub=1.0-smoothstep(.0,.35,abs(mod(px.x+px.y,12.0)-6.0));
+            line=max(edgeLine*.16,max(max(gx,gy)*.78,sub*.35)*smoothstep(.28,.86,lum));
           }
-          outc=body + red*line*0.95;
+          outc=body + red*line*1.35;
         }
         float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
         /* hover FX removed: standard model only */
@@ -3243,7 +3252,7 @@ if (stage) {
   const modeNames = ['STANDARD','CONTOUR','H-SCAN','V-RAIN','DIAGONAL','CROSS','TOPO','GLITCH','ASCII','RADIAL','MESH'];
   const fxBar = document.getElementById('psFxBar');
   function setMode(i){ lineFX.uniforms.uMode.value = modeValues[i]; if(fxBar) fxBar.querySelectorAll('button').forEach((b,bi)=>b.classList.toggle('on',bi===i)); }
-  if(fxBar) modeNames.forEach((name,i)=>{ const b=document.createElement('button'); b.type='button'; b.textContent=(i===0?'00':String(i).padStart(2,'0'))+' '+name; b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();setMode(i);}); fxBar.appendChild(b); });
+  if(fxBar) modeNames.forEach((name,i)=>{ const b=document.createElement('button'); b.type='button'; b.textContent=(i===0?'00':String(i).padStart(2,'0'))+' '+name; b.dataset.mode=modeNames[i]; b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();setMode(i);}); fxBar.appendChild(b); });
   setMode(0);
 
   /* RESIZE */
