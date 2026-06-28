@@ -630,12 +630,9 @@
   #processSvcGrid .sa-card[data-family="graph"] .sa-art::after{width:34px;height:20px;background:rgba(255,0,0,.045)}
   #processScene .ps-stage{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;pointer-events:auto;background:transparent}
   #processScene .ps-stage canvas{display:block;width:100%!important;height:100%!important}
-  #processScene .ps-fxbar{position:absolute;left:0;right:0;top:14px;z-index:6;display:flex;flex-wrap:wrap;gap:4px;align-items:flex-start;justify-content:center;padding:0 12px;pointer-events:auto}
-  #processScene .ps-fxbar button{height:16px;border:1px solid #262626;background:#000;color:#818181;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:5.5px;line-height:5.5px;letter-spacing:.85px;text-transform:uppercase;padding:0 5px;cursor:crosshair;white-space:nowrap;transition:none}
-  #processScene .ps-fxbar button:hover,#processScene .ps-fxbar button.on{border-color:var(--red);color:var(--red);background:#100000;box-shadow:0 0 14px rgba(255,0,0,.22)}
-  #processScene .ps-hover-light{position:absolute;left:var(--mx,-100px);top:var(--my,-100px);width:150px;height:150px;z-index:5;transform:translate(-50%,-50%);pointer-events:none;opacity:0;border-radius:50%;background:radial-gradient(circle,rgba(255,0,0,.32) 0,rgba(255,30,30,.14) 24%,rgba(255,0,0,.045) 46%,transparent 70%);mix-blend-mode:screen;filter:blur(10px);transition:opacity .12s linear}
-  #processScene.is-hovering .ps-hover-light{opacity:1}
-  /* top buttons switch 10 unique postprocessing looks; cursor adds real extra light + screen glow */
+  #processScene .ps-hover-hint{position:absolute;left:var(--mx,-999px);top:var(--my,-999px);z-index:6;transform:translate(12px,12px);pointer-events:none;opacity:0;background:#000;color:#a2a2a2;border:1px solid #262626;padding:5px 7px;font-family:'Anonymous Pro','Kode Mono',monospace;font-size:7px;line-height:7px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;box-shadow:0 0 0 1px #000}
+  #processScene.is-hovering .ps-hover-hint{opacity:1}
+  /* dbl-click cycles 5 minimal postprocessing looks; hover light is a small real 3D light on the model only */
 
 </style>
 </head>
@@ -905,7 +902,7 @@
 
 <div id="processPin">
 <div aria-label="GOBOLD real-time 3D — Eve" id="processScene">
-<div class="ps-fxbar" id="psFxBar" aria-label="3D postprocessing modes"></div><div class="ps-hover-light" aria-hidden="true"></div><div class="ps-stage" id="psStage"></div>
+<div class="ps-hover-hint" id="psHoverHint">DBL CLICK TO CHANGE · ASCII</div><div class="ps-stage" id="psStage"></div>
 </div>
 <div aria-label="GOBOLD services" id="processSvcGrid">
 <div class="sa-card" data-family="keyword-service"><span class="sa-k">01 / WEBSITE CREATION</span><span class="sa-title">WEBSITE CREATION</span><p class="sa-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sa-art"><canvas id="psWeb"></canvas></div><div class="sa-foot keyword-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
@@ -2046,7 +2043,7 @@ const gContainer = document.getElementById('globeZone');
 const GW = 1023, GH = 562;
 
 const gRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-gRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); /* perf: cap render res */
+gRenderer.setPixelRatio(1); /* fps: fixed DPR, same visual size with less GPU cost */
 gRenderer.setSize(GW, GH);
 gRenderer.setClearColor(0x000000, 0);
 gContainer.appendChild(gRenderer.domElement);
@@ -2116,7 +2113,7 @@ const ll2v = (lat, lon, R) => {
 };
 
 const fill = new THREE.Mesh(
-  new THREE.SphereGeometry(0.985, 48, 48),
+  new THREE.SphereGeometry(0.985, 32, 24),
   new THREE.MeshBasicMaterial({ color: 0x000000 })
 );
 fill.renderOrder = -2;
@@ -2126,12 +2123,12 @@ globe.add(fill);
   const mat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.16 }); // grid keeps grey
   for (let lat = -75; lat <= 75; lat += 15) {
     const pts = [], r = Math.cos(lat * Math.PI / 180), y = Math.sin(lat * Math.PI / 180);
-    for (let a = 0; a <= 360; a += 4) pts.push(new THREE.Vector3(r * Math.cos(a * Math.PI / 180), y, r * Math.sin(a * Math.PI / 180)));
+    for (let a = 0; a <= 360; a += 6) pts.push(new THREE.Vector3(r * Math.cos(a * Math.PI / 180), y, r * Math.sin(a * Math.PI / 180)));
     globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat));
   }
   for (let lon = 0; lon < 180; lon += 15) {
     const pts = [], l = lon * Math.PI / 180;
-    for (let a = 0; a <= 360; a += 4) {
+    for (let a = 0; a <= 360; a += 6) {
       const t = a * Math.PI / 180;
       pts.push(new THREE.Vector3(Math.sin(t) * Math.cos(l), Math.cos(t), Math.sin(t) * Math.sin(l)));
     }
@@ -2180,8 +2177,8 @@ fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
       return false;
     };
     const dots = [];
-    for (let lat = -58; lat <= 84; lat += 2.4) jobs.push(() => {
-      const dstep = 2.4 / Math.max(0.25, Math.cos(lat * Math.PI / 180));
+    for (let lat = -58; lat <= 84; lat += 3.2) jobs.push(() => {
+      const dstep = 3.2 / Math.max(0.25, Math.cos(lat * Math.PI / 180));
       for (let lon = -180; lon < 180; lon += dstep)
         if (inLand(lon, lat)) dots.push(...ll2v(lat, lon, 1.002).toArray());
     });
@@ -2189,19 +2186,19 @@ fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
       const dotGeo = new THREE.BufferGeometry();
       dotGeo.setAttribute('position', new THREE.Float32BufferAttribute(dots, 3));
       globe.add(new THREE.Points(dotGeo,
-        themed(new THREE.PointsMaterial({ size: 0.008, transparent: true, opacity: 0.6 }), false, true)));
+        themed(new THREE.PointsMaterial({ size: 0.010, transparent: true, opacity: 0.55 }), false, true)));
     });
     /* drain the job queue in tiny slices between frames */
     (function drain(){
       const t0 = performance.now();
-      while (jobs.length && performance.now() - t0 < 6) jobs.shift()();
+      while (jobs.length && performance.now() - t0 < 4) jobs.shift()();
       if (jobs.length) requestAnimationFrame(drain);
     })();
   });
 }
 
 const ringPts = [];
-for (let a = 0; a <= 360; a += 4) ringPts.push(new THREE.Vector3(Math.cos(a * Math.PI / 180), 0, Math.sin(a * Math.PI / 180)));
+for (let a = 0; a <= 360; a += 6) ringPts.push(new THREE.Vector3(Math.cos(a * Math.PI / 180), 0, Math.sin(a * Math.PI / 180)));
 const ringGeo = new THREE.BufferGeometry().setFromPoints(ringPts);
 const mkRing = () => {
   const m = themed(new THREE.LineBasicMaterial({ transparent: true, opacity: 0.9 }), true, false);
@@ -2367,11 +2364,14 @@ el.addEventListener('click', e => {
 });
 
 const gClock = new THREE.Clock();
-let gVisible = true;
+let gVisible = true, gLastRender = 0;
 new IntersectionObserver(e => { gVisible = e[0].isIntersecting; }, { threshold: 0 }).observe(gContainer);
 function gAnimate() {
   requestAnimationFrame(gAnimate);
   if (!gVisible || document.hidden) return;
+  const now = performance.now();
+  if (now - gLastRender < 33) return;
+  gLastRender = now;
   const t = gClock.getElapsedTime();
   spinY += 0.0135 + vy;   /* base spin (3x faster) + drag momentum on ONE per-frame axis -> no time/frame mismatch jigger at the slow crossover */
   globe.rotation.y = spinY;
@@ -3009,7 +3009,7 @@ if (stage) {
   const whiteLight = new THREE.SpotLight(0xffffff, 0, 14, Math.PI / 8, 0.3, 1.4);
   whiteLight.position.set(2.7, -0.7, 2.2); whiteLight.target.position.set(0, 0, 0);
   scene.add(whiteLight); scene.add(whiteLight.target);
-  const cursorLight = new THREE.PointLight(0xff2020, 0, 4.8, 1.65);
+  const cursorLight = new THREE.PointLight(0xff2020, 0, 1.35, 2.4);
   cursorLight.position.set(0, 0, 1.45);
   scene.add(cursorLight);
   scene.background = null;
@@ -3145,36 +3145,35 @@ if (stage) {
         } else if(m==3.0){ /* RED LINE ART */
           float e=edge(uv,texel).r; outc=mix(vec3(.005,.002,.002),vec3(1.,.04,.02),e)+base*.12;
         } else if(m==4.0){ /* GLITCH SLICES */
-          float row=floor(vUv.y*uRes.y/11.0); float jt=(hash(vec2(row,floor(uTime*12.0)))-.5)*step(.62,hash(vec2(row,uTime)))*.035;
+          float row=floor(vUv.y*uRes.y/11.0); float jt=(hash(vec2(row,floor(uTime*12.0)))-.5)*step(.82,hash(vec2(row,uTime)))*.009;
           outc=vec3(texture2D(tDiffuse,uv+vec2(jt+texel.x*3.,0)).r, texture2D(tDiffuse,uv+vec2(jt*.35,0)).g, texture2D(tDiffuse,uv-vec2(jt+texel.x*3.,0)).b);
         } else if(m==5.0){ /* ASCII BLOCKS */
-          vec2 cell=vec2(7.,9.); vec2 cuv=(floor(vUv*uRes/cell)+.5)*cell/uRes; vec3 c=texture2D(tDiffuse,cuv).rgb; float l=luma(c); vec2 f=fract(vUv*uRes/cell); float glyph=step(.11,abs(f.x-.5))*step(.18,abs(f.y-.5)); glyph*=step(hash(floor(vUv*uRes/cell)),l+.18); outc=c*glyph*1.55;
+          vec2 cell=vec2(3.,5.); vec2 cuv=(floor(vUv*uRes/cell)+.5)*cell/uRes; vec3 c=texture2D(tDiffuse,cuv).rgb; float l=luma(c); vec2 f=fract(vUv*uRes/cell); float glyph=step(.11,abs(f.x-.5))*step(.18,abs(f.y-.5)); glyph*=step(hash(floor(vUv*uRes/cell)),l+.18); outc=c*glyph*1.55;
         } else if(m==6.0){ /* HALFTONE */
-          float cell=6.0; vec2 gp=vUv*uRes/cell; vec2 cc=(floor(gp)+.5)*cell/uRes; vec3 cs=texture2D(tDiffuse,cc).rgb; float rad=sqrt(luma(cs))*.72; float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5)); outc=cs*dotm*1.25;
+          float cell=3.0; vec2 gp=vUv*uRes/cell; vec2 cc=(floor(gp)+.5)*cell/uRes; vec3 cs=texture2D(tDiffuse,cc).rgb; float rad=sqrt(luma(cs))*.72; float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5)); outc=cs*dotm*1.25;
         } else if(m==7.0){ /* THERMAL */
           float l=luma(base); outc=mix(mix(vec3(0.,0.,.12),vec3(.8,0.,0.),smoothstep(.12,.55,l)),vec3(1.,.95,.25),smoothstep(.55,1.,l));
         } else if(m==8.0){ /* CHROMA TRAIL */
-          float w=sin(uTime*2.2)*.003+.006; outc=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*1.05;
+          float w=sin(uTime*2.2)*.0015+.0025; outc=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*1.05;
         } else if(m==9.0){ /* DATAMOSH GRID */
           vec2 q=floor(vUv*uRes/12.0); float n=hash(q+floor(uTime*8.0)); uv += (n-.5)*texel*10.0*step(.72,n); outc=texture2D(tDiffuse,uv).rgb; outc*=.72+.28*step(.06,fract(vUv.x*uRes.x/12.0))*step(.06,fract(vUv.y*uRes.y/12.0));
         } else if(m==10.0){ /* INVERTED EDGES */
           float e=edge(uv,texel).r; outc=mix(1.0-base,vec3(1.,.06,.04),e)*(.72+e*.75);
         }
         float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
-        outc += vec3(1.0,.05,.02)*smoothstep(.28,0.0,d)*uHover*.45;
+        /* no screen/background glow: hover light is 3D-only */
         gl_FragColor = vec4(outc,1.0);
       }`
   });
   composer.addPass(lineFX);
 
-  const fxNames = ['SCAN','CRT','LINES','GLITCH','ASCII','DOTS','THERMAL','CHROMA','MOSH','INVERT'];
-  const fxBar = document.getElementById('psFxBar');
-  if (fxBar) fxNames.forEach((name, i) => {
-    const b = document.createElement('button'); b.type = 'button'; b.textContent = String(i + 1).padStart(2,'0') + ' ' + name;
-    if (i === 0) b.className = 'on';
-    b.addEventListener('click', () => { lineFX.uniforms.uMode.value = i + 1; fxBar.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); });
-    fxBar.appendChild(b);
-  });
+  const fxModes = [5, 6, 4, 7, 8];
+  const fxNames = ['ASCII', 'DOTS', 'GLITCH', 'THERMAL', 'CHROMA'];
+  let fxIndex = 0;
+  const hint = document.getElementById('psHoverHint');
+  function setFx(i){ fxIndex = (i + fxModes.length) % fxModes.length; lineFX.uniforms.uMode.value = fxModes[fxIndex]; if (hint) hint.textContent = 'DBL CLICK TO CHANGE · ' + fxNames[fxIndex]; }
+  setFx(0);
+  stage.addEventListener('dblclick', e => { e.preventDefault(); setFx(fxIndex + 1); });
 
   /* RESIZE */
   new ResizeObserver(() => {
@@ -3206,7 +3205,7 @@ if (stage) {
     const r = stage.getBoundingClientRect();
     const nx = (e.clientX - r.left) / Math.max(1, r.width), ny = (e.clientY - r.top) / Math.max(1, r.height);
     cursorLight.position.set((nx - 0.5) * 1.45, (0.5 - ny) * 1.8, 1.35);
-    cursorLight.intensity = 4.8;
+    cursorLight.intensity = 1.9;
     lineFX.uniforms.uMouse.value.set(nx, 1.0 - ny);
     lineFX.uniforms.uHover.value = 1.0;
     if (sceneEl) { sceneEl.style.setProperty('--mx', (e.clientX - sceneEl.getBoundingClientRect().left) + 'px'); sceneEl.style.setProperty('--my', (e.clientY - sceneEl.getBoundingClientRect().top) + 'px'); }
