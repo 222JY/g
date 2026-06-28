@@ -3060,7 +3060,7 @@ if (stage) {
     let tris = 0;
     model.traverse(o => {
       if (o.isMesh) {
-        o.material = new THREE.MeshStandardMaterial({ color: 0x181818, metalness: 0.10, roughness: 0.78, emissive: 0x140000, emissiveIntensity: 0.42, envMapIntensity: 0.20 });
+        o.material = new THREE.MeshStandardMaterial({ color: 0x6f6f76, metalness: 0.16, roughness: 0.70, emissive: 0x120202, emissiveIntensity: 0.16, envMapIntensity: 0.32 });
         const g = o.geometry; if (g && g.index) tris += g.index.count / 3;
       }
     });
@@ -3178,43 +3178,44 @@ if (stage) {
           vec3 ed=edge(uv,texel);
           float e=ed.r;
           vec3 red=vec3(1.0,0.0,0.0);
-          outc=vec3(0.0);
+          vec3 modelBase=vec3(max(lum*0.52,0.055));
+          outc=modelBase;
           if(mode<0.5){ /* 01 silhouette contour */
-            float line=max(smoothstep(0.025,0.12,e), smoothstep(0.08,0.35,lum)*0.45); outc=red*line;
+            float line=max(smoothstep(0.025,0.12,e), smoothstep(0.08,0.35,lum)*0.45); outc=max(modelBase, red*line);
           } else if(mode<1.5){ /* 02 horizontal scan stack */
             float h=1.0-step(0.50,abs(fract(vUv.y*uRes.y/7.0)-0.5));
-            outc=red*max(smoothstep(.06,.22,e), h*smoothstep(.10,.55,lum)*.85);
+            outc=max(modelBase, red*max(smoothstep(.06,.22,e), h*smoothstep(.10,.55,lum)*.85));
           } else if(mode<2.5){ /* 03 vertical wire rain */
             float v=1.0-step(0.44,abs(fract(vUv.x*uRes.x/8.0)-0.5));
-            outc=red*max(smoothstep(.055,.20,e), v*smoothstep(.13,.62,lum)*.8);
+            outc=max(modelBase, red*max(smoothstep(.055,.20,e), v*smoothstep(.13,.62,lum)*.8));
           } else if(mode<3.5){ /* 04 diagonal hatch */
             float d1=1.0-step(0.48,abs(fract((vUv.x*uRes.x+vUv.y*uRes.y)/10.0)-0.5));
-            outc=red*max(smoothstep(.07,.22,e), d1*smoothstep(.18,.70,lum)*.75);
+            outc=max(modelBase, red*max(smoothstep(.07,.22,e), d1*smoothstep(.18,.70,lum)*.75));
           } else if(mode<4.5){ /* 05 cross hatch */
             float d1=1.0-step(0.47,abs(fract((vUv.x*uRes.x+vUv.y*uRes.y)/11.0)-0.5));
             float d2=1.0-step(0.47,abs(fract((vUv.x*uRes.x-vUv.y*uRes.y)/11.0)-0.5));
-            outc=red*max(smoothstep(.07,.23,e), max(d1,d2)*smoothstep(.22,.78,lum)*.62);
+            outc=max(modelBase, red*max(smoothstep(.07,.23,e), max(d1,d2)*smoothstep(.22,.78,lum)*.62));
           } else if(mode<5.5){ /* 06 topo contour rings */
             float bands=1.0-step(0.10,abs(fract(lum*9.0+uTime*.08)-0.5));
-            outc=red*max(smoothstep(.06,.21,e), bands*smoothstep(.12,.85,lum));
+            outc=max(modelBase, red*max(smoothstep(.06,.21,e), bands*smoothstep(.12,.85,lum)));
           } else if(mode<6.5){ /* 07 broken glitch line */
             float row=floor(vUv.y*uRes.y/5.0); float n=hash(vec2(row,floor(uTime*9.0)));
             float h=1.0-step(0.36,abs(fract(vUv.y*uRes.y/5.0)-0.5));
             float cut=step(.35,n)*step(hash(floor(vUv*uRes/18.0)),.55);
-            outc=red*max(smoothstep(.06,.22,e), h*cut*smoothstep(.16,.65,lum));
+            outc=max(modelBase, red*max(smoothstep(.06,.22,e), h*cut*smoothstep(.16,.65,lum)));
           } else if(mode<7.5){ /* 08 ascii micro-line grid */
             vec2 cell=vec2(5.,7.); vec2 id=floor(vUv*uRes/cell); vec2 f=fract(vUv*uRes/cell); float n=hash(id);
             float glyph=max(step(.82,abs(f.x-.5)), step(.84,abs(f.y-.5)))*step(.18,n);
-            outc=red*max(smoothstep(.08,.24,e), glyph*smoothstep(.18,.70,lum));
+            outc=max(modelBase, red*max(smoothstep(.08,.24,e), glyph*smoothstep(.18,.70,lum)));
           } else if(mode<8.5){ /* 09 radial target lines */
             vec2 c=vUv-.5; c.x*=uRes.x/uRes.y; float a=atan(c.y,c.x); float r=length(c);
             float rays=1.0-step(.08,abs(fract((a+3.14159)/.22)-.5));
             float rings=1.0-step(.08,abs(fract(r*18.0)-.5));
-            outc=red*max(smoothstep(.06,.22,e), max(rays*.35,rings*.55)*smoothstep(.2,.75,lum));
+            outc=max(modelBase, red*max(smoothstep(.06,.22,e), max(rays*.35,rings*.55)*smoothstep(.2,.75,lum)));
           } else { /* 10 red blueprint mesh */
             float gx=1.0-step(.055,abs(fract(vUv.x*uRes.x/18.0)-.5));
             float gy=1.0-step(.055,abs(fract(vUv.y*uRes.y/18.0)-.5));
-            outc=red*max(smoothstep(.055,.24,e), max(gx,gy)*smoothstep(.25,.80,lum)*.45);
+            outc=max(modelBase, red*max(smoothstep(.055,.24,e), max(gx,gy)*smoothstep(.25,.80,lum)*.45));
           }
           outc*=1.15;
         float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
