@@ -3038,9 +3038,9 @@ if (stage) {
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
   /* LIGHTS — dimmed ~80% (much darker, moody) */
-  scene.add(new THREE.AmbientLight(0x404060, 0.12));
+  scene.add(new THREE.AmbientLight(0x505050, 0.22));
   scene.add(new THREE.HemisphereLight(0x8899ff, 0x331111, 0.14));
-  const spot = new THREE.SpotLight(0xffffff, 5.5);
+  const spot = new THREE.SpotLight(0xffffff, 7.0);
   spot.position.set(0, 3, 2.4); spot.angle = Math.PI / 5; spot.penumbra = 0.35; spot.decay = 2; spot.distance = 20;
   scene.add(spot); scene.add(spot.target);
   const rim = new THREE.DirectionalLight(0xff4d4d, 0.3); rim.position.set(-2, 2, -2); scene.add(rim);
@@ -3060,7 +3060,7 @@ if (stage) {
     let tris = 0;
     model.traverse(o => {
       if (o.isMesh) {
-        o.material = new THREE.MeshStandardMaterial({ color: 0x020202, metalness: 0.08, roughness: 0.82, emissive: 0x060000, emissiveIntensity: 0.18, envMapIntensity: 0.12 });
+        o.material = new THREE.MeshStandardMaterial({ color: 0x181818, metalness: 0.10, roughness: 0.78, emissive: 0x140000, emissiveIntensity: 0.42, envMapIntensity: 0.20 });
         const g = o.geometry; if (g && g.index) tris += g.index.count / 3;
       }
     });
@@ -3180,7 +3180,7 @@ if (stage) {
           vec3 red=vec3(1.0,0.0,0.0);
           outc=vec3(0.0);
           if(mode<0.5){ /* 01 silhouette contour */
-            float line=smoothstep(0.045,0.18,e); outc=red*line;
+            float line=max(smoothstep(0.025,0.12,e), smoothstep(0.08,0.35,lum)*0.45); outc=red*line;
           } else if(mode<1.5){ /* 02 horizontal scan stack */
             float h=1.0-step(0.50,abs(fract(vUv.y*uRes.y/7.0)-0.5));
             outc=red*max(smoothstep(.06,.22,e), h*smoothstep(.10,.55,lum)*.85);
