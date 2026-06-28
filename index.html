@@ -3005,7 +3005,7 @@ if (stage) {
   scrollSoftLight.position.set(-1.15, 1.75, 2.05);
   scrollSoftLight.target.position.set(0.0, 0.18, 0.0);
   scene.add(scrollSoftLight); scene.add(scrollSoftLight.target);
-  /* hover light removed — hover now uses particle distortion in postprocessing */
+  /* hover FX removed — no hover light, no distortion */
   scene.background = null;
   const camera = new THREE.PerspectiveCamera(34, (stage.clientWidth || 980) / (stage.clientHeight || 820), 0.1, 100);
   camera.position.set(0, 0, 2.7);
@@ -3182,14 +3182,7 @@ if (stage) {
           outc=mix(chroma,dots,0.10);
         }
         float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
-        /* hover particle distortion: tiny broken pixels around cursor, no hover light */
-        float mask=smoothstep(0.18,0.0,d)*uHover;
-        vec2 pid=floor(vUv*uRes/3.0);
-        float n=hash(pid+floor(uTime*18.0));
-        float spark=step(0.86,n)*mask;
-        vec2 sh=(vec2(hash(pid+1.7),hash(pid+8.3))-.5)*texel*10.0*mask*spark;
-        vec3 warped=vec3(texture2D(tDiffuse,uv+sh+vec2(texel.x*2.0,0.)).r, texture2D(tDiffuse,uv+sh).g, texture2D(tDiffuse,uv+sh-vec2(texel.x*2.0,0.)).b);
-        outc=mix(outc, warped+vec3(1.0,0.04,0.02)*spark*0.42, mask*0.72);
+        /* hover FX removed: standard model only */
         gl_FragColor = vec4(outc,1.0);
       }`
   });
@@ -3231,7 +3224,7 @@ if (stage) {
   stage.addEventListener('pointermove', e => {
     const r = stage.getBoundingClientRect();
     const nx = (e.clientX - r.left) / Math.max(1, r.width), ny = (e.clientY - r.top) / Math.max(1, r.height);
-    /* hover particle distortion only — no hover lights */
+    /* hover FX removed */
     lineFX.uniforms.uMouse.value.set(nx, 1.0 - ny);
     lineFX.uniforms.uHover.value = 1.0;
     if (sceneEl) { sceneEl.style.setProperty('--mx', (e.clientX - sceneEl.getBoundingClientRect().left) + 'px'); sceneEl.style.setProperty('--my', (e.clientY - sceneEl.getBoundingClientRect().top) + 'px'); }
