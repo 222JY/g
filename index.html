@@ -3183,24 +3183,53 @@ if (stage) {
           float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5));
           vec3 dots=cs*dotm*1.25;
           outc=mix(chroma,dots,0.10);
-        } else if(m>=30.0){ /* VISIBLE RED LINE OVERLAYS: keep original model visible */
+        } else if(m>=30.0){ /* 10 THIN RED LINE OVERLAYS: visible model + different 1px red systems */
           float mode=m-30.0;
           float lum=luma(base);
           float e=edge(uv,texel).r;
           vec3 red=vec3(1.0,0.0,0.0);
-          vec3 body=base*0.82 + vec3(lum)*0.08; /* original model remains visible */
+          vec3 body=base*0.92; /* keep original model visible */
           float line=0.0;
-          if(mode<0.5){ line=smoothstep(.025,.16,e); }
-          else if(mode<1.5){ float h=1.0-step(.08,abs(fract(vUv.y*uRes.y/8.0)-.5)); line=max(smoothstep(.03,.17,e),h*smoothstep(.18,.72,lum)*.75); }
-          else if(mode<2.5){ float v=1.0-step(.08,abs(fract(vUv.x*uRes.x/9.0)-.5)); line=max(smoothstep(.03,.17,e),v*smoothstep(.18,.72,lum)*.72); }
-          else if(mode<3.5){ float d1=1.0-step(.07,abs(fract((vUv.x*uRes.x+vUv.y*uRes.y)/12.0)-.5)); line=max(smoothstep(.04,.18,e),d1*smoothstep(.22,.78,lum)*.68); }
-          else if(mode<4.5){ float d1=1.0-step(.065,abs(fract((vUv.x*uRes.x+vUv.y*uRes.y)/13.0)-.5)); float d2=1.0-step(.065,abs(fract((vUv.x*uRes.x-vUv.y*uRes.y)/13.0)-.5)); line=max(smoothstep(.04,.18,e),max(d1,d2)*smoothstep(.25,.8,lum)*.55); }
-          else if(mode<5.5){ float bands=1.0-step(.09,abs(fract(lum*10.0+uTime*.08)-.5)); line=max(smoothstep(.035,.17,e),bands*smoothstep(.16,.85,lum)*.8); }
-          else if(mode<6.5){ float row=floor(vUv.y*uRes.y/6.0); float n=hash(vec2(row,floor(uTime*9.0))); float h=1.0-step(.09,abs(fract(vUv.y*uRes.y/6.0)-.5)); line=max(smoothstep(.04,.18,e),h*step(.42,n)*smoothstep(.20,.70,lum)); }
-          else if(mode<7.5){ vec2 cell=vec2(6.,8.); vec2 id=floor(vUv*uRes/cell); vec2 f=fract(vUv*uRes/cell); float glyph=max(step(.84,abs(f.x-.5)),step(.86,abs(f.y-.5)))*step(.22,hash(id)); line=max(smoothstep(.04,.18,e),glyph*smoothstep(.22,.74,lum)*.75); }
-          else if(mode<8.5){ vec2 c=vUv-.5; c.x*=uRes.x/uRes.y; float a=atan(c.y,c.x); float r=length(c); float rays=1.0-step(.06,abs(fract((a+3.14159)/.24)-.5)); float rings=1.0-step(.07,abs(fract(r*18.0)-.5)); line=max(smoothstep(.04,.18,e),max(rays*.28,rings*.45)*smoothstep(.25,.78,lum)); }
-          else { float gx=1.0-step(.045,abs(fract(vUv.x*uRes.x/20.0)-.5)); float gy=1.0-step(.045,abs(fract(vUv.y*uRes.y/20.0)-.5)); line=max(smoothstep(.04,.18,e),max(gx,gy)*smoothstep(.28,.82,lum)*.38); }
-          outc=max(body, red*line*1.25);
+          float edgeLine=smoothstep(.055,.145,e); /* thin contour base */
+          if(mode<0.5){ /* 01 ultra-thin contour */
+            line=edgeLine;
+          } else if(mode<1.5){ /* 02 sparse horizontal red scanlines */
+            float h=1.0-smoothstep(.018,.032,abs(fract(vUv.y*uRes.y/9.0)-.5));
+            line=max(edgeLine*.55,h*smoothstep(.22,.78,lum)*.55);
+          } else if(mode<2.5){ /* 03 sparse vertical red rain */
+            float v=1.0-smoothstep(.014,.028,abs(fract(vUv.x*uRes.x/10.0)-.5));
+            float gate=step(.46,hash(vec2(floor(vUv.x*uRes.x/10.0),floor(uTime*3.0))));
+            line=max(edgeLine*.5,v*gate*smoothstep(.24,.82,lum)*.62);
+          } else if(mode<3.5){ /* 04 thin diagonal / */
+            float d1=1.0-smoothstep(.012,.026,abs(fract((vUv.x*uRes.x+vUv.y*uRes.y)/14.0)-.5));
+            line=max(edgeLine*.45,d1*smoothstep(.26,.82,lum)*.58);
+          } else if(mode<4.5){ /* 05 thin cross-hatch */
+            float d1=1.0-smoothstep(.012,.024,abs(fract((vUv.x*uRes.x+vUv.y*uRes.y)/16.0)-.5));
+            float d2=1.0-smoothstep(.012,.024,abs(fract((vUv.x*uRes.x-vUv.y*uRes.y)/16.0)-.5));
+            line=max(edgeLine*.42,max(d1,d2)*smoothstep(.30,.86,lum)*.46);
+          } else if(mode<5.5){ /* 06 topo/luma contour lines */
+            float bands=1.0-smoothstep(.018,.04,abs(fract(lum*13.0+uTime*.05)-.5));
+            line=max(edgeLine*.45,bands*smoothstep(.18,.86,lum)*.68);
+          } else if(mode<6.5){ /* 07 broken glitch hairlines */
+            float row=floor(vUv.y*uRes.y/7.0); float n=hash(vec2(row,floor(uTime*10.0)));
+            float h=1.0-smoothstep(.012,.026,abs(fract(vUv.y*uRes.y/7.0)-.5));
+            float blocks=step(.55,n)*step(hash(floor(vUv*uRes/22.0)),.42);
+            line=max(edgeLine*.38,h*blocks*smoothstep(.24,.78,lum)*.72);
+          } else if(mode<7.5){ /* 08 ascii-like micro strokes */
+            vec2 cell=vec2(7.,9.); vec2 id=floor(vUv*uRes/cell); vec2 f=fract(vUv*uRes/cell); float rnd=hash(id);
+            float glyph=max(1.0-smoothstep(.018,.04,abs(f.x-.18)),1.0-smoothstep(.018,.04,abs(f.y-.72)))*step(.34,rnd);
+            line=max(edgeLine*.35,glyph*smoothstep(.25,.80,lum)*.62);
+          } else if(mode<8.5){ /* 09 radial target thin lines */
+            vec2 c=vUv-.5; c.x*=uRes.x/uRes.y; float a=atan(c.y,c.x); float r=length(c);
+            float rays=1.0-smoothstep(.010,.022,abs(fract((a+3.14159)/.28)-.5));
+            float rings=1.0-smoothstep(.012,.028,abs(fract(r*22.0)-.5));
+            line=max(edgeLine*.38,max(rays*.22,rings*.42)*smoothstep(.28,.82,lum));
+          } else { /* 10 blueprint mesh, very thin */
+            float gx=1.0-smoothstep(.010,.022,abs(fract(vUv.x*uRes.x/24.0)-.5));
+            float gy=1.0-smoothstep(.010,.022,abs(fract(vUv.y*uRes.y/24.0)-.5));
+            line=max(edgeLine*.35,max(gx,gy)*smoothstep(.32,.88,lum)*.34);
+          }
+          outc=body + red*line*0.95;
         }
         float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
         /* hover FX removed: standard model only */
