@@ -630,9 +630,12 @@
   #processSvcGrid .sa-card[data-family="graph"] .sa-art::after{width:34px;height:20px;background:rgba(255,0,0,.045)}
   #processScene .ps-stage{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;pointer-events:auto;background:transparent}
   #processScene .ps-stage canvas{display:block;width:100%!important;height:100%!important}
-  #processScene .ps-hover-hint{position:absolute;left:var(--mx,-999px);top:var(--my,-999px);z-index:6;transform:translate(12px,12px);pointer-events:none;opacity:0;background:#000;color:#a2a2a2;border:1px solid #262626;padding:5px 7px;font-family:'Anonymous Pro','Kode Mono',monospace;font-size:7px;line-height:7px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;box-shadow:0 0 0 1px #000}
-  #processScene.is-hovering .ps-hover-hint{opacity:1}
-  /* dbl-click cycles 5 minimal postprocessing looks; hover light is a small real 3D light on the model only */
+  #processScene .ps-fxbar{position:absolute;left:0;right:0;top:14px;z-index:8;display:flex;flex-wrap:wrap;gap:4px;align-items:flex-start;justify-content:center;padding:0 12px;pointer-events:auto}
+  #processScene .ps-fxbar button{height:16px;border:1px solid #262626;background:#000;color:#818181;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:5.5px;line-height:5.5px;letter-spacing:.85px;text-transform:uppercase;padding:0 5px;cursor:crosshair;white-space:nowrap;transition:none}
+  #processScene .ps-fxbar button:hover,#processScene .ps-fxbar button.on{border-color:var(--red);color:var(--red);background:#100000;box-shadow:0 0 14px rgba(255,0,0,.22)}
+  #processScene .ps-hover-hint{position:absolute;left:50%;top:48px;z-index:9;transform:translateX(-50%);pointer-events:none;opacity:1;background:#000;color:#e9eaec;border:1px solid var(--red);padding:5px 8px;font-family:'Anonymous Pro','Kode Mono',monospace;font-size:7px;line-height:7px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;box-shadow:0 0 0 1px #000,0 0 16px rgba(255,0,0,.28)}
+  #processScene.is-hovering .ps-hover-hint{color:#ff2b2b}
+  /* buttons + dbl-click cycle 5 postprocessing looks; hover light is a small real 3D light on the model only */
 
 </style>
 </head>
@@ -902,7 +905,7 @@
 
 <div id="processPin">
 <div aria-label="GOBOLD real-time 3D — Eve" id="processScene">
-<div class="ps-hover-hint" id="psHoverHint">DBL CLICK TO CHANGE · ASCII</div><div class="ps-stage" id="psStage"></div>
+<div class="ps-fxbar" id="psFxBar" aria-label="3D postprocessing modes"></div><div class="ps-hover-hint" id="psHoverHint">DBL CLICK OR BUTTON · ASCII</div><div class="ps-stage" id="psStage"></div>
 </div>
 <div aria-label="GOBOLD services" id="processSvcGrid">
 <div class="sa-card" data-family="keyword-service"><span class="sa-k">01 / WEBSITE CREATION</span><span class="sa-title">WEBSITE CREATION</span><p class="sa-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sa-art"><canvas id="psWeb"></canvas></div><div class="sa-foot keyword-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
@@ -3147,12 +3150,28 @@ if (stage) {
         } else if(m==4.0){ /* GLITCH SLICES */
           float row=floor(vUv.y*uRes.y/11.0); float jt=(hash(vec2(row,floor(uTime*12.0)))-.5)*step(.82,hash(vec2(row,uTime)))*.009;
           outc=vec3(texture2D(tDiffuse,uv+vec2(jt+texel.x*3.,0)).r, texture2D(tDiffuse,uv+vec2(jt*.35,0)).g, texture2D(tDiffuse,uv-vec2(jt+texel.x*3.,0)).b);
-        } else if(m==5.0){ /* ASCII BLOCKS */
-          vec2 cell=vec2(3.,5.); vec2 cuv=(floor(vUv*uRes/cell)+.5)*cell/uRes; vec3 c=texture2D(tDiffuse,cuv).rgb; float l=luma(c); vec2 f=fract(vUv*uRes/cell); float glyph=step(.11,abs(f.x-.5))*step(.18,abs(f.y-.5)); glyph*=step(hash(floor(vUv*uRes/cell)),l+.18); outc=c*glyph*1.55;
+        } else if(m==5.0){ /* REDONE ASCII: tiny dense terminal glyphs */
+          vec2 cell=vec2(4.,6.);
+          vec2 id=floor(vUv*uRes/cell);
+          vec2 f=fract(vUv*uRes/cell);
+          vec2 cuv=(id+.5)*cell/uRes;
+          vec3 c=texture2D(tDiffuse,cuv).rgb;
+          float l=luma(c);
+          float rnd=hash(id);
+          float vbar=step(.42,abs(f.x-.5));
+          float hbar=step(.42,abs(f.y-.5));
+          float diag=step(.86,abs((f.x+f.y)-1.0));
+          float cross=max(step(.78,abs(f.x-.5)),step(.78,abs(f.y-.5)));
+          float glyph=mix(max(vbar,hbar), mix(diag,cross,step(.5,rnd)), step(.33,rnd));
+          glyph*=smoothstep(.10,.72,l);
+          outc=mix(vec3(0.0), mix(vec3(1.0,.04,.02),vec3(1.0),smoothstep(.62,1.0,l)), glyph);
         } else if(m==6.0){ /* HALFTONE */
           float cell=3.0; vec2 gp=vUv*uRes/cell; vec2 cc=(floor(gp)+.5)*cell/uRes; vec3 cs=texture2D(tDiffuse,cc).rgb; float rad=sqrt(luma(cs))*.72; float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5)); outc=cs*dotm*1.25;
-        } else if(m==7.0){ /* THERMAL */
-          float l=luma(base); outc=mix(mix(vec3(0.,0.,.12),vec3(.8,0.,0.),smoothstep(.12,.55,l)),vec3(1.,.95,.25),smoothstep(.55,1.,l));
+        } else if(m==7.0){ /* THERMAL: red on black, no purple */
+          float l=luma(base);
+          float heat=smoothstep(.06,.82,l);
+          outc=mix(vec3(0.0), vec3(1.0,0.0,0.0), heat);
+          outc+=vec3(1.0,0.08,0.03)*smoothstep(.78,1.0,l)*0.38;
         } else if(m==8.0){ /* CHROMA TRAIL */
           float w=sin(uTime*2.2)*.0015+.0025; outc=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*1.05;
         } else if(m==9.0){ /* DATAMOSH GRID */
@@ -3171,7 +3190,18 @@ if (stage) {
   const fxNames = ['ASCII', 'DOTS', 'GLITCH', 'THERMAL', 'CHROMA'];
   let fxIndex = 0;
   const hint = document.getElementById('psHoverHint');
-  function setFx(i){ fxIndex = (i + fxModes.length) % fxModes.length; lineFX.uniforms.uMode.value = fxModes[fxIndex]; if (hint) hint.textContent = 'DBL CLICK TO CHANGE · ' + fxNames[fxIndex]; }
+  const fxBar = document.getElementById('psFxBar');
+  function setFx(i){
+    fxIndex = (i + fxModes.length) % fxModes.length;
+    lineFX.uniforms.uMode.value = fxModes[fxIndex];
+    if (hint) hint.textContent = 'DBL CLICK OR BUTTON · ' + fxNames[fxIndex];
+    if (fxBar) fxBar.querySelectorAll('button').forEach((b, bi) => b.classList.toggle('on', bi === fxIndex));
+  }
+  if (fxBar) fxNames.forEach((name, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = String(i + 1).padStart(2,'0') + ' ' + name;
+    b.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); setFx(i); });
+    fxBar.appendChild(b);
+  });
   setFx(0);
   stage.addEventListener('dblclick', e => { e.preventDefault(); setFx(fxIndex + 1); });
 
