@@ -3180,14 +3180,14 @@ if (stage) {
           float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5));
           vec3 dots=cs*dotm*0.86;
           outc=mix(chroma,dots,0.10);
-        } else if(m==40.0){ /* CANNY FIRST: super dark grey, thinner */
+        } else if(m==40.0){ /* CANNY FIRST: much darker, thin charcoal */
           float lum=luma(base);
           float e=edge(uv,texel).r;
-          vec3 body=base*0.68;
-          /* thinner edge selection: tighter smoothstep window */
-          float can=smoothstep(.135,.205,e)*step(.18,lum)*step(lum,.88);
-          /* same red-version structure, but super dark grey instead of red/white */
-          outc=body*.68 + vec3(0.16)*can*1.05;
+          vec3 body=base*0.42;
+          /* thin edge selection */
+          float can=smoothstep(.145,.215,e)*step(.20,lum)*step(lum,.86);
+          /* much darker charcoal grey */
+          outc=body*.46 + vec3(0.055)*can*0.72;
         }
         float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
         /* hover FX removed: standard model only */
