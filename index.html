@@ -630,7 +630,10 @@
   #processSvcGrid .sa-card[data-family="graph"] .sa-art::after{width:34px;height:20px;background:rgba(255,0,0,.045)}
   #processScene .ps-stage{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;pointer-events:auto;background:transparent}
   #processScene .ps-stage canvas{display:block;width:100%!important;height:100%!important}
-  /* third 3D: standard fixed postprocessing only, no buttons / no dbl-click UI */
+  #processScene .ps-fxbar{position:absolute;left:0;right:0;top:14px;z-index:8;display:flex;flex-wrap:wrap;gap:4px;align-items:flex-start;justify-content:center;padding:0 12px;pointer-events:auto}
+  #processScene .ps-fxbar button{height:16px;border:1px solid #260000;background:#000;color:#818181;font-family:'Anonymous Pro','Kode Mono',monospace;font-size:5.5px;line-height:5.5px;letter-spacing:.85px;text-transform:uppercase;padding:0 5px;cursor:crosshair;white-space:nowrap}
+  #processScene .ps-fxbar button:hover,#processScene .ps-fxbar button.on{border-color:#ff0000;color:#ff0000;background:#080000;box-shadow:0 0 10px rgba(255,0,0,.18)}
+  /* third 3D: black model + 10 thin red line modes */
 
 </style>
 </head>
@@ -900,7 +903,7 @@
 
 <div id="processPin">
 <div aria-label="GOBOLD real-time 3D — Eve" id="processScene">
-<div class="ps-stage" id="psStage"></div>
+<div class="ps-fxbar" id="psFxBar" aria-label="Red line modes"></div><div class="ps-stage" id="psStage"></div>
 </div>
 <div aria-label="GOBOLD services" id="processSvcGrid">
 <div class="sa-card" data-family="keyword-service"><span class="sa-k">01 / WEBSITE CREATION</span><span class="sa-title">WEBSITE CREATION</span><p class="sa-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sa-art"><canvas id="psWeb"></canvas></div><div class="sa-foot keyword-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
@@ -3057,7 +3060,7 @@ if (stage) {
     let tris = 0;
     model.traverse(o => {
       if (o.isMesh) {
-        o.material = new THREE.MeshStandardMaterial({ color: 0x8f8f97, metalness: 0.2, roughness: 0.66, emissive: 0x1a0303, emissiveIntensity: 0.12, envMapIntensity: 0.35 });
+        o.material = new THREE.MeshStandardMaterial({ color: 0x020202, metalness: 0.08, roughness: 0.82, emissive: 0x060000, emissiveIntensity: 0.18, envMapIntensity: 0.12 });
         const g = o.geometry; if (g && g.index) tris += g.index.count / 3;
       }
     });
@@ -3169,18 +3172,51 @@ if (stage) {
           vec2 q=floor(vUv*uRes/12.0); float n=hash(q+floor(uTime*8.0)); uv += (n-.5)*texel*10.0*step(.72,n); outc=texture2D(tDiffuse,uv).rgb; outc*=.72+.28*step(.06,fract(vUv.x*uRes.x/12.0))*step(.06,fract(vUv.y*uRes.y/12.0));
         } else if(m==10.0){ /* INVERTED EDGES */
           float e=edge(uv,texel).r; outc=mix(1.0-base,vec3(1.,.06,.04),e)*(.72+e*.75);
-        } else if(m==11.0){ /* STANDARD: stronger chroma + 10% tiny dots */
-          float w=(sin(uTime*2.2)*.0015+.0025)*1.3;
-          vec3 chroma=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*1.05;
-          float cell=3.0;
-          vec2 gp=vUv*uRes/cell;
-          vec2 cc=(floor(gp)+.5)*cell/uRes;
-          vec3 cs=texture2D(tDiffuse,cc).rgb;
-          float rad=sqrt(luma(cs))*.72;
-          float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5));
-          vec3 dots=cs*dotm*1.25;
-          outc=mix(chroma,dots,0.10);
-        }
+        } else if(m>=20.0){ /* 10 RED LINE MODES: black bg + minimum 1px red lines */
+          float mode=m-20.0;
+          float lum=luma(base);
+          vec3 ed=edge(uv,texel);
+          float e=ed.r;
+          vec3 red=vec3(1.0,0.0,0.0);
+          outc=vec3(0.0);
+          if(mode<0.5){ /* 01 silhouette contour */
+            float line=smoothstep(0.045,0.18,e); outc=red*line;
+          } else if(mode<1.5){ /* 02 horizontal scan stack */
+            float h=1.0-step(0.50,abs(fract(vUv.y*uRes.y/7.0)-0.5));
+            outc=red*max(smoothstep(.06,.22,e), h*smoothstep(.10,.55,lum)*.85);
+          } else if(mode<2.5){ /* 03 vertical wire rain */
+            float v=1.0-step(0.44,abs(fract(vUv.x*uRes.x/8.0)-0.5));
+            outc=red*max(smoothstep(.055,.20,e), v*smoothstep(.13,.62,lum)*.8);
+          } else if(mode<3.5){ /* 04 diagonal hatch */
+            float d1=1.0-step(0.48,abs(fract((vUv.x*uRes.x+vUv.y*uRes.y)/10.0)-0.5));
+            outc=red*max(smoothstep(.07,.22,e), d1*smoothstep(.18,.70,lum)*.75);
+          } else if(mode<4.5){ /* 05 cross hatch */
+            float d1=1.0-step(0.47,abs(fract((vUv.x*uRes.x+vUv.y*uRes.y)/11.0)-0.5));
+            float d2=1.0-step(0.47,abs(fract((vUv.x*uRes.x-vUv.y*uRes.y)/11.0)-0.5));
+            outc=red*max(smoothstep(.07,.23,e), max(d1,d2)*smoothstep(.22,.78,lum)*.62);
+          } else if(mode<5.5){ /* 06 topo contour rings */
+            float bands=1.0-step(0.10,abs(fract(lum*9.0+uTime*.08)-0.5));
+            outc=red*max(smoothstep(.06,.21,e), bands*smoothstep(.12,.85,lum));
+          } else if(mode<6.5){ /* 07 broken glitch line */
+            float row=floor(vUv.y*uRes.y/5.0); float n=hash(vec2(row,floor(uTime*9.0)));
+            float h=1.0-step(0.36,abs(fract(vUv.y*uRes.y/5.0)-0.5));
+            float cut=step(.35,n)*step(hash(floor(vUv*uRes/18.0)),.55);
+            outc=red*max(smoothstep(.06,.22,e), h*cut*smoothstep(.16,.65,lum));
+          } else if(mode<7.5){ /* 08 ascii micro-line grid */
+            vec2 cell=vec2(5.,7.); vec2 id=floor(vUv*uRes/cell); vec2 f=fract(vUv*uRes/cell); float n=hash(id);
+            float glyph=max(step(.82,abs(f.x-.5)), step(.84,abs(f.y-.5)))*step(.18,n);
+            outc=red*max(smoothstep(.08,.24,e), glyph*smoothstep(.18,.70,lum));
+          } else if(mode<8.5){ /* 09 radial target lines */
+            vec2 c=vUv-.5; c.x*=uRes.x/uRes.y; float a=atan(c.y,c.x); float r=length(c);
+            float rays=1.0-step(.08,abs(fract((a+3.14159)/.22)-.5));
+            float rings=1.0-step(.08,abs(fract(r*18.0)-.5));
+            outc=red*max(smoothstep(.06,.22,e), max(rays*.35,rings*.55)*smoothstep(.2,.75,lum));
+          } else { /* 10 red blueprint mesh */
+            float gx=1.0-step(.055,abs(fract(vUv.x*uRes.x/18.0)-.5));
+            float gy=1.0-step(.055,abs(fract(vUv.y*uRes.y/18.0)-.5));
+            outc=red*max(smoothstep(.055,.24,e), max(gx,gy)*smoothstep(.25,.80,lum)*.45);
+          }
+          outc*=1.15;
         float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
         /* hover FX removed: standard model only */
         gl_FragColor = vec4(outc,1.0);
@@ -3188,8 +3224,16 @@ if (stage) {
   });
   composer.addPass(lineFX);
 
-  /* STANDARD FIXED LOOK: 1.3x stronger chroma + 10% tiny dots. No buttons, no dbl-click. */
-  lineFX.uniforms.uMode.value = 11;
+  /* 10 black/red thin-line versions controlled by buttons */
+  const lineModes = [20,21,22,23,24,25,26,27,28,29];
+  const lineNames = ['CONTOUR','H-SCAN','V-RAIN','DIAGONAL','CROSS','TOPO','GLITCH','ASCII','RADIAL','MESH'];
+  const fxBar = document.getElementById('psFxBar');
+  function setLineMode(i){
+    lineFX.uniforms.uMode.value = lineModes[i];
+    if (fxBar) fxBar.querySelectorAll('button').forEach((b,bi)=>b.classList.toggle('on',bi===i));
+  }
+  if (fxBar) lineNames.forEach((name,i)=>{ const b=document.createElement('button'); b.type='button'; b.textContent=String(i+1).padStart(2,'0')+' '+name; b.addEventListener('click',e=>{e.preventDefault(); e.stopPropagation(); setLineMode(i);}); fxBar.appendChild(b); });
+  setLineMode(0);
 
   /* RESIZE */
   new ResizeObserver(() => {
