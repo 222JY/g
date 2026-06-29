@@ -231,7 +231,8 @@
 
   /* ---- FAQ ---- */
   #vidband{position:absolute;left:3px;top:1255px;width:1018px;height:573px;overflow:hidden;z-index:5;background:#000;border-top:0;border-bottom:0;transform-origin:50% 50%;will-change:transform,opacity;transition:transform .3s ease-out,opacity .3s ease-out}
-  #vidband .vb-showreel{display:none!important}
+  #vidband .vb-showreel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9;font-family:'Anonymous Pro','Kode Mono',monospace;font-size:7px;letter-spacing:2.5px;text-transform:uppercase;color:#fff;background:#000;padding:7px 12px;opacity:0;transition:opacity .2s ease;pointer-events:none;white-space:nowrap}
+  #vidband:hover .vb-showreel{opacity:1}
   #vidband .video-replace{position:absolute;left:0;top:-35%;width:100%;height:170%;object-fit:cover;will-change:transform;filter:contrast(1.08) brightness(.86) saturate(.92)}
   #vidband.fx2 .video-replace{filter:contrast(1.32) brightness(.72) saturate(.55) grayscale(.28)}
   #vidband.fx3 .video-replace{filter:contrast(1.55) brightness(.78) saturate(1.65) hue-rotate(-8deg)}
@@ -264,7 +265,7 @@
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
-  #snakeBand{position:absolute;left:7px;top:2108px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
+  #snakeBand{position:absolute;left:7px;top:2183px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
 
   #snakeBand::before{display:none}
   #snakeBand::after{display:none}
@@ -380,7 +381,7 @@
   .sect .stats > div:first-child{padding-left:0;transform:translateX(5px)}
   .sect .stats > div:nth-child(4){transform:translateX(-5px)}
   .sect .stats > div:not(:first-child)::before{content:'';position:absolute;left:-10px;top:0;width:1px;height:34px;background:#262626}
-  #faq{position:absolute;left:3px;top:3026px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
+  #faq{position:absolute;left:3px;top:2606px;width:1018px;z-index:7;font-family:'Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-align:right}
   #faq .faq-head{margin:0 0 34px;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);transform:translate(-10px,4px)}
   .faq-item{border-top:1px solid #262626}
   .faq-item:last-child{border-bottom:1px solid #262626}
@@ -540,15 +541,15 @@
   #weHelp #weHelpText{margin:0;color:#242424;filter:url(#threshfxStrong)}
 
   /* services — moving marquee line (p--l, tight letters, BIG visible threshold), non-interactive */
-  #bigmovingtext{position:absolute;left:0;top:1824px;width:1024px;height:250px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
-  #bigmovingtext .bigmovingtextTrack{position:relative;top:-28px;z-index:1;display:flex;flex-shrink:0;align-items:center;white-space:nowrap;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:300px;line-height:300px;letter-spacing:-16px;text-transform:uppercase;color:#242424;animation:bigmovingtextMarquee 158.4s linear infinite}
+  #bigmovingtext{position:absolute;left:0;top:1834px;width:1024px;height:316px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
+  #bigmovingtext .bigmovingtextTrack{position:relative;top:13px;z-index:1;display:flex;flex-shrink:0;align-items:center;white-space:nowrap;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:300px;line-height:1;letter-spacing:-16px;text-transform:uppercase;color:#242424;animation:bigmovingtextMarquee 158.4s linear infinite}
   #bigmovingtext .bigmovingtextItem{padding-right:150px}
   #bigmovingtextTrail{position:absolute;left:0;top:0;width:100%;height:100%;mix-blend-mode:normal;pointer-events:none;z-index:3}
   @keyframes bigmovingtextMarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
 
 
   /* PROCESS — 4 compact rotatable real-3D blocks under FAQ */
-  #processFlow{position:absolute;left:7px;top:2586px;width:1010px;height:418px;z-index:8;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;pointer-events:auto}
+  #processFlow{position:absolute;left:7px;top:3166px;width:1010px;height:418px;z-index:8;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;pointer-events:auto}
   #processFlow .pf-card{position:relative;height:418px;min-width:0;border-top:1px solid #262626;border-bottom:1px solid #262626;overflow:hidden;background:transparent;cursor:grab}
   #processFlow .pf-card:active{cursor:grabbing}
   #processFlow .pf-card:not(:first-child)::before{content:'';position:absolute;left:-9px;top:0;width:1px;height:100%;background:#262626;opacity:1}
@@ -573,12 +574,10 @@
   #processFlow .pf-card:hover .pf-status i{border-color:#3a0000}
   @keyframes pfScan{0%{background-position:0 0,0 0}100%{background-position:0 32px,82px 0}}
   /* PROCESS — single real-time 3D scene (Eve) under the four process blocks */
-  #processPin{position:absolute;left:7px;top:4028px;width:1010px;height:2320px;z-index:8;pointer-events:none}
+  #processPin{position:absolute;left:7px;top:3608px;width:1010px;height:2320px;z-index:8;pointer-events:none}
   #processScene{position:sticky;top:0;margin-left:-60px;width:640px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
-
-  #whatWeDoHead{position:absolute;left:3px;top:82px;width:1018px;z-index:7;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);text-align:right;transform:translate(-10px,4px);pointer-events:none}
-  #processSvcGrid{position:absolute;left:560px;top:210px;width:440px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
-  #processSvcGrid .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px 40px;overflow:hidden;background:transparent;cursor:crosshair}
+  #processSvcGrid{position:absolute;left:600px;top:210px;width:400px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
+  #processSvcGrid .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px;overflow:hidden;background:transparent;cursor:crosshair}
   #processSvcGrid .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #processSvcGrid .sm-col::after{content:'';position:absolute;left:0;right:0;bottom:32px;height:1px;background:#262626;pointer-events:none}
   #processSvcGrid .sm-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:14px}
@@ -602,8 +601,8 @@
   #processSvcGrid .sm-col:hover .sm-signal{background-color:#080000}
   #processSvcGrid .sm-signal canvas{display:block;width:100%;height:100%;position:relative;z-index:1;cursor:crosshair}
   #processSvcGrid .sm-col:hover .sm-foot{opacity:1;transform:none}
-  #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 11px 40px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair}
-  #processSvcGrid .sa-card::before{content:'';position:absolute;left:29px;top:0;width:1px;height:100%;background:#262626;opacity:1}
+  #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 11px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair}
+  #processSvcGrid .sa-card::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #processSvcGrid .sa-card:nth-child(4n+1)::before{display:none}
   #processSvcGrid .sa-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
   #processSvcGrid .sa-title{display:block;width:max-content;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:15px;line-height:15px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:9px;white-space:nowrap;cursor:crosshair}
@@ -631,7 +630,8 @@
   #processSvcGrid .sa-card[data-family="graph"] .sa-art::after{width:34px;height:20px;background:rgba(255,0,0,.045)}
   #processScene .ps-stage{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;pointer-events:auto;background:transparent}
   #processScene .ps-stage canvas{display:block;width:100%!important;height:100%!important}
-  /* third 3D: CANNY first, double-click toggles to normal. No buttons. */
+  /* window chrome removed — line / grid / scan effects now come from the toggle buttons (postprocessing) */
+  /* (status strip removed) */
 
 </style>
 </head>
@@ -664,7 +664,7 @@
 <a data-section="main" data-target="#page" data-y="0" href="#page">MAIN</a>
 <a data-section="about" data-target="#giantLine" data-y="560" href="#giantLine">ABOUT</a>
 <a data-section="services" data-target="#servicesHead" data-y="2695" href="#servicesHead">SERVICES</a>
-<a data-section="faq" data-target="#faq" data-y="3026" href="#faq">FAQ</a>
+<a data-section="faq" data-target="#faq" data-y="3506" href="#faq">FAQ</a>
 <a data-bottom="true" data-section="contact" data-target="#endcap" href="#endcap">CONTACT</a>
 </nav>
 <!-- ===================== FULL-PAGE PRELOADER ===================== -->
@@ -810,7 +810,7 @@
 <div id="gBox"><span class="gb-x">[X]</span><span class="gb-t"></span><span class="gb-d"></span></div>
 <div id="vidband">
 <video autoplay="" class="video-replace" id="ytv" loop="" muted="" playsinline="" preload="auto" src="media/tt.mp4"></video>
-
+<div class="vb-showreel">WATCH SHOWREEL</div>
 <canvas height="660" id="vbTrail" width="1014"></canvas>
 <input aria-label="Video position" id="vbSeek" max="1000" min="0" type="range" value="0"/>
 <div aria-hidden="true" id="vbSeekPreview"></div>
@@ -903,7 +903,6 @@
 <div aria-label="GOBOLD real-time 3D — Eve" id="processScene">
 <div class="ps-stage" id="psStage"></div>
 </div>
-<p id="whatWeDoHead">WHAT WE DO</p>
 <div aria-label="GOBOLD services" id="processSvcGrid">
 <div class="sa-card" data-family="keyword-service"><span class="sa-k">01 / WEBSITE CREATION</span><span class="sa-title">WEBSITE CREATION</span><p class="sa-copy">Custom, high-performance sites built from scratch — never templates. Fast, responsive, made to convert.</p><div class="sa-art"><canvas id="psWeb"></canvas></div><div class="sa-foot keyword-foot"><i>WEB</i><i>PRODUCT</i><i>MOTION</i><i class="hot">UI/UX</i><i class="hot">WEBFLOW</i><i class="hot">DEVELOPMENT</i><i>SYSTEMS</i><i>END</i><i>TO</i><i>END</i></div></div>
 <div class="sa-card" data-family="keyword-service"><span class="sa-k">02 / 3D WEB3</span><span class="sa-title">3D / WEB3</span><p class="sa-copy">Interactive 3D, WebGL and on-chain experiences that make people stop scrolling.</p><div class="sa-art"><canvas id="ps3d"></canvas></div><div class="sa-foot keyword-foot"><i>IMMERSIVE</i><i>INTERACTIVE</i><i class="hot">WEBGL</i><i class="hot">THREE.JS</i><i>MOTION</i><i>SCENES</i><i>HIGH-SIGNAL</i><i>DIGITAL</i><i>WORLDS</i></div></div>
@@ -1122,7 +1121,7 @@ addEventListener('resize', rescale);
     {key:'main', start:0, end:560},
     {key:'about', start:560, end:1950},
     {key:'services', start:2695, end:3506},
-    {key:'faq', start:3026, end:4845},
+    {key:'faq', start:3506, end:4845},
     {key:'contact', start:4845, end:999999}
   ];
   function scale(){
@@ -1256,7 +1255,6 @@ setTimeout(function(){ if (window.__startBrandTypewriter) window.__startBrandTyp
   /* FAQ/WHAT WE DO heads: start with first letter, typewrite the rest on first scroll into view */
   typeHeadingFromFirstLetter(faqHead, 160);
   typeHeadingFromFirstLetter(document.getElementById('servicesHead'), 120);
-  typeHeadingFromFirstLetter(document.getElementById('whatWeDoHead'), 120);
 
 })();
 
@@ -1587,7 +1585,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && gBox.classList.cont
 gBox.querySelector('.gb-x').addEventListener('click', gbClose);
 
 const carBandEl = document.getElementById('carBand');
-const faqPushIds = ['processPin','bigAgency','carBand','intake','endcap','contactDivider'];
+const faqPushIds = ['processFlow','processPin','bigAgency','carBand','intake','endcap','contactDivider'];
 const faqBaseTops = {};
 function readTopPx(el){ return parseFloat((el.style && el.style.top) || getComputedStyle(el).top) || 0; }
 function captureFaqBaseTops(){
@@ -2044,10 +2042,8 @@ const gContainer = document.getElementById('globeZone');
 const GW = 1023, GH = 562;
 
 const gRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-gRenderer.setPixelRatio(1); /* fps: DPR fixed at 1 */
-gRenderer.setSize(Math.round(GW * 0.72), Math.round(GH * 0.72), false); /* lower internal resolution for higher FPS */
-gRenderer.domElement.style.width = GW + 'px';
-gRenderer.domElement.style.height = GH + 'px';
+gRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); /* perf: cap render res */
+gRenderer.setSize(GW, GH);
 gRenderer.setClearColor(0x000000, 0);
 gContainer.appendChild(gRenderer.domElement);
 
@@ -2060,10 +2056,13 @@ gCamera.lookAt(0, 0, 0);
 /* prewarm: compile shaders now, while the site loader still covers the page */
 gRenderer.render(gScene, gCamera);
 
+const gTilt = new THREE.Group();
+gTilt.rotation.z = 0.07; gTilt.rotation.x = 0.025;   /* small STATIC tilt (never spun/dragged) so the planet sits at a slight angle with no jigger */
+gScene.add(gTilt);
 const world = new THREE.Group();
 world.position.x = -0.27;   /* globe sits a bit left of center */
-world.scale.setScalar(1.346);   /* 1.07x smaller, no tilt */
-gScene.add(world);
+world.scale.setScalar(1.44);
+gTilt.add(world);
 
 const globe = new THREE.Group();
 world.add(globe);
@@ -2113,7 +2112,7 @@ const ll2v = (lat, lon, R) => {
 };
 
 const fill = new THREE.Mesh(
-  new THREE.SphereGeometry(0.985, 24, 16),
+  new THREE.SphereGeometry(0.985, 48, 48),
   new THREE.MeshBasicMaterial({ color: 0x000000 })
 );
 fill.renderOrder = -2;
@@ -2123,12 +2122,12 @@ globe.add(fill);
   const mat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.16 }); // grid keeps grey
   for (let lat = -75; lat <= 75; lat += 15) {
     const pts = [], r = Math.cos(lat * Math.PI / 180), y = Math.sin(lat * Math.PI / 180);
-    for (let a = 0; a <= 360; a += 6) pts.push(new THREE.Vector3(r * Math.cos(a * Math.PI / 180), y, r * Math.sin(a * Math.PI / 180)));
+    for (let a = 0; a <= 360; a += 4) pts.push(new THREE.Vector3(r * Math.cos(a * Math.PI / 180), y, r * Math.sin(a * Math.PI / 180)));
     globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat));
   }
   for (let lon = 0; lon < 180; lon += 15) {
     const pts = [], l = lon * Math.PI / 180;
-    for (let a = 0; a <= 360; a += 6) {
+    for (let a = 0; a <= 360; a += 4) {
       const t = a * Math.PI / 180;
       pts.push(new THREE.Vector3(Math.sin(t) * Math.cos(l), Math.cos(t), Math.sin(t) * Math.sin(l)));
     }
@@ -2177,8 +2176,8 @@ fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
       return false;
     };
     const dots = [];
-    for (let lat = -58; lat <= 84; lat += 4.0) jobs.push(() => {
-      const dstep = 4.0 / Math.max(0.25, Math.cos(lat * Math.PI / 180));
+    for (let lat = -58; lat <= 84; lat += 2.4) jobs.push(() => {
+      const dstep = 2.4 / Math.max(0.25, Math.cos(lat * Math.PI / 180));
       for (let lon = -180; lon < 180; lon += dstep)
         if (inLand(lon, lat)) dots.push(...ll2v(lat, lon, 1.002).toArray());
     });
@@ -2186,19 +2185,19 @@ fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
       const dotGeo = new THREE.BufferGeometry();
       dotGeo.setAttribute('position', new THREE.Float32BufferAttribute(dots, 3));
       globe.add(new THREE.Points(dotGeo,
-        themed(new THREE.PointsMaterial({ size: 0.010, transparent: true, opacity: 0.55 }), false, true)));
+        themed(new THREE.PointsMaterial({ size: 0.008, transparent: true, opacity: 0.6 }), false, true)));
     });
     /* drain the job queue in tiny slices between frames */
     (function drain(){
       const t0 = performance.now();
-      while (jobs.length && performance.now() - t0 < 4) jobs.shift()();
+      while (jobs.length && performance.now() - t0 < 6) jobs.shift()();
       if (jobs.length) requestAnimationFrame(drain);
     })();
   });
 }
 
 const ringPts = [];
-for (let a = 0; a <= 360; a += 6) ringPts.push(new THREE.Vector3(Math.cos(a * Math.PI / 180), 0, Math.sin(a * Math.PI / 180)));
+for (let a = 0; a <= 360; a += 4) ringPts.push(new THREE.Vector3(Math.cos(a * Math.PI / 180), 0, Math.sin(a * Math.PI / 180)));
 const ringGeo = new THREE.BufferGeometry().setFromPoints(ringPts);
 const mkRing = () => {
   const m = themed(new THREE.LineBasicMaterial({ transparent: true, opacity: 0.9 }), true, false);
@@ -2364,14 +2363,11 @@ el.addEventListener('click', e => {
 });
 
 const gClock = new THREE.Clock();
-let gVisible = true, gLastRender = 0;
+let gVisible = true;
 new IntersectionObserver(e => { gVisible = e[0].isIntersecting; }, { threshold: 0 }).observe(gContainer);
 function gAnimate() {
   requestAnimationFrame(gAnimate);
   if (!gVisible || document.hidden) return;
-  const now = performance.now();
-  if (now - gLastRender < 16) return;
-  gLastRender = now;
   const t = gClock.getElapsedTime();
   spinY += 0.0135 + vy;   /* base spin (3x faster) + drag momentum on ONE per-frame axis -> no time/frame mismatch jigger at the slow crossover */
   globe.rotation.y = spinY;
@@ -3002,12 +2998,13 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 const stage = document.getElementById('psStage');
 if (stage) {
   const scene = new THREE.Scene();
-  /* NATURAL MODEL LIGHTING: soft readable light, not tiny laser spots */
-  const scrollSoftLight = new THREE.SpotLight(0xfff6ef, 0, 8.2, Math.PI / 9.2, 0.66, 1.55);
-  scrollSoftLight.position.set(-1.15, 1.75, 2.05);
-  scrollSoftLight.target.position.set(0.0, 0.18, 0.0);
-  scene.add(scrollSoftLight); scene.add(scrollSoftLight.target);
-  /* hover FX removed — no hover light, no distortion */
+  /* two angled lights that APPEAR on scroll (red + white), not a brightness pulse */
+  const redLight = new THREE.SpotLight(0xff0000, 0, 16, Math.PI / 8, 0.28, 1.4);
+  redLight.position.set(-2.7, 1.9, 2.0); redLight.target.position.set(0, 0, 0);
+  scene.add(redLight); scene.add(redLight.target);
+  const whiteLight = new THREE.SpotLight(0xffffff, 0, 14, Math.PI / 8, 0.3, 1.4);
+  whiteLight.position.set(2.7, -0.7, 2.2); whiteLight.target.position.set(0, 0, 0);
+  scene.add(whiteLight); scene.add(whiteLight.target);
   scene.background = null;
   const camera = new THREE.PerspectiveCamera(34, (stage.clientWidth || 980) / (stage.clientHeight || 820), 0.1, 100);
   camera.position.set(0, 0, 2.7);
@@ -3111,95 +3108,63 @@ if (stage) {
 
   /* POWERSHOT — reuse the hero's digicam ISP shader if available */
   let psPass = null;
-  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.30; psPass.enabled = true; composer.addPass(psPass); }
+  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.30; composer.addPass(psPass); }
 
-  /* 10 UNIQUE POSTPROCESSING MODES — buttons on top of the third 3D */
+  /* LINE / SPLAT POSTPROCESSING — toggled by the buttons under the model */
   const lineFX = new ShaderPass({
-    uniforms: { tDiffuse: { value: null }, uRes: { value: new THREE.Vector2(stage.clientWidth || 980, stage.clientHeight || 560) }, uMode: { value: 1 }, uTime: { value: 0 }, uMouse: { value: new THREE.Vector2(-10, -10) }, uHover: { value: 0 } },
+    uniforms: { tDiffuse: { value: null }, uRes: { value: new THREE.Vector2(stage.clientWidth || 980, stage.clientHeight || 560) }, uMode: { value: 0 }, uTime: { value: 0 } },
     vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
     fragmentShader: `
-      uniform sampler2D tDiffuse; uniform vec2 uRes; uniform float uMode; uniform float uTime; uniform vec2 uMouse; uniform float uHover; varying vec2 vUv;
+      uniform sampler2D tDiffuse; uniform vec2 uRes; uniform float uMode; uniform float uTime; varying vec2 vUv;
       float luma(vec3 c){ return dot(c, vec3(0.299,0.587,0.114)); }
-      float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123); }
-      vec3 edge(vec2 uv, vec2 texel){
-        float l00=luma(texture2D(tDiffuse,uv+texel*vec2(-1.,-1.)).rgb), l01=luma(texture2D(tDiffuse,uv+texel*vec2(0.,-1.)).rgb), l02=luma(texture2D(tDiffuse,uv+texel*vec2(1.,-1.)).rgb);
-        float l10=luma(texture2D(tDiffuse,uv+texel*vec2(-1.,0.)).rgb), l12=luma(texture2D(tDiffuse,uv+texel*vec2(1.,0.)).rgb);
-        float l20=luma(texture2D(tDiffuse,uv+texel*vec2(-1.,1.)).rgb), l21=luma(texture2D(tDiffuse,uv+texel*vec2(0.,1.)).rgb), l22=luma(texture2D(tDiffuse,uv+texel*vec2(1.,1.)).rgb);
-        float gx=-l00-2.0*l10-l20+l02+2.0*l12+l22, gy=-l00-2.0*l01-l02+l20+2.0*l21+l22;
-        float e=smoothstep(0.055,0.42,sqrt(gx*gx+gy*gy)); return vec3(e);
-      }
       void main(){
         vec2 texel = 1.0/uRes;
-        vec2 uv = vUv;
-        vec3 base = texture2D(tDiffuse, uv).rgb;
+        vec3 base = texture2D(tDiffuse, vUv).rgb;
         vec3 outc = base;
-        float m=floor(uMode+0.5);
-        if(m==1.0){ /* SCANLINES */
-          float s=0.5+0.5*sin(vUv.y*uRes.y*3.14159); outc=base*mix(0.28,1.12,smoothstep(.12,.88,s));
-        } else if(m==2.0){ /* CRT RGB */
-          float grille=step(.38,fract(vUv.x*uRes.x/3.0)); float scan=0.72+0.28*sin(vUv.y*uRes.y*3.14159); outc=vec3(base.r*(1.15-grille*.2),base.g*(.92+grille*.16),base.b*.78)*scan;
-        } else if(m==3.0){ /* RED LINE ART */
-          float e=edge(uv,texel).r; outc=mix(vec3(.005,.002,.002),vec3(1.,.04,.02),e)+base*.12;
-        } else if(m==4.0){ /* GLITCH SLICES */
-          float row=floor(vUv.y*uRes.y/11.0); float jt=(hash(vec2(row,floor(uTime*12.0)))-.5)*step(.82,hash(vec2(row,uTime)))*.009;
-          outc=vec3(texture2D(tDiffuse,uv+vec2(jt+texel.x*3.,0)).r, texture2D(tDiffuse,uv+vec2(jt*.35,0)).g, texture2D(tDiffuse,uv-vec2(jt+texel.x*3.,0)).b);
-        } else if(m==5.0){ /* REDONE ASCII: tiny dense terminal glyphs */
-          vec2 cell=vec2(4.,6.);
-          vec2 id=floor(vUv*uRes/cell);
-          vec2 f=fract(vUv*uRes/cell);
-          vec2 cuv=(id+.5)*cell/uRes;
-          vec3 c=texture2D(tDiffuse,cuv).rgb;
-          float l=luma(c);
-          float rnd=hash(id);
-          float vbar=step(.42,abs(f.x-.5));
-          float hbar=step(.42,abs(f.y-.5));
-          float diag=step(.86,abs((f.x+f.y)-1.0));
-          float cross=max(step(.78,abs(f.x-.5)),step(.78,abs(f.y-.5)));
-          float glyph=mix(max(vbar,hbar), mix(diag,cross,step(.5,rnd)), step(.33,rnd));
-          glyph*=smoothstep(.10,.72,l);
-          outc=mix(vec3(0.0), mix(vec3(1.0,.04,.02),vec3(1.0),smoothstep(.62,1.0,l)), glyph);
-        } else if(m==6.0){ /* HALFTONE */
-          float cell=3.0; vec2 gp=vUv*uRes/cell; vec2 cc=(floor(gp)+.5)*cell/uRes; vec3 cs=texture2D(tDiffuse,cc).rgb; float rad=sqrt(luma(cs))*.72; float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5)); outc=cs*dotm*1.25;
-        } else if(m==7.0){ /* THERMAL: red on black, no purple */
-          float l=luma(base);
-          float heat=smoothstep(.06,.82,l);
-          outc=mix(vec3(0.0), vec3(1.0,0.0,0.0), heat);
-          outc+=vec3(1.0,0.08,0.03)*smoothstep(.78,1.0,l)*0.38;
-        } else if(m==8.0){ /* CHROMA TRAIL */
-          float w=sin(uTime*2.2)*.0015+.0025; outc=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*1.05;
-        } else if(m==9.0){ /* DATAMOSH GRID */
-          vec2 q=floor(vUv*uRes/12.0); float n=hash(q+floor(uTime*8.0)); uv += (n-.5)*texel*10.0*step(.72,n); outc=texture2D(tDiffuse,uv).rgb; outc*=.72+.28*step(.06,fract(vUv.x*uRes.x/12.0))*step(.06,fract(vUv.y*uRes.y/12.0));
-        } else if(m==10.0){ /* INVERTED EDGES */
-          float e=edge(uv,texel).r; outc=mix(1.0-base,vec3(1.,.06,.04),e)*(.72+e*.75);
-        } else if(m==11.0){ /* STANDARD: stronger chroma + 10% tiny dots */
-          float w=(sin(uTime*2.2)*.0015+.0025)*1.3;
-          vec3 chroma=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*1.05;
-          float cell=3.0;
+        if(uMode>0.5 && uMode<1.5){            /* SCANLINES */
+          float s = 0.5+0.5*sin((vUv.y*uRes.y)*3.14159);
+          outc = base*mix(0.32,1.08,smoothstep(0.15,0.85,s));
+        } else if(uMode>1.5 && uMode<2.5){     /* VERTICAL LINES */
+          float v = 0.5+0.5*sin((vUv.x*uRes.x)*3.14159);
+          outc = base*mix(0.32,1.08,smoothstep(0.15,0.85,v));
+        } else if(uMode>2.5 && uMode<3.5){     /* EDGES -> line art */
+          float l00=luma(texture2D(tDiffuse,vUv+texel*vec2(-1.,-1.)).rgb);
+          float l01=luma(texture2D(tDiffuse,vUv+texel*vec2(0.,-1.)).rgb);
+          float l02=luma(texture2D(tDiffuse,vUv+texel*vec2(1.,-1.)).rgb);
+          float l10=luma(texture2D(tDiffuse,vUv+texel*vec2(-1.,0.)).rgb);
+          float l12=luma(texture2D(tDiffuse,vUv+texel*vec2(1.,0.)).rgb);
+          float l20=luma(texture2D(tDiffuse,vUv+texel*vec2(-1.,1.)).rgb);
+          float l21=luma(texture2D(tDiffuse,vUv+texel*vec2(0.,1.)).rgb);
+          float l22=luma(texture2D(tDiffuse,vUv+texel*vec2(1.,1.)).rgb);
+          float gx=-l00-2.0*l10-l20+l02+2.0*l12+l22;
+          float gy=-l00-2.0*l01-l02+l20+2.0*l21+l22;
+          float g=sqrt(gx*gx+gy*gy);
+          float e=smoothstep(0.06,0.45,g);
+          outc = mix(vec3(0.008,0.004,0.004), vec3(1.0,0.2,0.2), e);
+        } else if(uMode>3.5 && uMode<4.5){     /* SPLATS / halftone dots */
+          float cell=6.0;
           vec2 gp=vUv*uRes/cell;
-          vec2 cc=(floor(gp)+.5)*cell/uRes;
+          vec2 cc=(floor(gp)+0.5)*cell/uRes;
           vec3 cs=texture2D(tDiffuse,cc).rgb;
-          float rad=sqrt(luma(cs))*.72;
-          float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5));
-          vec3 dots=cs*dotm*1.25;
-          outc=mix(chroma,dots,0.10);
-        } else if(m==40.0){ /* CANNY DISABLED */
-          float lum=luma(base);
-          float e=edge(uv,texel).r;
-          vec3 body=base*0.42;
-          /* thin edge selection */
-          float can=smoothstep(.145,.215,e)*step(.20,lum)*step(lum,.86);
-          /* much darker charcoal grey */
-          outc=body*.46 + vec3(0.055)*can*0.72;
+          float l=luma(cs);
+          float d=length(fract(gp)-0.5);
+          float rad=sqrt(l)*0.7;
+          float dotm=smoothstep(rad,rad-0.14,d);
+          outc = cs*dotm;
+        } else if(uMode>4.5){                  /* GLITCH: fine scan + rgb split */
+          float s=0.5+0.5*sin((vUv.y*uRes.y)*3.14159*2.0);
+          float jt=step(0.93,fract(sin(floor(vUv.y*uRes.y*0.25)+uTime*3.0)*43758.5453))*0.012;
+          float r=texture2D(tDiffuse,vUv+vec2(texel.x*2.0+jt,0.)).r;
+          float b=texture2D(tDiffuse,vUv-vec2(texel.x*2.0+jt,0.)).b;
+          outc = vec3(r,base.g,b)*mix(0.4,1.0,s);
         }
-        float d=length((vUv-uMouse)*vec2(uRes.x/uRes.y,1.0));
-        /* hover FX removed: standard model only */
         gl_FragColor = vec4(outc,1.0);
       }`
   });
   composer.addPass(lineFX);
 
-  /* Standard postprocessed model only: no Canny, no dark-grey, no double-click effects. */
-  lineFX.uniforms.uMode.value = 11;
+  /* effect locked to SCANLINES (buttons removed) */
+  lineFX.uniforms.uMode.value = 1;
 
   /* RESIZE */
   new ResizeObserver(() => {
@@ -3213,31 +3178,19 @@ if (stage) {
   /* DRAG-TO-ROTATE (gentle, no hover distortion) + visibility gating */
   let visible = true;
   new IntersectionObserver(e => { visible = e[0].isIntersecting; if (visible) { lastScrollY = window.scrollY || window.pageYOffset || 0; } }, { threshold: 0 }).observe(stage);
-  let dragging = false, hovering = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = START_ROT_Y;
+  let dragging = false, lastX = 0, lastY = 0, targetRotX = 0, targetRotY = START_ROT_Y;
   let lastScrollY = window.scrollY || window.pageYOffset || 0;
   const pinEl = document.getElementById('processPin');
   addEventListener('scroll', () => { if (!visible) return; const y = window.scrollY || window.pageYOffset || 0; targetRotY += (y - lastScrollY) * 0.0003; lastScrollY = y;
     if (pinEl) { const pr = pinEl.getBoundingClientRect(); const prog = Math.min(1, Math.max(0, -pr.top / Math.max(1, pr.height - window.innerHeight)));
-      const appear = Math.min(1, Math.max(0, prog * 1.35));
-      /* soft scroll key light: bigger, visible as actual lighting but still model-only */
-      scrollSoftLight.intensity = 4.75 * appear;
-      scrollSoftLight.position.x = -1.02 + 0.38 * Math.sin(prog * Math.PI * 1.35);
-      scrollSoftLight.position.y = 1.55 - 0.38 * prog;
-      scrollSoftLight.target.position.set(0.0 + 0.14 * Math.sin(prog * Math.PI), 0.16 - 0.14 * prog, 0.0);
-    }
-  }, { passive: true });   /* scroll rotates model + drives tiny local light only */
-  const sceneEl = document.getElementById('processScene');
-  stage.addEventListener('pointerenter', () => { hovering = true; if (sceneEl) sceneEl.classList.add('is-hovering'); });
-  stage.addEventListener('pointerleave', () => { dragging = false; hovering = false; lineFX.uniforms.uHover.value = 0; if (sceneEl) sceneEl.classList.remove('is-hovering'); stage.style.cursor = 'grab'; });
+      const appear = Math.min(1, Math.max(0, prog * 1.5));   /* lights ramp in (appear) as you scroll through the section */
+      redLight.intensity = 8 * appear; whiteLight.intensity = 10 * appear;
+      redLight.position.x = -2.7 + 1.0 * appear; whiteLight.position.x = 2.7 - 1.0 * appear; }
+  }, { passive: true });   /* scroll -> faster rotate + light sweeps across the model */
+  stage.addEventListener('pointerleave', () => { dragging = false; stage.style.cursor = 'grab'; });
   stage.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; stage.style.cursor = 'grabbing'; if (stage.setPointerCapture) stage.setPointerCapture(e.pointerId); });
   window.addEventListener('pointerup', () => { dragging = false; stage.style.cursor = 'grab'; });
   stage.addEventListener('pointermove', e => {
-    const r = stage.getBoundingClientRect();
-    const nx = (e.clientX - r.left) / Math.max(1, r.width), ny = (e.clientY - r.top) / Math.max(1, r.height);
-    /* hover FX removed */
-    lineFX.uniforms.uMouse.value.set(nx, 1.0 - ny);
-    lineFX.uniforms.uHover.value = 1.0;
-    if (sceneEl) { sceneEl.style.setProperty('--mx', (e.clientX - sceneEl.getBoundingClientRect().left) + 'px'); sceneEl.style.setProperty('--my', (e.clientY - sceneEl.getBoundingClientRect().top) + 'px'); }
     if (!dragging) return;
     const dx = e.clientX - lastX, dy = e.clientY - lastY;
     lastX = e.clientX; lastY = e.clientY;
