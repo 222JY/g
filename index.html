@@ -207,7 +207,7 @@
   }
 
   /* ---- globe zone (replaces image-trail / slideshow) ---- */
-  #globeWrap{position:absolute;left:10px;top:663px;width:1023px;height:882px;z-index:6}
+  #globeWrap{position:absolute;left:-20px;top:663px;width:1023px;height:882px;z-index:6}
   #globeZone{position:relative;width:1023px;height:562px;top:-40px;
     cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 3v18M3 12h18' stroke='white' stroke-width='2.6'/></svg>") 12 12, crosshair}
   #globeZone canvas{display:block}
@@ -576,7 +576,7 @@
   /* PROCESS — single real-time 3D scene (Eve) under the four process blocks */
   #processPin{position:absolute;left:7px;top:3656px;width:1010px;height:2320px;z-index:8;pointer-events:none}
   #processScene{position:sticky;top:0;margin-left:-60px;width:640px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
-  #processSvcGrid{position:absolute;left:600px;top:210px;width:400px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
+  #processSvcGrid{position:absolute;left:600px;top:170px;width:400px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
   #processSvcGrid .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px;overflow:hidden;background:transparent;cursor:crosshair}
   #processSvcGrid .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #processSvcGrid .sm-col::after{content:'';position:absolute;left:0;right:0;bottom:32px;height:1px;background:#262626;pointer-events:none}
@@ -602,7 +602,7 @@
   #processSvcGrid .sm-signal canvas{display:block;width:100%;height:100%;position:relative;z-index:1;cursor:crosshair}
   #processSvcGrid .sm-col:hover .sm-foot{opacity:1;transform:none}
   #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 11px;box-sizing:border-box;overflow:visible;background:transparent;cursor:crosshair}
-  #processSvcGrid .sa-card::before{content:'';position:absolute;left:-40px;top:0;width:40px;height:100%;background:transparent;opacity:1;pointer-events:auto;z-index:9;border:0}
+  #processSvcGrid .sa-card::before{content:'';position:absolute;left:-80px;top:0;width:80px;height:100%;background:transparent;opacity:1;pointer-events:auto;z-index:9;border:0}
   #processSvcGrid .sa-card:nth-child(4n+1)::before{display:block}
   #processSvcGrid .sa-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
   #processSvcGrid .sa-title{display:block;width:max-content;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:15px;line-height:15px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:9px;white-space:nowrap;cursor:crosshair}
@@ -1276,8 +1276,15 @@ function giantHitAt(x, y){
   }
   return null;
 }
+function pointerInSecondGlobe(e){
+  const gz = document.getElementById('globeZone');
+  if (!gz) return false;
+  const r = gz.getBoundingClientRect();
+  return e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+}
 addEventListener('pointermove', e => {
-  const found = giantHitAt(e.clientX, e.clientY);
+  const onGlobe = pointerInSecondGlobe(e) || window.__globeBusy;
+  const found = onGlobe ? null : giantHitAt(e.clientX, e.clientY);
   giantLines.forEach(el => el.classList.toggle('hov', el === found));
   if (found) { window.__giantOff = true; giantLines.forEach(el => el.classList.remove('shov')); }   // once any line is hovered, the scroll-red effect turns off completely
   const gw = document.getElementById('globeWrap');
@@ -1579,7 +1586,7 @@ function gbOpen(el) {
 }
 /* globe canvas sits above the text, so clicks are hit-tested by pointer position */
 addEventListener('click', e => {
-  if (gBox.contains(e.target)) return;
+  if (gBox.contains(e.target) || pointerInSecondGlobe(e) || window.__globeBusy) return;
   const hit = giantHitAt(e.clientX, e.clientY) || giantLines.find(el => el.classList.contains('hov'));
   if (hit) { window.__giantOff = true; giantLines.forEach(el => el.classList.remove('shov')); gbOpen(hit); }   // once clicked, the scroll-red effect turns off completely
 });
