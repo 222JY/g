@@ -207,7 +207,7 @@
   }
 
   /* ---- globe zone (replaces image-trail / slideshow) ---- */
-  #globeWrap{position:absolute;left:-10px;top:663px;width:1023px;height:882px;z-index:6}
+  #globeWrap{position:absolute;left:-40px;top:663px;width:1023px;height:882px;z-index:6}
   #globeZone{position:relative;width:1023px;height:562px;top:-40px;
     cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M12 3v18M3 12h18' stroke='white' stroke-width='2.6'/></svg>") 12 12, crosshair}
   #globeZone canvas{display:block}
@@ -265,7 +265,7 @@
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
-  #snakeBand{position:absolute;left:7px;top:2152px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
+  #snakeBand{position:absolute;left:7px;top:2148px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
 
   #snakeBand::before{display:none}
   #snakeBand::after{display:none}
@@ -601,9 +601,9 @@
   #processSvcGrid .sm-col:hover .sm-signal{background-color:#080000}
   #processSvcGrid .sm-signal canvas{display:block;width:100%;height:100%;position:relative;z-index:1;cursor:crosshair}
   #processSvcGrid .sm-col:hover .sm-foot{opacity:1;transform:none}
-  #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 11px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair}
-  #processSvcGrid .sa-card::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
-  #processSvcGrid .sa-card:nth-child(4n+1)::before{display:none}
+  #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 11px;box-sizing:border-box;overflow:visible;background:transparent;cursor:crosshair}
+  #processSvcGrid .sa-card::before{content:'';position:absolute;left:-40px;top:0;width:40px;height:100%;background:transparent;opacity:1;pointer-events:auto;z-index:9;border-right:1px solid #262626}
+  #processSvcGrid .sa-card:nth-child(4n+1)::before{display:block}
   #processSvcGrid .sa-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
   #processSvcGrid .sa-title{display:block;width:max-content;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:15px;line-height:15px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:9px;white-space:nowrap;cursor:crosshair}
   #processSvcGrid .sa-copy{margin:0;font-size:6.5px;line-height:9px;letter-spacing:1px;color:#777;max-width:218px;min-height:50px}
@@ -621,7 +621,7 @@
   #processSvcGrid .sa-foot.keyword-foot i{display:inline-block;font-style:normal;font-weight:400;color:#e9eaec;border:1px solid #262626;padding:2px 3px;background:#050505;white-space:nowrap}
   #processSvcGrid .sa-foot.keyword-foot i.hot{color:var(--red)}
   #processSvcGrid .sa-card:hover{border-color:var(--red)}
-  #processSvcGrid .sa-card:hover::before{background:var(--red)}
+  #processSvcGrid .sa-card:hover::before{background:transparent;border-right-color:var(--red)}
   #processSvcGrid .sa-card:hover .sa-title{color:var(--red);animation:cmFlick .5s steps(2) 1}
   #processSvcGrid .sa-card:hover .sa-art{background:#080000}
   #processSvcGrid .sa-card:hover .sa-foot{opacity:1;transform:none}
@@ -2044,7 +2044,7 @@ const gContainer = document.getElementById('globeZone');
 const GW = 1023, GH = 562;
 
 const gRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-gRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 0.9)); /* perf: cap globe DPR below 1 for smoother FPS */
+gRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 0.8)); /* perf: cap globe DPR at 0.8 for smoother FPS */
 gRenderer.setSize(GW, GH);
 gRenderer.setClearColor(0x000000, 0);
 gContainer.appendChild(gRenderer.domElement);
@@ -2059,7 +2059,7 @@ gCamera.lookAt(0, 0, 0);
 gRenderer.render(gScene, gCamera);
 
 const gTilt = new THREE.Group();
-gTilt.rotation.z = 0.07; gTilt.rotation.x = 0.025;   /* original small static tilt restored */
+gTilt.rotation.z = 0; gTilt.rotation.x = 0;   /* tilt removed for straight globe */
 gScene.add(gTilt);
 const world = new THREE.Group();
 world.position.x = -0.27;   /* globe sits a bit left of center */
@@ -2114,7 +2114,7 @@ const ll2v = (lat, lon, R) => {
 };
 
 const fill = new THREE.Mesh(
-  new THREE.SphereGeometry(0.985, 48, 48),
+  new THREE.SphereGeometry(0.985, 24, 24),
   new THREE.MeshBasicMaterial({ color: 0x000000 })
 );
 fill.renderOrder = -2;
@@ -2124,12 +2124,12 @@ globe.add(fill);
   const mat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.16 }); // grid keeps grey
   for (let lat = -75; lat <= 75; lat += 15) {
     const pts = [], r = Math.cos(lat * Math.PI / 180), y = Math.sin(lat * Math.PI / 180);
-    for (let a = 0; a <= 360; a += 4) pts.push(new THREE.Vector3(r * Math.cos(a * Math.PI / 180), y, r * Math.sin(a * Math.PI / 180)));
+    for (let a = 0; a <= 360; a += 8) pts.push(new THREE.Vector3(r * Math.cos(a * Math.PI / 180), y, r * Math.sin(a * Math.PI / 180)));
     globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat));
   }
   for (let lon = 0; lon < 180; lon += 15) {
     const pts = [], l = lon * Math.PI / 180;
-    for (let a = 0; a <= 360; a += 4) {
+    for (let a = 0; a <= 360; a += 8) {
       const t = a * Math.PI / 180;
       pts.push(new THREE.Vector3(Math.sin(t) * Math.cos(l), Math.cos(t), Math.sin(t) * Math.sin(l)));
     }
@@ -2178,8 +2178,8 @@ fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
       return false;
     };
     const dots = [];
-    for (let lat = -58; lat <= 84; lat += 2.4) jobs.push(() => {
-      const dstep = 2.4 / Math.max(0.25, Math.cos(lat * Math.PI / 180));
+    for (let lat = -58; lat <= 84; lat += 4.0) jobs.push(() => {
+      const dstep = 4.0 / Math.max(0.25, Math.cos(lat * Math.PI / 180));
       for (let lon = -180; lon < 180; lon += dstep)
         if (inLand(lon, lat)) dots.push(...ll2v(lat, lon, 1.002).toArray());
     });
@@ -2199,7 +2199,7 @@ fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
 }
 
 const ringPts = [];
-for (let a = 0; a <= 360; a += 4) ringPts.push(new THREE.Vector3(Math.cos(a * Math.PI / 180), 0, Math.sin(a * Math.PI / 180)));
+for (let a = 0; a <= 360; a += 8) ringPts.push(new THREE.Vector3(Math.cos(a * Math.PI / 180), 0, Math.sin(a * Math.PI / 180)));
 const ringGeo = new THREE.BufferGeometry().setFromPoints(ringPts);
 const mkRing = () => {
   const m = themed(new THREE.LineBasicMaterial({ transparent: true, opacity: 0.9 }), true, false);
@@ -2231,7 +2231,7 @@ window.addEventListener('pointermove', e => {
     const dx = e.clientX - px, dy = e.clientY - py;
     px = e.clientX; py = e.clientY;
     vy = THREE.MathUtils.clamp(vy + dx * 0.0009, -0.25, 0.25);
-    vx = THREE.MathUtils.clamp(vx + dy * 0.0004, -0.05, 0.05);
+    vx = 0;   /* tilt removed: horizontal globe drag only */
   }
   const r = el.getBoundingClientRect();
   gMouse.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
@@ -2373,8 +2373,9 @@ function gAnimate() {
   const t = gClock.getElapsedTime();
   spinY += 0.0135 + vy;   /* base spin (3x faster) + drag momentum on ONE per-frame axis -> no time/frame mismatch jigger at the slow crossover */
   globe.rotation.y = spinY;
-  world.rotation.x = THREE.MathUtils.clamp(world.rotation.x + vx, -0.6, 0.6);
-  vy *= 0.985; vx *= 0.94;
+  world.rotation.x = 0;
+  vx = 0;
+  vy *= 0.985;
   U.uTime.value = t;
   updateMissiles(Math.min(gClock.getDelta ? 0.016 : 0.016, 0.05));
   updateHover();
