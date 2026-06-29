@@ -265,7 +265,7 @@
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
-  #snakeBand{position:absolute;left:7px;top:2168px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
+  #snakeBand{position:absolute;left:7px;top:2138px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
 
   #snakeBand::before{display:none}
   #snakeBand::after{display:none}
@@ -577,7 +577,7 @@
   #processPin{position:absolute;left:7px;top:4028px;width:1010px;height:2320px;z-index:8;pointer-events:none}
   #processScene{position:sticky;top:0;margin-left:-60px;width:640px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
 
-  #whatWeDoHead{position:absolute;left:600px;top:82px;width:400px;z-index:7;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:86px;line-height:68px;letter-spacing:-4.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);text-align:right;transform:translate(-6px,2px);pointer-events:none}
+  #whatWeDoHead{position:absolute;left:3px;top:82px;width:1018px;z-index:7;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);text-align:right;transform:translate(-10px,4px);pointer-events:none}
   #processSvcGrid{position:absolute;left:600px;top:210px;width:400px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
   #processSvcGrid .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px;overflow:hidden;background:transparent;cursor:crosshair}
   #processSvcGrid .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
@@ -603,8 +603,8 @@
   #processSvcGrid .sm-col:hover .sm-signal{background-color:#080000}
   #processSvcGrid .sm-signal canvas{display:block;width:100%;height:100%;position:relative;z-index:1;cursor:crosshair}
   #processSvcGrid .sm-col:hover .sm-foot{opacity:1;transform:none}
-  #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 11px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair}
-  #processSvcGrid .sa-card::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
+  #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;border-left:40px solid transparent;margin-left:-40px;padding:12px 0 11px 40px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair;background-clip:padding-box}
+  #processSvcGrid .sa-card::before{content:'';position:absolute;left:29px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #processSvcGrid .sa-card:nth-child(4n+1)::before{display:none}
   #processSvcGrid .sa-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
   #processSvcGrid .sa-title{display:block;width:max-content;font-family:'Kode Mono','Anonymous Pro',monospace;font-size:15px;line-height:15px;letter-spacing:-.7px;color:#e9eaec;margin-bottom:9px;white-space:nowrap;cursor:crosshair}
@@ -2045,8 +2045,10 @@ const gContainer = document.getElementById('globeZone');
 const GW = 1023, GH = 562;
 
 const gRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-gRenderer.setPixelRatio(1); /* fps: fixed DPR, same visual size with less GPU cost */
-gRenderer.setSize(GW, GH);
+gRenderer.setPixelRatio(1); /* fps: DPR fixed at 1 */
+gRenderer.setSize(Math.round(GW * 0.72), Math.round(GH * 0.72), false); /* lower internal resolution for higher FPS */
+gRenderer.domElement.style.width = GW + 'px';
+gRenderer.domElement.style.height = GH + 'px';
 gRenderer.setClearColor(0x000000, 0);
 gContainer.appendChild(gRenderer.domElement);
 
@@ -2112,7 +2114,7 @@ const ll2v = (lat, lon, R) => {
 };
 
 const fill = new THREE.Mesh(
-  new THREE.SphereGeometry(0.985, 32, 24),
+  new THREE.SphereGeometry(0.985, 24, 16),
   new THREE.MeshBasicMaterial({ color: 0x000000 })
 );
 fill.renderOrder = -2;
@@ -2176,8 +2178,8 @@ fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
       return false;
     };
     const dots = [];
-    for (let lat = -58; lat <= 84; lat += 3.2) jobs.push(() => {
-      const dstep = 3.2 / Math.max(0.25, Math.cos(lat * Math.PI / 180));
+    for (let lat = -58; lat <= 84; lat += 4.0) jobs.push(() => {
+      const dstep = 4.0 / Math.max(0.25, Math.cos(lat * Math.PI / 180));
       for (let lon = -180; lon < 180; lon += dstep)
         if (inLand(lon, lat)) dots.push(...ll2v(lat, lon, 1.002).toArray());
     });
@@ -3110,7 +3112,7 @@ if (stage) {
 
   /* POWERSHOT — reuse the hero's digicam ISP shader if available */
   let psPass = null;
-  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.30; composer.addPass(psPass); }
+  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.0; psPass.enabled = false; composer.addPass(psPass); }
 
   /* 10 UNIQUE POSTPROCESSING MODES — buttons on top of the third 3D */
   const lineFX = new ShaderPass({
@@ -3170,12 +3172,18 @@ if (stage) {
           vec2 q=floor(vUv*uRes/12.0); float n=hash(q+floor(uTime*8.0)); uv += (n-.5)*texel*10.0*step(.72,n); outc=texture2D(tDiffuse,uv).rgb; outc*=.72+.28*step(.06,fract(vUv.x*uRes.x/12.0))*step(.06,fract(vUv.y*uRes.y/12.0));
         } else if(m==10.0){ /* INVERTED EDGES */
           float e=edge(uv,texel).r; outc=mix(1.0-base,vec3(1.,.06,.04),e)*(.72+e*.75);
-        } else if(m==11.0){ /* SECOND EFFECT: dark grey model only, background stays black */
-          float lum=luma(base);
-          float modelMask=smoothstep(0.035,0.18,lum);
-          /* dark grey applies only where the model is rendered — no grey background wash */
-          outc=vec3(0.0) + vec3(0.035,0.035,0.038)*modelMask + vec3(0.090)*smoothstep(0.12,0.68,lum)*modelMask;
-        } else if(m==40.0){ /* CANNY FIRST: much darker, thin charcoal */
+        } else if(m==11.0){ /* STANDARD: stronger chroma + 10% tiny dots */
+          float w=(sin(uTime*2.2)*.0015+.0025)*1.3;
+          vec3 chroma=vec3(texture2D(tDiffuse,uv+vec2(w,0)).r,base.g,texture2D(tDiffuse,uv-vec2(w,0)).b)*1.05;
+          float cell=3.0;
+          vec2 gp=vUv*uRes/cell;
+          vec2 cc=(floor(gp)+.5)*cell/uRes;
+          vec3 cs=texture2D(tDiffuse,cc).rgb;
+          float rad=sqrt(luma(cs))*.72;
+          float dotm=smoothstep(rad,rad-.13,length(fract(gp)-.5));
+          vec3 dots=cs*dotm*1.25;
+          outc=mix(chroma,dots,0.10);
+        } else if(m==40.0){ /* CANNY DISABLED */
           float lum=luma(base);
           float e=edge(uv,texel).r;
           vec3 body=base*0.42;
@@ -3191,8 +3199,8 @@ if (stage) {
   });
   composer.addPass(lineFX);
 
-  /* Standard only: Canny/double-click removed. */
-  lineFX.uniforms.uMode.value = 11;
+  /* Standard model only: no Canny, no dark-grey, no double-click effects. */
+  lineFX.uniforms.uMode.value = 0;
 
   /* RESIZE */
   new ResizeObserver(() => {
