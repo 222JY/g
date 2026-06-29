@@ -231,8 +231,7 @@
 
   /* ---- FAQ ---- */
   #vidband{position:absolute;left:3px;top:1255px;width:1018px;height:573px;overflow:hidden;z-index:5;background:#000;border-top:0;border-bottom:0;transform-origin:50% 50%;will-change:transform,opacity;transition:transform .3s ease-out,opacity .3s ease-out}
-  #vidband .vb-showreel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9;font-family:'Anonymous Pro','Kode Mono',monospace;font-size:7px;letter-spacing:2.5px;text-transform:uppercase;color:#fff;background:#000;padding:7px 12px;opacity:0;transition:opacity .2s ease;pointer-events:none;white-space:nowrap}
-  #vidband:hover .vb-showreel{opacity:1}
+  #vidband .vb-showreel{display:none!important}
   #vidband .video-replace{position:absolute;left:0;top:-35%;width:100%;height:170%;object-fit:cover;will-change:transform;filter:contrast(1.08) brightness(.86) saturate(.92)}
   #vidband.fx2 .video-replace{filter:contrast(1.32) brightness(.72) saturate(.55) grayscale(.28)}
   #vidband.fx3 .video-replace{filter:contrast(1.55) brightness(.78) saturate(1.65) hue-rotate(-8deg)}
@@ -265,7 +264,7 @@
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
-  #snakeBand{position:absolute;left:7px;top:2138px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
+  #snakeBand{position:absolute;left:7px;top:2108px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
 
   #snakeBand::before{display:none}
   #snakeBand::after{display:none}
@@ -541,8 +540,8 @@
   #weHelp #weHelpText{margin:0;color:#242424;filter:url(#threshfxStrong)}
 
   /* services — moving marquee line (p--l, tight letters, BIG visible threshold), non-interactive */
-  #bigmovingtext{position:absolute;left:0;top:1829px;width:1024px;height:286px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
-  #bigmovingtext .bigmovingtextTrack{position:relative;top:-2px;z-index:1;display:flex;flex-shrink:0;align-items:center;white-space:nowrap;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:300px;line-height:1;letter-spacing:-16px;text-transform:uppercase;color:#242424;animation:bigmovingtextMarquee 158.4s linear infinite}
+  #bigmovingtext{position:absolute;left:0;top:1824px;width:1024px;height:250px;z-index:8;overflow:hidden;display:flex;align-items:center;pointer-events:none;filter:url(#threshfxXXStrong);transform:translateZ(0);backface-visibility:hidden}
+  #bigmovingtext .bigmovingtextTrack{position:relative;top:-28px;z-index:1;display:flex;flex-shrink:0;align-items:center;white-space:nowrap;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:300px;line-height:300px;letter-spacing:-16px;text-transform:uppercase;color:#242424;animation:bigmovingtextMarquee 158.4s linear infinite}
   #bigmovingtext .bigmovingtextItem{padding-right:150px}
   #bigmovingtextTrail{position:absolute;left:0;top:0;width:100%;height:100%;mix-blend-mode:normal;pointer-events:none;z-index:3}
   @keyframes bigmovingtextMarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
@@ -578,8 +577,8 @@
   #processScene{position:sticky;top:0;margin-left:-60px;width:640px;height:820px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181;overflow:hidden;pointer-events:none}
 
   #whatWeDoHead{position:absolute;left:3px;top:82px;width:1018px;z-index:7;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);text-align:right;transform:translate(-10px,4px);pointer-events:none}
-  #processSvcGrid{position:absolute;left:600px;top:210px;width:400px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
-  #processSvcGrid .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px;overflow:hidden;background:transparent;cursor:crosshair}
+  #processSvcGrid{position:absolute;left:560px;top:210px;width:440px;z-index:6;display:grid;grid-template-columns:1fr;row-gap:46px;pointer-events:auto;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;color:#818181}
+  #processSvcGrid .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px 40px;overflow:hidden;background:transparent;cursor:crosshair}
   #processSvcGrid .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #processSvcGrid .sm-col::after{content:'';position:absolute;left:0;right:0;bottom:32px;height:1px;background:#262626;pointer-events:none}
   #processSvcGrid .sm-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:14px}
@@ -603,7 +602,7 @@
   #processSvcGrid .sm-col:hover .sm-signal{background-color:#080000}
   #processSvcGrid .sm-signal canvas{display:block;width:100%;height:100%;position:relative;z-index:1;cursor:crosshair}
   #processSvcGrid .sm-col:hover .sm-foot{opacity:1;transform:none}
-  #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;border-left:40px solid transparent;margin-left:-40px;padding:12px 0 11px 40px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair;background-clip:padding-box}
+  #processSvcGrid .sa-card{position:relative;min-width:0;height:295px;border-top:1px solid #262626;border-bottom:1px solid #262626;padding:12px 0 11px 40px;box-sizing:border-box;overflow:hidden;background:transparent;cursor:crosshair}
   #processSvcGrid .sa-card::before{content:'';position:absolute;left:29px;top:0;width:1px;height:100%;background:#262626;opacity:1}
   #processSvcGrid .sa-card:nth-child(4n+1)::before{display:none}
   #processSvcGrid .sa-k{display:block;font-size:6px;line-height:6px;letter-spacing:1.4px;color:var(--red);margin-bottom:12px}
@@ -811,7 +810,7 @@
 <div id="gBox"><span class="gb-x">[X]</span><span class="gb-t"></span><span class="gb-d"></span></div>
 <div id="vidband">
 <video autoplay="" class="video-replace" id="ytv" loop="" muted="" playsinline="" preload="auto" src="media/tt.mp4"></video>
-<div class="vb-showreel">WATCH SHOWREEL</div>
+
 <canvas height="660" id="vbTrail" width="1014"></canvas>
 <input aria-label="Video position" id="vbSeek" max="1000" min="0" type="range" value="0"/>
 <div aria-hidden="true" id="vbSeekPreview"></div>
@@ -3112,7 +3111,7 @@ if (stage) {
 
   /* POWERSHOT — reuse the hero's digicam ISP shader if available */
   let psPass = null;
-  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.0; psPass.enabled = false; composer.addPass(psPass); }
+  if (window.PowershotShader) { psPass = new ShaderPass(window.PowershotShader); psPass.uniforms.uAmount.value = 0.30; psPass.enabled = true; composer.addPass(psPass); }
 
   /* 10 UNIQUE POSTPROCESSING MODES — buttons on top of the third 3D */
   const lineFX = new ShaderPass({
@@ -3199,8 +3198,8 @@ if (stage) {
   });
   composer.addPass(lineFX);
 
-  /* Standard model only: no Canny, no dark-grey, no double-click effects. */
-  lineFX.uniforms.uMode.value = 0;
+  /* Standard postprocessed model only: no Canny, no dark-grey, no double-click effects. */
+  lineFX.uniforms.uMode.value = 11;
 
   /* RESIZE */
   new ResizeObserver(() => {
