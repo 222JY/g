@@ -265,7 +265,7 @@
   #carBand canvas:active{cursor:grabbing}
   /* ---- horizontal pixel snake band ---- */
   /* ---- horizontal eden art strip, sits before the game ---- */
-  #snakeBand{position:absolute;left:7px;top:2158px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
+  #snakeBand{position:absolute;left:7px;top:2152px;width:1010px;height:393px;z-index:8;background:#020202;border:1px solid var(--red);border-radius:0;box-shadow:0 0 0 1px #000,0 16px 36px rgba(0,0,0,.72),0 0 24px rgba(255,0,0,.16);font-family:'Anonymous Pro','Noto Sans Symbols','Noto Sans Symbols 2',monospace;color:#fff;overflow:hidden;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'><path d='M5 3 L5 29 L12 22 L17 34 L23 31 L18 20 L29 20 Z' fill='%23ff0000' stroke='%23ffffff' stroke-width='2'/><path d='M8 9 L8 22 L12 18 L15 25 L17 24 L14 17 L22 17 Z' fill='%23000000'/></svg>") 5 3, pointer}
 
   #snakeBand::before{display:none}
   #snakeBand::after{display:none}
@@ -465,7 +465,7 @@
   #contactDivider span{display:inline-block;color:#818181;background:transparent;padding:0}
 
   /* SERVICES heading + services matrix */
-  #servicesHead{position:absolute;left:3px;top:3520px;width:1018px;z-index:8;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);text-align:right;transform:translate(-10px,4px);pointer-events:none}
+  #servicesHead{position:absolute;left:3px;top:3760px;width:1018px;z-index:8;margin:0;font-family:'p--l','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:124px;line-height:97px;letter-spacing:-6.8px;color:#242424;text-transform:uppercase;filter:url(#threshfxStrong);text-align:right;transform:translate(-10px,4px);pointer-events:none}
   #servicesMatrix{position:absolute;left:7px;top:2809px;width:1010px;height:350px;z-index:8;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;text-transform:uppercase;pointer-events:auto;color:#818181}
   #servicesMatrix .sm-col{position:relative;min-width:0;height:350px;border-top:1px solid #262626;border-bottom:0;padding:13px 0 12px;overflow:hidden;background:transparent;cursor:crosshair}
   #servicesMatrix .sm-col:not(:first-child)::before{content:'';position:absolute;left:-11px;top:0;width:1px;height:100%;background:#262626;opacity:1}
@@ -663,7 +663,7 @@
 <nav aria-label="GOBOLD minimap" id="miniMap">
 <a data-section="main" data-target="#page" data-y="0" href="#page">MAIN</a>
 <a data-section="about" data-target="#giantLine" data-y="560" href="#giantLine">ABOUT</a>
-<a data-section="services" data-target="#servicesHead" data-y="3520" href="#servicesHead">SERVICES</a>
+<a data-section="services" data-target="#servicesHead" data-y="3760" href="#servicesHead">SERVICES</a>
 <a data-section="faq" data-target="#faq" data-y="3166" href="#faq">FAQ</a>
 <a data-bottom="true" data-section="contact" data-target="#endcap" href="#endcap">CONTACT</a>
 </nav>
@@ -1122,8 +1122,8 @@ addEventListener('resize', rescale);
   var ranges=[
     {key:'main', start:0, end:560},
     {key:'about', start:560, end:1950},
-    {key:'services', start:3520, end:4845},
-    {key:'faq', start:3166, end:3520},
+    {key:'services', start:3760, end:4845},
+    {key:'faq', start:3166, end:3760},
     {key:'contact', start:4845, end:999999}
   ];
   function scale(){
@@ -2043,8 +2043,8 @@ import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 const gContainer = document.getElementById('globeZone');
 const GW = 1023, GH = 562;
 
-const gRenderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, powerPreference: 'high-performance', stencil: false, depth: true });
-gRenderer.setPixelRatio(1); /* perf: fixed DPR for smoother FPS */
+const gRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+gRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 0.9)); /* perf: cap globe DPR below 1 for smoother FPS */
 gRenderer.setSize(GW, GH);
 gRenderer.setClearColor(0x000000, 0);
 gContainer.appendChild(gRenderer.domElement);
@@ -2059,11 +2059,11 @@ gCamera.lookAt(0, 0, 0);
 gRenderer.render(gScene, gCamera);
 
 const gTilt = new THREE.Group();
-gTilt.rotation.z = 0; gTilt.rotation.x = 0;   /* tilt removed: straight globe for stable motion */
+gTilt.rotation.z = 0.07; gTilt.rotation.x = 0.025;   /* original small static tilt restored */
 gScene.add(gTilt);
 const world = new THREE.Group();
 world.position.x = -0.27;   /* globe sits a bit left of center */
-world.scale.setScalar(1.385);   /* 1.04x smaller than previous 1.44 */
+world.scale.setScalar(1.385);   /* slightly smaller than original 1.44 */
 gTilt.add(world);
 
 const globe = new THREE.Group();
@@ -2114,7 +2114,7 @@ const ll2v = (lat, lon, R) => {
 };
 
 const fill = new THREE.Mesh(
-  new THREE.SphereGeometry(0.985, 32, 32),
+  new THREE.SphereGeometry(0.985, 48, 48),
   new THREE.MeshBasicMaterial({ color: 0x000000 })
 );
 fill.renderOrder = -2;
@@ -2124,12 +2124,12 @@ globe.add(fill);
   const mat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.16 }); // grid keeps grey
   for (let lat = -75; lat <= 75; lat += 15) {
     const pts = [], r = Math.cos(lat * Math.PI / 180), y = Math.sin(lat * Math.PI / 180);
-    for (let a = 0; a <= 360; a += 6) pts.push(new THREE.Vector3(r * Math.cos(a * Math.PI / 180), y, r * Math.sin(a * Math.PI / 180)));
+    for (let a = 0; a <= 360; a += 4) pts.push(new THREE.Vector3(r * Math.cos(a * Math.PI / 180), y, r * Math.sin(a * Math.PI / 180)));
     globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat));
   }
   for (let lon = 0; lon < 180; lon += 15) {
     const pts = [], l = lon * Math.PI / 180;
-    for (let a = 0; a <= 360; a += 6) {
+    for (let a = 0; a <= 360; a += 4) {
       const t = a * Math.PI / 180;
       pts.push(new THREE.Vector3(Math.sin(t) * Math.cos(l), Math.cos(t), Math.sin(t) * Math.sin(l)));
     }
@@ -2178,8 +2178,8 @@ fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
       return false;
     };
     const dots = [];
-    for (let lat = -58; lat <= 84; lat += 3.2) jobs.push(() => {
-      const dstep = 3.2 / Math.max(0.25, Math.cos(lat * Math.PI / 180));
+    for (let lat = -58; lat <= 84; lat += 2.4) jobs.push(() => {
+      const dstep = 2.4 / Math.max(0.25, Math.cos(lat * Math.PI / 180));
       for (let lon = -180; lon < 180; lon += dstep)
         if (inLand(lon, lat)) dots.push(...ll2v(lat, lon, 1.002).toArray());
     });
@@ -2192,14 +2192,14 @@ fetch('https://unpkg.com/world-atlas@2.0.2/countries-110m.json')
     /* drain the job queue in tiny slices between frames */
     (function drain(){
       const t0 = performance.now();
-      while (jobs.length && performance.now() - t0 < 4) jobs.shift()();
+      while (jobs.length && performance.now() - t0 < 6) jobs.shift()();
       if (jobs.length) requestAnimationFrame(drain);
     })();
   });
 }
 
 const ringPts = [];
-for (let a = 0; a <= 360; a += 6) ringPts.push(new THREE.Vector3(Math.cos(a * Math.PI / 180), 0, Math.sin(a * Math.PI / 180)));
+for (let a = 0; a <= 360; a += 4) ringPts.push(new THREE.Vector3(Math.cos(a * Math.PI / 180), 0, Math.sin(a * Math.PI / 180)));
 const ringGeo = new THREE.BufferGeometry().setFromPoints(ringPts);
 const mkRing = () => {
   const m = themed(new THREE.LineBasicMaterial({ transparent: true, opacity: 0.9 }), true, false);
@@ -2231,7 +2231,7 @@ window.addEventListener('pointermove', e => {
     const dx = e.clientX - px, dy = e.clientY - py;
     px = e.clientX; py = e.clientY;
     vy = THREE.MathUtils.clamp(vy + dx * 0.0009, -0.25, 0.25);
-    vx = 0;   /* tilt removed: horizontal globe rotation only */
+    vx = THREE.MathUtils.clamp(vx + dy * 0.0004, -0.05, 0.05);
   }
   const r = el.getBoundingClientRect();
   gMouse.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
@@ -2373,9 +2373,8 @@ function gAnimate() {
   const t = gClock.getElapsedTime();
   spinY += 0.0135 + vy;   /* base spin (3x faster) + drag momentum on ONE per-frame axis -> no time/frame mismatch jigger at the slow crossover */
   globe.rotation.y = spinY;
-  world.rotation.x = 0;
-  vx = 0;
-  vy *= 0.985;
+  world.rotation.x = THREE.MathUtils.clamp(world.rotation.x + vx, -0.6, 0.6);
+  vy *= 0.985; vx *= 0.94;
   U.uTime.value = t;
   updateMissiles(Math.min(gClock.getDelta ? 0.016 : 0.016, 0.05));
   updateHover();
