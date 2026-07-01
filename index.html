@@ -630,8 +630,8 @@
   #processSvcGrid .sa-card[data-family="graph"] .sa-art::after{width:34px;height:20px;background:rgba(255,0,0,.045)}
   #processScene .ps-stage{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;pointer-events:auto;background:transparent}
   #processScene .ps-stage canvas{display:block;width:100%!important;height:100%!important}
-  #processScene .ps-fx-controls{position:absolute;left:72px;bottom:126px;z-index:8;display:flex;gap:6px;align-items:center;pointer-events:auto}
-  #processScene .ps-fx-controls button{height:18px;border:1px solid #262626;background:#000;color:#818181;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:6px;line-height:6px;letter-spacing:1.1px;text-transform:uppercase;padding:0 7px;cursor:crosshair}
+  #processScene .ps-fx-controls{position:absolute;left:72px;bottom:112px;width:500px;z-index:8;display:flex;flex-wrap:wrap;gap:5px;align-items:center;pointer-events:auto}
+  #processScene .ps-fx-controls button{height:17px;border:1px solid #262626;background:#000;color:#818181;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:5.5px;line-height:5.5px;letter-spacing:.9px;text-transform:uppercase;padding:0 6px;cursor:crosshair}
   #processScene .ps-fx-controls button:hover,#processScene .ps-fx-controls button.on{border-color:var(--red);background:var(--red);color:#000}
   /* model FX buttons: original scan / CCTV dither / full chrome */
   /* (status strip removed) */
@@ -909,8 +909,18 @@
 <div class="ps-stage" id="psStage"></div>
 <div aria-label="3D model material effects" class="ps-fx-controls">
 <button class="on" data-ps-fx="scan" type="button">SCAN</button>
-<button data-ps-fx="dither" type="button">DITHER</button>
-<button data-ps-fx="chrome" type="button">CHROME</button>
+<button data-ps-fx="chrome" type="button">METAL</button>
+<button data-ps-fx="dither" type="button">BLUE NOISE</button>
+<button data-ps-fx="bayer" type="button">BAYER</button>
+<button data-ps-fx="stipple" type="button">STIPPLE</button>
+<button data-ps-fx="pointcloud" type="button">POINT CLOUD</button>
+<button data-ps-fx="xerox" type="button">XEROX</button>
+<button data-ps-fx="crt" type="button">CRT DOTS</button>
+<button data-ps-fx="pixel" type="button">PIXEL</button>
+<button data-ps-fx="ascii" type="button">ASCII</button>
+<button data-ps-fx="wiredot" type="button">WIRE+DOT</button>
+<button data-ps-fx="dust" type="button">DUST</button>
+<button data-ps-fx="scangrain" type="button">SCAN GRAIN</button>
 </div>
 </div>
 <div aria-label="GOBOLD services" id="processSvcGrid">
@@ -3069,8 +3079,8 @@ if (stage) {
         clearcoat: 0.0, clearcoatRoughness: 1.0, reflectivity: 0.08, sheen: 0, emissive: 0x101010, emissiveIntensity: 0.012
       });
     }
-    if (mode === 'dither') {
-      return new THREE.MeshStandardMaterial({ color: 0xd7d7d7, metalness: 0.0, roughness: 1.0, emissive: 0x000000, emissiveIntensity: 0, envMapIntensity: 0.02 });
+    if (['dither','bayer','stipple','pointcloud','xerox','crt','pixel','ascii','wiredot','dust','scangrain'].includes(mode)) {
+      return new THREE.MeshStandardMaterial({ color: 0xc6c6c2, metalness: 0.0, roughness: 1.0, emissive: 0x000000, emissiveIntensity: 0, envMapIntensity: 0.015 });
     }
     return new THREE.MeshStandardMaterial({ color: 0x8f8f97, metalness: 0.2, roughness: 0.66, emissive: 0x1a0303, emissiveIntensity: 0.12, envMapIntensity: 0.35 });
   }
@@ -3190,19 +3200,131 @@ if (stage) {
           float r=texture2D(tDiffuse,vUv+vec2(texel.x*2.0+jt,0.)).r;
           float b=texture2D(tDiffuse,vUv-vec2(texel.x*2.0+jt,0.)).b;
           outc = vec3(r,base.g,b)*mix(0.4,1.0,s);
-        } else if(uMode>5.5){                  /* MODEL-ONLY MICRO DITHER: tiny dots, full-black background */
+        } else if(uMode>5.5 && uMode<6.5){       /* BLUE NOISE: tiny grey particles, model only */
           vec2 px = vUv * uRes;
           float raw = luma(base);
-          if (raw < 0.018) {                    /* no background dithering/noise */
-            outc = vec3(0.0);
-          } else {
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
             float grey = smoothstep(0.018, 0.74, raw * 1.16);
-            vec2 cell = floor(px / 1.05);       /* minimal-size dither particles */
+            vec2 cell = floor(px / 1.05);
             float rnd = fract(sin(dot(cell, vec2(12.9898,78.233))) * 43758.5453);
             float dotm = step(rnd, grey);
-            float microScan = mix(0.90, 1.0, step(0.5, fract(px.y * 0.75)));
-            vec3 mono = mix(vec3(0.0), vec3(0.46), dotm) * microScan;
-            outc = mix(mono, vec3(grey) * 0.30, 0.18);
+            outc = mix(vec3(0.0), vec3(0.46), dotm) * mix(0.90, 1.0, step(0.5, fract(px.y * 0.75)));
+            outc = mix(outc, vec3(grey) * 0.30, 0.18);
+          }
+        } else if(uMode>6.5 && uMode<7.5){      /* BAYER: ordered retro dither, model only */
+          vec2 px = floor(vUv * uRes);
+          float raw = luma(base);
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
+            int xi = int(mod(px.x,4.0)); int yi = int(mod(px.y,4.0));
+            float b = 0.0;
+            if(yi==0) b = (xi==0?0.0:(xi==1?8.0:(xi==2?2.0:10.0)));
+            if(yi==1) b = (xi==0?12.0:(xi==1?4.0:(xi==2?14.0:6.0)));
+            if(yi==2) b = (xi==0?3.0:(xi==1?11.0:(xi==2?1.0:9.0)));
+            if(yi==3) b = (xi==0?15.0:(xi==1?7.0:(xi==2?13.0:5.0)));
+            float grey = smoothstep(0.02,0.72,raw*1.12);
+            outc = vec3(step((b+0.5)/16.0, grey) * 0.50);
+          }
+        } else if(uMode>7.5 && uMode<8.5){      /* STIPPLE: organic dot shading */
+          vec2 px = vUv * uRes;
+          float raw = luma(base);
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
+            float cell = 3.0;
+            vec2 gp = px / cell;
+            vec2 id = floor(gp);
+            vec2 jitter = vec2(fract(sin(dot(id,vec2(27.1,61.7)))*43758.5), fract(sin(dot(id,vec2(91.7,17.3)))*24634.6));
+            float d = length(fract(gp) - (0.32 + 0.36*jitter));
+            float grey = smoothstep(0.02,0.72,raw*1.15);
+            float dotm = smoothstep(0.30*grey, 0.30*grey-0.10, d);
+            outc = vec3(dotm * 0.52);
+          }
+        } else if(uMode>8.5 && uMode<9.5){      /* POINT CLOUD: surface broken into sparse 3D points */
+          vec2 px = vUv * uRes;
+          float raw = luma(base);
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
+            float cell = 4.0;
+            vec2 gp = px / cell;
+            float d = length(fract(gp) - 0.5);
+            float grey = smoothstep(0.02,0.72,raw*1.2);
+            float dotm = smoothstep(0.34*grey, 0.34*grey-0.13, d);
+            outc = vec3(dotm * 0.62);
+          }
+        } else if(uMode>9.5 && uMode<10.5){     /* XEROX: photocopy grey grain */
+          vec2 px = vUv * uRes;
+          float raw = luma(base);
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
+            float n = fract(sin(dot(floor(px*0.7), vec2(127.1,311.7))) * 43758.5453);
+            float smear = 0.82 + 0.18*sin(px.y*0.18 + n*2.0);
+            float grey = smoothstep(0.02,0.78,raw*1.05 + (n-0.5)*0.12) * smear;
+            outc = vec3(grey * 0.50);
+          }
+        } else if(uMode>10.5 && uMode<11.5){    /* CRT PHOSPHOR DOTS */
+          vec2 px = vUv * uRes;
+          float raw = luma(base);
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
+            vec2 gp = px / 2.2;
+            float d = length(fract(gp) - 0.5);
+            float dotm = smoothstep(0.34,0.18,d);
+            float scan = mix(0.72,1.0,step(0.5,fract(px.y*0.5)));
+            outc = vec3(dotm * smoothstep(0.02,0.70,raw*1.18) * 0.54 * scan);
+          }
+        } else if(uMode>11.5 && uMode<12.5){    /* LOW-RES PIXEL DITHER */
+          vec2 px = vUv * uRes;
+          float raw = luma(base);
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
+            vec2 cell = floor(px / 5.0) * 5.0 / uRes;
+            float grey = luma(texture2D(tDiffuse, cell).rgb);
+            float levels = floor(smoothstep(0.02,0.78,grey*1.25)*4.0)/4.0;
+            outc = vec3(levels * 0.56);
+          }
+        } else if(uMode>12.5 && uMode<13.5){    /* ASCII / symbol shading approximation */
+          vec2 px = vUv * uRes;
+          float raw = luma(base);
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
+            vec2 gp = px / vec2(4.0,6.0);
+            vec2 f = abs(fract(gp)-0.5);
+            float glyph = max(step(f.x,0.08), step(abs(f.y - f.x*0.75),0.05));
+            float grey = smoothstep(0.02,0.76,raw*1.2);
+            outc = vec3(glyph * grey * 0.54);
+          }
+        } else if(uMode>13.5 && uMode<14.5){    /* WIRE + DOT HYBRID */
+          vec2 px = vUv * uRes;
+          float raw = luma(base);
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
+            float lL=luma(texture2D(tDiffuse,vUv-vec2(texel.x,0.)).rgb), lR=luma(texture2D(tDiffuse,vUv+vec2(texel.x,0.)).rgb);
+            float lU=luma(texture2D(tDiffuse,vUv-vec2(0.,texel.y)).rgb), lD=luma(texture2D(tDiffuse,vUv+vec2(0.,texel.y)).rgb);
+            float edge = smoothstep(0.035,0.22,abs(lR-lL)+abs(lD-lU));
+            vec2 gp = px / 5.0;
+            float dotm = smoothstep(0.18,0.05,length(fract(gp)-0.5));
+            outc = vec3(max(edge*0.48, dotm*smoothstep(0.03,0.75,raw)*0.38));
+          }
+        } else if(uMode>14.5 && uMode<15.5){    /* DUST / NOISE REVEAL */
+          vec2 px = vUv * uRes;
+          float raw = luma(base);
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
+            float n = fract(sin(dot(floor(px/1.6), vec2(41.3,289.1)) + uTime*0.7) * 43758.5453);
+            float grey = smoothstep(0.02,0.72,raw*1.18);
+            float dust = step(n, grey*0.72 + 0.08*sin(uTime + px.y*0.012));
+            outc = vec3(dust * 0.48);
+          }
+        } else if(uMode>15.5){                  /* SCANLINE + MICRO GRAIN */
+          vec2 px = vUv * uRes;
+          float raw = luma(base);
+          if (raw < 0.018) outc = vec3(0.0);
+          else {
+            float grain = fract(sin(dot(floor(px), vec2(12.9898,78.233)) + uTime) * 43758.5453);
+            float scan = mix(0.70,1.0,step(0.5,fract(px.y*0.5)));
+            float grey = smoothstep(0.02,0.74,raw*1.12) * scan + (grain-0.5)*0.10;
+            outc = vec3(clamp(grey,0.0,1.0) * 0.50);
           }
         }
         gl_FragColor = vec4(outc,1.0);
@@ -3216,14 +3338,15 @@ if (stage) {
   function setProcessFx(mode) {
     fxControls.forEach(btn => btn.classList.toggle('on', btn.dataset.psFx === mode));
     applyEveMaterial(mode);
-    if (mode === 'dither') {
-      lineFX.uniforms.uMode.value = 6;
-      processBloomPass.enabled = false;          /* keep dither background pure black */
+    const particleModes = { dither: 6, bayer: 7, stipple: 8, pointcloud: 9, xerox: 10, crt: 11, pixel: 12, ascii: 13, wiredot: 14, dust: 15, scangrain: 16 };
+    if (particleModes[mode]) {
+      lineFX.uniforms.uMode.value = particleModes[mode];
+      processBloomPass.enabled = false;          /* keep particle backgrounds pure black */
       processFilmPass.enabled = false;
       if (psPass) { psPass.enabled = false; }
       spot.intensity = 4.4; rim.intensity = 0.05; fill.intensity = 0.04;
     } else if (mode === 'chrome') {
-      /* chrome = neutral single-color metallic material, very low postprocessing */
+      /* metal = neutral single-color metallic material, not mirror-reflective */
       lineFX.uniforms.uMode.value = 0;
       processBloomPass.enabled = false;
       processFilmPass.enabled = false;
