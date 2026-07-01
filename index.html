@@ -630,10 +630,11 @@
   #processSvcGrid .sa-card[data-family="graph"] .sa-art::after{width:34px;height:20px;background:rgba(255,0,0,.045)}
   #processScene .ps-stage{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;pointer-events:auto;background:transparent}
   #processScene .ps-stage canvas{display:block;width:100%!important;height:100%!important}
-  #processScene .ps-fx-controls{position:absolute;left:72px;bottom:126px;z-index:8;display:flex;gap:6px;align-items:center;pointer-events:auto}
-  #processScene .ps-fx-controls button{height:18px;border:1px solid #262626;background:#000;color:#818181;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols','Noto Sans Symbols 2',monospace;font-size:6px;line-height:6px;letter-spacing:1.1px;text-transform:uppercase;padding:0 7px;cursor:crosshair}
-  #processScene .ps-fx-controls button:hover,#processScene .ps-fx-controls button.on{border-color:var(--red);background:var(--red);color:#000}
-  /* model FX buttons: original scan / CCTV dither / full chrome */
+  /* look-toggle buttons under the model */
+  #processScene .ps-fx{position:absolute;left:0;bottom:24px;width:100%;z-index:6;display:flex;gap:8px;justify-content:center;pointer-events:none;font-family:'Anonymous Pro','Kode Mono','Noto Sans Symbols',monospace}
+  #processScene .ps-fx button{pointer-events:auto;cursor:pointer;background:rgba(0,0,0,.55);border:1px solid #2a2a2a;color:#818181;font:inherit;font-size:8px;line-height:1;letter-spacing:1.6px;text-transform:uppercase;padding:7px 13px;transition:color .15s ease,border-color .15s ease,background .15s ease;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+  #processScene .ps-fx button:hover{color:#e6e6e6;border-color:#4a4a4a}
+  #processScene .ps-fx button.on{color:#ff3b3b;border-color:#ff3b3b;background:rgba(255,0,0,.08)}
   /* (status strip removed) */
 
 </style>
@@ -907,10 +908,10 @@
 <div id="processPin">
 <div aria-label="GOBOLD real-time 3D — Eve" id="processScene">
 <div class="ps-stage" id="psStage"></div>
-<div aria-label="3D model material effects" class="ps-fx-controls">
-<button class="on" data-ps-fx="scan" type="button">SCAN</button>
-<button data-ps-fx="dither" type="button">DITHER</button>
-<button data-ps-fx="chrome" type="button">CHROME</button>
+<div class="ps-fx" id="psFx">
+<button type="button" data-look="normal" class="on">NORMAL</button>
+<button type="button" data-look="dither">DITHER</button>
+<button type="button" data-look="chrome">CHROME</button>
 </div>
 </div>
 <div aria-label="GOBOLD services" id="processSvcGrid">
@@ -3059,35 +3060,49 @@ if (stage) {
   const START_ROT_Y = -50 * Math.PI / 180;   /* model rests turned ~50 degrees to the left so the turn is actually visible */
   rig.rotation.y = START_ROT_Y;
 
-  const eveMeshes = [];
-  let activeModelFx = 'scan';
-  function makeEveMaterial(mode) {
-    if (mode === 'chrome') {
-      return new THREE.MeshPhysicalMaterial({
-        /* darker chrome: reflective, but no blown-out white wash */
-        color: 0x9a9a9a, metalness: 1, roughness: 0.085, envMapIntensity: 2.15,
-        clearcoat: 0.85, clearcoatRoughness: 0.04, reflectivity: 0.75, sheen: 0, emissive: 0x000000, emissiveIntensity: 0
-      });
-    }
-    if (mode === 'dither') {
-      return new THREE.MeshStandardMaterial({ color: 0xbfc3c7, metalness: 0.05, roughness: 0.92, emissive: 0x080808, emissiveIntensity: 0.08, envMapIntensity: 0.12 });
-    }
-    return new THREE.MeshStandardMaterial({ color: 0x8f8f97, metalness: 0.2, roughness: 0.66, emissive: 0x1a0303, emissiveIntensity: 0.12, envMapIntensity: 0.35 });
-  }
-  function applyEveMaterial(mode) {
-    activeModelFx = mode;
-    eveMeshes.forEach(mesh => { if (mesh.material && mesh.material.dispose) mesh.material.dispose(); mesh.material = makeEveMaterial(mode); });
-  }
-
   /* MODEL — decimated Eve GLB */
+  const meshes = [];
+  let currentLook = 'normal';
+  function setPostFX(bloomStrength, bloomThreshold, filmN, psAmt){
+    if (typeof bloomPass !== 'undefined' && bloomPass) { bloomPass.strength = bloomStrength; bloomPass.threshold = bloomThreshold; }
+    if (typeof filmPass !== 'undefined' && filmPass && filmPass.uniforms) {
+      if (filmPass.uniforms.nIntensity) filmPass.uniforms.nIntensity.value = filmN;
+      if (filmPass.uniforms.intensity) filmPass.uniforms.intensity.value = filmN;
+    }
+    if (typeof psPass !== 'undefined' && psPass && psPass.uniforms && psPass.uniforms.uAmount) psPass.uniforms.uAmount.value = psAmt;
+  }
+  function applyLook(look){
+    currentLook = look;
+    if (look === 'chrome') {
+      /* CHROME — reflective metal, but post-processing dialled WAY down so it isn't blown out white */
+      meshes.forEach(o => {
+        if (!o.userData.chromeMat) o.userData.chromeMat = new THREE.MeshStandardMaterial({ color: 0xb4b8bd, metalness: 1.0, roughness: 0.07, envMapIntensity: 1.05, emissive: 0x000000 });
+        o.material = o.userData.chromeMat;
+      });
+      lineFX.uniforms.uMode.value = 0;
+      setPostFX(0.03, 0.92, 0.1, 0.05);   /* almost no bloom / grain / ISP so chrome stays a clean reflective grey */
+    } else if (look === 'dither') {
+      /* DITHER — monochrome halftone dots (reference look), no big grid */
+      meshes.forEach(o => { if (o.userData.stdMat) o.material = o.userData.stdMat; });
+      lineFX.uniforms.uMode.value = 6;
+      setPostFX(0.32, 0.25, 0.5, 0.30);   /* restore full postprocessing */
+    } else {
+      /* NORMAL — clean lit model, no overlay */
+      meshes.forEach(o => { if (o.userData.stdMat) o.material = o.userData.stdMat; });
+      lineFX.uniforms.uMode.value = 0;
+      setPostFX(0.32, 0.25, 0.5, 0.30);   /* restore full postprocessing */
+    }
+  }
   const MODEL_SCALE = 1.95;
   new GLTFLoader().load(((window.GB_ASSETS && window.GB_ASSETS.models) || 'models/') + 'eve.glb', gltf => {
     const model = gltf.scene;
     let tris = 0;
     model.traverse(o => {
       if (o.isMesh) {
-        eveMeshes.push(o);
-        o.material = makeEveMaterial(activeModelFx);
+        const stdMat = new THREE.MeshStandardMaterial({ color: 0x8f8f97, metalness: 0.2, roughness: 0.66, emissive: 0x1a0303, emissiveIntensity: 0.12, envMapIntensity: 0.35 });
+        o.material = stdMat;
+        o.userData.stdMat = stdMat;
+        meshes.push(o);
         const g = o.geometry; if (g && g.index) tris += g.index.count / 3;
       }
     });
@@ -3107,6 +3122,7 @@ if (stage) {
       fitHalfH = bs.y / 2; fitHalfW = Math.sqrt(bs.x * bs.x + bs.z * bs.z) / 2; }
     rig.rotation.y = _ry; rig.updateMatrixWorld(true);
     fitCamera();
+    applyLook(currentLook);   /* apply the currently-selected look now that meshes exist */
     try { renderer.compile(scene, camera); composer.render(); } catch(e){}   /* precompile shaders at load so entering the pin is not choppy */
     const meta = document.getElementById('psMeta');
     if (meta && tris) meta.textContent = 'WEBGL · THREE.JS · ' + Math.round(tris / 1000) + 'K TRIS · POSTFX';
@@ -3134,10 +3150,10 @@ if (stage) {
   });
   /* (hover lens distortion removed) */
 
-  const processBloomPass = new UnrealBloomPass(new THREE.Vector2((stage.clientWidth || 980)/2, (stage.clientHeight || 820)/2), 0.32, 0.55, 0.25);
-  composer.addPass(processBloomPass);
-  const processFilmPass = new FilmPass(0.5, 0.025, 650, false);
-  composer.addPass(processFilmPass);
+  const bloomPass = new UnrealBloomPass(new THREE.Vector2((stage.clientWidth || 980)/2, (stage.clientHeight || 820)/2), 0.32, 0.55, 0.25);
+  composer.addPass(bloomPass);
+  const filmPass = new FilmPass(0.5, 0.025, 650, false);
+  composer.addPass(filmPass);
 
   /* POWERSHOT — reuse the hero's digicam ISP shader if available */
   let psPass = null;
@@ -3184,56 +3200,39 @@ if (stage) {
           float rad=sqrt(l)*0.7;
           float dotm=smoothstep(rad,rad-0.14,d);
           outc = cs*dotm;
-        } else if(uMode>4.5 && uMode<5.5){      /* GLITCH: fine scan + rgb split */
+        } else if(uMode>4.5 && uMode<5.5){     /* GLITCH: fine scan + rgb split */
           float s=0.5+0.5*sin((vUv.y*uRes.y)*3.14159*2.0);
           float jt=step(0.93,fract(sin(floor(vUv.y*uRes.y*0.25)+uTime*3.0)*43758.5453))*0.012;
           float r=texture2D(tDiffuse,vUv+vec2(texel.x*2.0+jt,0.)).r;
           float b=texture2D(tDiffuse,vUv-vec2(texel.x*2.0+jt,0.)).b;
           outc = vec3(r,base.g,b)*mix(0.4,1.0,s);
-        } else if(uMode>5.5){                  /* CCTV DITHER: reference-photo dots, no large grid */
-          vec2 px = vUv * uRes;
-          float grey = smoothstep(0.015, 0.92, luma(base) * 1.28);
-          vec2 cell = floor(px / 2.5);
-          float rnd = fract(sin(dot(cell, vec2(12.9898,78.233))) * 43758.5453);
-          float dotm = step(rnd, grey);
-          float microScan = mix(0.66, 1.08, step(0.5, fract(px.y * 0.5)));
-          float softNoise = 0.86 + 0.14 * fract(sin(dot(floor(px), vec2(127.1,311.7)) + uTime * 0.9) * 43758.5453);
-          vec3 mono = mix(vec3(0.015), vec3(0.72), dotm) * microScan * softNoise;
-          outc = mix(mono, vec3(grey) * 0.36, 0.18);
+        } else if(uMode>5.5){                  /* MONO DITHER HALFTONE — matches reference, no big grid */
+          float cell=4.5;
+          vec2 gp=vUv*uRes/cell;
+          vec2 cc=(floor(gp)+0.5)*cell/uRes;
+          float l=luma(texture2D(tDiffuse,cc).rgb);
+          float d=length(fract(gp)-0.5);
+          float rad=sqrt(l)*0.72;
+          float dotm=smoothstep(rad,rad-0.12,d);
+          outc = vec3(dotm);
         }
         gl_FragColor = vec4(outc,1.0);
       }`
   });
   composer.addPass(lineFX);
 
-  /* model FX controls: SCAN restores the current look, DITHER matches the reference-photo dot effect (without the big grid), CHROME makes the mesh maximally reflective/brighter */
-  lineFX.uniforms.uMode.value = 1;
-  const fxControls = document.querySelectorAll('#processScene .ps-fx-controls button[data-ps-fx]');
-  function setProcessFx(mode) {
-    fxControls.forEach(btn => btn.classList.toggle('on', btn.dataset.psFx === mode));
-    applyEveMaterial(mode);
-    if (mode === 'dither') {
-      lineFX.uniforms.uMode.value = 6;
-      processBloomPass.enabled = true; processBloomPass.strength = 0.18; processBloomPass.radius = 0.34; processBloomPass.threshold = 0.34;
-      processFilmPass.enabled = true;
-      if (psPass) { psPass.enabled = true; psPass.uniforms.uAmount.value = 0.12; }
-      spot.intensity = 4.8; rim.intensity = 0.14; fill.intensity = 0.10;
-    } else if (mode === 'chrome') {
-      /* chrome = material-driven reflection, with postprocessing turned way down */
-      lineFX.uniforms.uMode.value = 0;
-      processBloomPass.enabled = true; processBloomPass.strength = 0.035; processBloomPass.radius = 0.12; processBloomPass.threshold = 0.72;
-      processFilmPass.enabled = false;
-      if (psPass) { psPass.enabled = true; psPass.uniforms.uAmount.value = 0.035; }
-      spot.intensity = 4.2; rim.intensity = 0.36; fill.intensity = 0.28;
-    } else {
-      lineFX.uniforms.uMode.value = 1;
-      processBloomPass.enabled = true; processBloomPass.strength = 0.32; processBloomPass.radius = 0.55; processBloomPass.threshold = 0.25;
-      processFilmPass.enabled = true;
-      if (psPass) { psPass.enabled = true; psPass.uniforms.uAmount.value = 0.30; }
-      spot.intensity = 5.5; rim.intensity = 0.3; fill.intensity = 0.2;
-    }
+  /* look buttons under the model: NORMAL / DITHER / CHROME */
+  applyLook('normal');
+  const psFx = document.getElementById('psFx');
+  if (psFx) {
+    psFx.querySelectorAll('button[data-look]').forEach(b => {
+      b.addEventListener('click', () => {
+        psFx.querySelectorAll('button[data-look]').forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+        applyLook(b.dataset.look);
+      });
+    });
   }
-  fxControls.forEach(btn => btn.addEventListener('click', () => setProcessFx(btn.dataset.psFx)));
 
   /* RESIZE */
   new ResizeObserver(() => {
